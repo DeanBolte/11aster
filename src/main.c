@@ -1,8 +1,9 @@
 /*
-*	A file that runs the OpenGL commands and display
+*	main contains all the functions that directly connect with or assist in the functionality of OpenGL
 *
-*	Author: Dean
-*	Copyright: I believe RMIT has the copyright for this due it being an asssigment but if not then I take Standard MIT Licensing
+*	Main Contributer: Dean
+* 
+*	Please read LICENSE.txt
 */
 
 #include "../vs/engine.h"

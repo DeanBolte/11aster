@@ -1,8 +1,7 @@
 /*
-*	source file for utility functions
+*	uitl contains vector math functions and various other utility functions
 *
-*	Author: Dean
-*	Copyright: read description in main.c
+*	Main Author: Dean
 */
 #include "util.h"
 

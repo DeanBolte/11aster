@@ -1,8 +1,7 @@
 /*
-*	A header file for the utilities source file
+*	uitl contains vector math functions and various other utility functions
 *
-*	Author: Dean
-*	Copyright: read description in main.c
+*	Main Author: Dean
 */
 #pragma once
 

@@ -1,8 +1,7 @@
 /*	
-*	A file of different objects and sprites for use by the GameEngine
+*	elements contains functionality for object data storage and rendering
 * 
-*	Author: Dean
-*	Copyright: read description in main.c
+*	Main Author: Dean
 */
 
 #include "elements.h"

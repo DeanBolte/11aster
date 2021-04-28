@@ -1,8 +1,7 @@
 /*
-*	A header file for the Game Engine source file
+*	engine contains the main functionality for gameplay
 *
-*	Author: Dean
-*	Copyright: read description in main.c
+*	Main Author: Dean
 */
 #pragma once
 

@@ -1,8 +1,7 @@
 /*
-*	The Source file for the Game Engine, used to manipulate the game environment.
+*	engine contains the main functionality for gameplay
 *
-*	Author: Dean
-*	Copyright: read description in main.c
+*	Main Author: Dean
 */
 #include "engine.h"
 

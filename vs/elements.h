@@ -1,8 +1,7 @@
 /*
-*	A header file for the elements source file
+*	elements contains functionality for object data storage and rendering
 *
-*	Author: Dean
-*	Copyright: read description in main.c
+*	Main Author: Dean
 */
 #pragma once
 
