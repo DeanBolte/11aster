@@ -139,7 +139,6 @@ void init_app(int* argcp, char** argv) {
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);  
 	glutInitWindowSize(1024, 768);
 	glutCreateWindow("s3784635 Assignment 1");
-	glutFullScreen();
 	glutReshapeFunc(on_reshape);
 
 	// input functionality
