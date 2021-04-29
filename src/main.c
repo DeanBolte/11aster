@@ -16,7 +16,7 @@ int port_height = 0;
 // Frametime data
 float previous_frametime;
 
-// Keyboard controls
+// Keyboard input on press
 void inputDown(unsigned char key, int x, int y)
 {
 	switch (key)
@@ -44,6 +44,7 @@ void inputDown(unsigned char key, int x, int y)
 	}
 }
 
+// Keyboard input on release
 void inputUp(unsigned char key, int x, int y)
 {
 	switch (key)
@@ -68,6 +69,7 @@ void inputUp(unsigned char key, int x, int y)
 	}
 }
 
+// Mouse state change function
 void mouseInput(int button, int state, int x, int y) {
 	// represents whether a mouse button is being pressed
 	int pressed = 0;
@@ -88,6 +90,7 @@ void mouseInput(int button, int state, int x, int y) {
 	}
 }
 
+// Resize on reshaping of screen
 void on_reshape(int w, int h) {
 	glViewport(0, 0, w, h);
 
@@ -99,6 +102,7 @@ void on_reshape(int w, int h) {
 	glOrtho(0.0, w, 0.0, h, -1.0, 1.0); 
 }
 
+// Display frame
 void on_display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -115,12 +119,14 @@ void on_display()
 
 	// Error Checking
 	int err;
-	while ((err = glGetError()) != GL_NO_ERROR)
+	while ((err = glGetError()) != GL_NO_ERROR) {
 		printf("display: %s\n", gluErrorString(err));
+	}
 
 	glutSwapBuffers();
 }
 
+// Idle frame
 void on_idle() { 
 	// Calculate delta between frames
 	float currentTime = glutGet(GLUT_ELAPSED_TIME) / 1000.0;  
@@ -133,6 +139,7 @@ void on_idle() {
 	glutPostRedisplay(); 
 }
 
+// Initialises the opengl application
 void init_app(int* argcp, char** argv) {
 	// Set up display
 	glutInit(argcp, argv); 
