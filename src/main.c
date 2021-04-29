@@ -10,8 +10,8 @@
 
 #define KEY_ESC 27
 
-int g_screen_width = 0;
-int g_screen_height = 0;
+int port_width = 0;
+int port_height = 0;
 
 // Frametime data
 float previous_frametime;
@@ -91,8 +91,8 @@ void mouseInput(int button, int state, int x, int y) {
 void on_reshape(int w, int h) {
 	glViewport(0, 0, w, h);
 
-	g_screen_width = w;  
-	g_screen_height = h;
+	port_width = w;  
+	port_height = h;
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();  
@@ -108,7 +108,7 @@ void on_display()
 	// Highlight Colour
 	glColor3f(highColour.r, highColour.g, highColour.b);
 	// Background Colour
-	//glClearColor(lowColour.r, lowColour.g, lowColour.b, 1.0);
+	glClearColor(lowColour.r, lowColour.g, lowColour.b, 1.0);
 
 	// Call Game Engine to handle rendering
 	render();
@@ -127,7 +127,7 @@ void on_idle() {
 	float delta = currentTime - previous_frametime;
 
 	// Call to Game Engine to update
-	update(delta, g_screen_width, g_screen_height);
+	update(delta, port_width, port_height);
 	previous_frametime = currentTime;
 
 	glutPostRedisplay(); 
@@ -153,11 +153,11 @@ void init_app(int* argcp, char** argv) {
 	glutIdleFunc(on_idle); 
 
 	// Initialise screen size
-	g_screen_width = 1024;
-	g_screen_height = 768;
+	port_width = 1024;
+	port_height = 768;
 
 	// Initialise Game Engine
-	init(g_screen_width, g_screen_height);
+	init(port_width, port_height);
 
 	// Get time of init for calculating delta
 	previous_frametime = glutGet(GLUT_ELAPSED_TIME) / 1000.0;

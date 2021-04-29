@@ -17,7 +17,7 @@ Asteroid* initAsteroid(float x, float y) {
 	// initialise variables
 	asteroid->position.x = x;
 	asteroid->position.y = y;
-	asteroid->moveVector.x = 0;
+	asteroid->moveVector.x = 0; 
 	asteroid->moveVector.y = 0;
 	asteroid->inside = 0;
 	asteroid->vertexCount = ASTEROID_VERTEX_COUNT;
