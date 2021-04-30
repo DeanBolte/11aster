@@ -81,7 +81,7 @@ Player* initPlayer(float x, float y) {
 	return player;
 }
 
-Bullet* initBullet(Player* player, float x, float y) {
+Bullet* initBullet(Player* player) {
 	Bullet* bullet = NULL;
 	while (bullet == NULL) {
 		bullet = malloc(sizeof(Bullet));
@@ -127,6 +127,7 @@ BlackHole* initBlackHole(PositionVector position) {
 	bh->radiusInPulse = bh->radius - rand() % (int)(BLACKHOLE_RADIUS / 2);
 	bh->gravity = bh->radius * GRAVITY_MULTIPLIER;
 	bh->pulseDirection = 1;
+	return bh;
 }
 
 // Object Destruction

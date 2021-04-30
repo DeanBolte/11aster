@@ -6,7 +6,7 @@
 #pragma once
 
 #include "elements.h"
-
+ 
 #define MAX_ASTEROIDS 500
 #define MAX_BULLETS 100
 #define MAX_ENGINE_PARTICLES 1000
@@ -74,14 +74,12 @@ void createBlackHole(PositionVector position);
 
 //		Gameplay
 void gameOver();
-void launchAsteroidWave();
 
 //		Player Actions
 void fireCannonPlayer(float delta);
 
 //		Collision Detection
 void checkCollisions();
-void playerWallCollision();
 void asteroidCollisions();
 void blackHoleCollision();
 int collidingWithBlackHole(PositionVector position, float radius);
@@ -124,6 +122,5 @@ PositionVector getAccelerationVector(float delta, BlackHole* bh, PositionVector 
 void renderAsteroids();
 void renderPlayer();
 void renderBullets();
-void renderArena();
 void renderEngineParticles();
 void renderBlackHoles();

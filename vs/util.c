@@ -23,8 +23,9 @@ PositionVector subtractVectors(PositionVector vector1, PositionVector vector2) {
 PositionVector rotateVector(PositionVector vector, float radians, int dir) {
 	float x1 = vector.x;
 	float y1 = vector.y;
-	vector.x = (x1 * cos(radians * dir)) - (y1 * sin(radians * dir));
-	vector.y = (x1 * sin(radians * dir)) + (y1 * cos(radians * dir));
+	float theta = radians * dir;
+	vector.x = (x1 * cos(theta)) - (y1 * sin(theta));
+	vector.y = (x1 * sin(theta)) + (y1 * cos(theta));
 	return vector;
 }
 

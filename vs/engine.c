@@ -8,8 +8,6 @@
 // Game Data
 float screenWidth = 0.0;
 float screenHeight = 0.0;
-float roundStartTime = 0.0;
-int asteroidKillCount = 0;
 int gameState = SPLASH;
 
 // This ensures that the game over screen only accepts an input after a new key is pressed during the game over screen
@@ -17,14 +15,6 @@ int inputDuringGameOver = 0;
 
 // Ship variables and constants
 double DEGREE_OF_ROTATION = 2 * PI;
-
-// Asteroid variables
-int wave = 0;
-
-// Render Data
-float OUT_OF_BOUNDS = 32.0;
-float WALL_WARNING_DISTANCE = -128.0;
-RGB arenaWallColours[4];
 
 // Keyboard Inputs
 int key_right = 0;
@@ -51,22 +41,17 @@ int blackHoleCount = 0;
 // Colours
 void initColours() {
 	// Init colour data
-	highColour.r = 0.004;
-	highColour.g = 0.922;
-	highColour.b = 0.373;
+	highColour.r = 0.004f;
+	highColour.g = 0.922f;
+	highColour.b = 0.373f;
 
-	lowColour.r = 0.145;
-	lowColour.g = 0.204;
-	lowColour.b = 0.184;
+	lowColour.r = 0.145f;
+	lowColour.g = 0.204f;
+	lowColour.b = 0.184f;
 
-	warnColour.r = 0.8;
-	warnColour.g = 0.1;
-	warnColour.b = 0.1;
-
-	// Init arena colours
-	for (int i = 0; i < 4; ++i) {
-		arenaWallColours[i] = highColour;
-	}
+	warnColour.r = 0.8f;
+	warnColour.g = 0.1f;
+	warnColour.b = 0.1f;
 }
 
 // Game Engine Calls
@@ -95,13 +80,6 @@ void initRound() {
 
 	// Return input values to initial values
 	initKeys();
-
-	// Reset time and kill count
-	roundStartTime = glutGet(GLUT_ELAPSED_TIME);
-	asteroidKillCount = 0;
-
-	// Reset wave
-	wave = 0;
 
 	// Start Game
 	gameState = IN_GAME;
@@ -144,11 +122,6 @@ void updateGame(float delta) {
 	// Asteroids
 	for (int i = 0; i < asteroidCount; ++i) {
 		moveAsteroid(delta, asteroidArray[i]);
-	}
-
-	if (asteroidCount <= 0) {
-		++wave;
-		launchAsteroidWave();
 	}
 
 	// Player Actions
@@ -209,7 +182,7 @@ void render() {
 void renderSplash() {
 	glPushMatrix();
 
-	drawText(screenWidth / 2 - 5 * glutStrokeWidth(GLUT_STROKE_ROMAN, 'A'), screenHeight / 1.4, "Asteroids by Dean Bolte", 23, 0.5);
+	drawText(screenWidth / 2 - 1.5 * glutStrokeWidth(GLUT_STROKE_ROMAN, 'A'), screenHeight / 1.4, "11Aster", 7, 0.5);
 	drawText(screenWidth / 2 - 14 / 5 * glutStrokeWidth(GLUT_STROKE_ROMAN, 'P'), screenHeight / 8, "Press any key to play!", 24, 0.2);
 
 	glPopMatrix();
@@ -220,22 +193,11 @@ void renderInGame() {
 	glPushMatrix();
 
 	// Render Order
-	renderArena();
 	renderAsteroids();
 	renderBlackHoles();
 	renderBullets();
 	renderEngineParticles();
 	renderPlayer();
-
-	// UI Overlay
-	const char time[12];
-	int timeElapsed = (glutGet(GLUT_ELAPSED_TIME) - roundStartTime) / 1000;
-	snprintf(time, 12, "%i", timeElapsed);
-	drawText(10, screenHeight - 24, time, 3, 0.1);
-
-	const char kills[12];
-	snprintf(kills, 12, "%i", asteroidKillCount);
-	drawText(screenWidth - 10 - intToCharacterCount(asteroidKillCount) * 8, screenHeight - 24, kills, 3, 0.1);
 
 	glPopMatrix();
 }
@@ -333,11 +295,6 @@ void createAsteroid(float x, float y) {
 		Asteroid* asteroid = initAsteroid(x, y);
 		asteroidArray[asteroidCount] = asteroid;
 		++asteroidCount;
-
-		// Accelerate towards player by random amount
-		PositionVector distanceVector = subtractVectors(playerData->position, asteroid->position);
-		PositionVector acceleration = multiplyVector(distanceVector, ASTEROID_SPAWN_ACCELERATION_MULTIPLIER * (rand() % 100 / 50));
-		asteroid->moveVector = addVectors(asteroid->moveVector, acceleration);
 	}
 }
 
@@ -399,31 +356,8 @@ void gameOver() {
 	gameState = GAME_OVER;
 }
 
-void launchAsteroidWave() {
-	// Create and launch asteroids in wave
-	for (int i = 0; i < wave; ++i) {
-		// Generate spawn location
-		PositionVector vector;
-		vector.x = 0;
-		vector.y = ASTEROID_SPAWN_RADIUS_MULTIPLIER * screenWidth;
-
-		// Rotate vector to random point around the spawn circumfrence
-		vector = rotateVector(vector, (rand() % 100) * (PI/50), 1);
-
-		// Vector now points from centre of screen
-		vector.x += screenWidth;
-		vector.y += screenHeight;
-
-		// create asteroid
-		createAsteroid(vector.x, vector.y);
-	}
-}
-
 // Collision Detection
 void checkCollisions() {
-	// Check player collisions with arena wall
-	playerWallCollision();
-
 	// Check collision with asteroids
 	// Player / Asteroid collisions
 	// Bullet / Asteroid collisions
@@ -438,25 +372,6 @@ void checkCollisions() {
 	blackHoleCollision();
 }
 
-void playerWallCollision() {
-	// Collision check wall bounds
-	int outOfBoundsSide = boolOutOfBounds(playerData->position, WALL_WARNING_DISTANCE);
-
-	for (int i = 0; i < 4; ++i) {
-		if (i == outOfBoundsSide - 1) {
-			arenaWallColours[i] = warnColour;
-		}
-		else {
-			arenaWallColours[i] = highColour;
-		}
-	}
-
-	// Collision check walls
-	if (boolOutOfBounds(playerData->position, -playerData->collisionRadius)) {
-		gameOver();
-	}
-}
-
 // This is the heaviest part of the code base, its essentially the entire game, it could be heavily modified to be made faster
 // however that is out of the scope of this project, i will however attempt to do as much optimisation in the time i have available
 void asteroidCollisions() {
@@ -466,36 +381,7 @@ void asteroidCollisions() {
 		
 		// Check for collision circle overlap for player
 		if (distance < playerData->collisionRadius + asteroidArray[i]->collisionRadius) {
-			//gameOver();
-		}
-
-		// Check for collisions for asteroids and arena walls
-		int outOfBoundsSide = boolOutOfBounds(asteroidArray[i]->position, -asteroidArray[i]->collisionRadius);
-		if (outOfBoundsSide > 0) {
-			// Reflect asteroid trajectory based on the wall the asteroid bounces off
-			if (asteroidArray[i]->inside == 1) {
-				if (outOfBoundsSide > 2) {
-					asteroidArray[i]->moveVector.y *= -1;
-					if (outOfBoundsSide == 3) {
-						asteroidArray[i]->position.y += asteroidArray[i]->collisionRadius - asteroidArray[i]->position.y;
-					}
-					else {
-						asteroidArray[i]->position.y -= asteroidArray[i]->collisionRadius - (screenHeight - asteroidArray[i]->position.y);
-					}					
-				}
-				else {
-					asteroidArray[i]->moveVector.x *= -1;
-					if (outOfBoundsSide == 1) {
-						asteroidArray[i]->position.x += asteroidArray[i]->collisionRadius - asteroidArray[i]->position.x;
-					}
-					else {
-						asteroidArray[i]->position.x -= asteroidArray[i]->collisionRadius - (screenWidth - asteroidArray[i]->position.x);
-					}
-				}
-			}
-		}
-		else {
-			asteroidArray[i]->inside = 1;
+			gameOver();
 		}
 
 		// Check for collisions with other asteroids
@@ -529,8 +415,8 @@ void asteroidCollisions() {
 					PositionVector asteroid2OverlapVector = multiplyVector(distanceUnitVector, asteroidArray[j]->collisionRadius);
 					PositionVector overlapVector = subtractVectors(subtractVectors(distanceVector, asteroid1OverlapVector), asteroid2OverlapVector);
 					PositionVector displacementVector = multiplyVector(overlapVector, 0.5);
-					asteroidArray[i]->position = subtractVectors(asteroidArray[i]->position, overlapVector);
-					asteroidArray[j]->position = addVectors(asteroidArray[j]->position, overlapVector);
+					asteroidArray[i]->position = subtractVectors(asteroidArray[i]->position, displacementVector);
+					asteroidArray[j]->position = addVectors(asteroidArray[j]->position, displacementVector);
 				}
 			}
 		}
@@ -552,7 +438,6 @@ void asteroidCollisions() {
 				asteroidArray[i]->hp -= PLAYER_DAMAGE_DEALT;
 				if (asteroidArray[i]->hp <= 0) {
 					explodeAsteroid(asteroidArray[i], i);
-					++asteroidKillCount;
 				}
 			}
 		} 
@@ -719,13 +604,6 @@ void acceleratePlayer(float delta, int dir) {
 			createParticle(playerData->position, playerData->direction, PLAYER_PARTICLE_SIZE);
 		}
 	}
-	else if (vectorLength(playerData->moveVector) > playerData->minVelocity) {
-		PositionVector decceleration = multiplyVector(vectorToUnitVector(playerData->moveVector), (playerData->acceleration / 2) * delta);
-		playerData->moveVector = subtractVectors(playerData->moveVector, decceleration);
-	}
-	else {
-		playerData->moveVector = multiplyVector(playerData->moveVector, 0);
-	}
 }
 
 void fireCannonPlayer(float delta) {
@@ -754,7 +632,7 @@ void moveBullets(float delta) {
 }
 
 void cullBullet(Bullet* bullet, int index) {
-	if (boolOutOfBounds(bullet->position, OUT_OF_BOUNDS) > 0) {
+	if (boolOutOfBounds(bullet->position, 32) > 0) {
 		removeBullet(bullet, index);
 	}
 }
@@ -890,50 +768,6 @@ void renderBullets() {
 
 		glPopMatrix();
 	}
-}
-
-void renderArena() {
-	// Increase size of the walls
-	glLineWidth(4.0);
-
-	// Left wall
-	glPushMatrix();
-	glColor3f(arenaWallColours[LEFT_WALL - 1].r, arenaWallColours[LEFT_WALL - 1].g, arenaWallColours[LEFT_WALL - 1].b);
-	glBegin(GL_LINES);
-	glVertex2f(1, 0);
-	glVertex2f(1, screenHeight);
-	glEnd();
-	glPopMatrix();
-
-	// Upper wall
-	glPushMatrix();
-	glColor3f(arenaWallColours[TOP_WALL - 1].r, arenaWallColours[TOP_WALL - 1].g, arenaWallColours[TOP_WALL - 1].b);
-	glBegin(GL_LINES);
-	glVertex2f(0, screenHeight - 1);
-	glVertex2f(screenWidth, screenHeight - 1);
-	glEnd();
-	glPopMatrix();
-
-	// Right wall
-	glPushMatrix();
-	glColor3f(arenaWallColours[RIGHT_WALL - 1].r, arenaWallColours[RIGHT_WALL - 1].g, arenaWallColours[RIGHT_WALL - 1].b);
-	glBegin(GL_LINES);
-	glVertex2f(screenWidth, screenHeight);
-	glVertex2f(screenWidth, 0);
-	glEnd();
-	glPopMatrix();
-
-	// Lower wall
-	glPushMatrix();
-	glColor3f(arenaWallColours[BOTTOM_WALL - 1].r, arenaWallColours[BOTTOM_WALL - 1].g, arenaWallColours[BOTTOM_WALL - 1].b);
-	glBegin(GL_LINES);
-	glVertex2f(screenWidth, 0);
-	glVertex2f(0, 0);
-	glEnd();
-	glPopMatrix();
-
-	// Return line width to normal
-	glLineWidth(1.0);
 }
 
 void renderEngineParticles() {
