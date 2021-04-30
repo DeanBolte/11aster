@@ -68,16 +68,6 @@ void initRound() {
 	// Create Player at starting position
 	createPlayer(256, 256);
 
-	// Create a BlackHole at a random position on screen
-	PositionVector randomPosition;
-	randomPosition.x = rand() % (int)(screenWidth / 1.2) + screenWidth / 8;
-	randomPosition.y = rand() % (int)(screenHeight / 2) + screenHeight / 8;
-	// prevent the blackhole from spawning on the player
-	if (vectorLength(subtractVectors(playerData->position, randomPosition)) < MIN_BH_DISTANCE_FROM_PLAYER) {
-		randomPosition = addVectors(randomPosition, multiplyVector(angleToUnitVector(PI / 4), MIN_BH_DISTANCE_FROM_PLAYER));
-	}
-	createBlackHole(randomPosition);
-
 	// Return input values to initial values
 	initKeys();
 
