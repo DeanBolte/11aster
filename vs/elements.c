@@ -6,6 +6,21 @@
 
 #include "elements.h"
 
+// Object Data
+Asteroid* asteroidArray[MAX_ASTEROIDS];
+int asteroidCount = 0;
+
+Bullet* bulletArray[MAX_BULLETS];
+int bulletCount = 0;
+
+Player* playerData = NULL;
+
+Particle* particleArray[MAX_ENGINE_PARTICLES];
+int particleCount = 0;
+
+BlackHole* blackHoleArray[MAX_BLACKHOLES];
+int blackHoleCount;
+
 // Object Initialisation
 Asteroid* initAsteroid(float x, float y) {
 	// Create and return the asteroid struct where requested
@@ -130,7 +145,180 @@ BlackHole* initBlackHole(PositionVector position) {
 	return bh;
 }
 
+// Object Creation
+void createAsteroid(float x, float y) {
+	if (asteroidCount < MAX_ASTEROIDS) {
+		Asteroid* asteroid = initAsteroid(x, y);
+		asteroidArray[asteroidCount] = asteroid;
+		++asteroidCount;
+	}
+}
+
+void createPlayer(float x, float y) {
+	if (playerData != NULL) {
+		destructPlayer(playerData);
+	}
+	playerData = initPlayer(x, y);
+}
+
+void createParticle(PositionVector position, PositionVector velocity, int maxSize) {
+	if (particleCount < MAX_ENGINE_PARTICLES) {
+		Particle* particle = initParticle(position, velocity, maxSize);
+		particleArray[particleCount] = particle;
+		++particleCount;
+	}
+}
+
+void createBlackHole(PositionVector position) {
+	if (blackHoleCount < MAX_BLACKHOLES) {
+		blackHoleArray[blackHoleCount] = initBlackHole(position);
+		++blackHoleCount;
+	}
+}
+
+// Object Access
+Player* getPlayer() {
+	return playerData;
+}
+
+Asteroid* getAsteroid(int index) {
+	return asteroidArray[index];
+}
+
+int getAsteroidCount() {
+	return asteroidCount;
+}
+
+Particle* getParticle(int index) {
+	return particleArray[index];
+}
+
+int getParticleCount() {
+	return particleCount;
+}
+
+Bullet* getBullet(int index) {
+	return bulletArray[index];
+}
+
+int getBulletCount() {
+	return bulletCount;
+}
+
+BlackHole* getBlackHole(int index) {
+	return blackHoleArray[index];
+}
+
+int getBlackHoleCount() {
+	return blackHoleCount;
+}
+
 // Object Destruction
+void freeAllObjects() {
+	// Free all game objects
+	freeAsteroids();
+	freeBullets();
+	freeParticles();
+	freeBlackHoles();
+
+	// Free the player
+	if (playerData) {
+		destructPlayer(playerData);
+	}
+}
+
+void freeAsteroids() {
+	// Free asteroids
+	for (int i = 0; i < asteroidCount; ++i) {
+		destructAsteroid(asteroidArray[i]);
+	}
+	asteroidCount = 0;
+}
+
+void freeBullets() {
+	// Free bullets
+	for (int i = 0; i < bulletCount; ++i) {
+		destructBullet(bulletArray[i]);
+	}
+	bulletCount = 0;
+}
+
+void freeParticles() {
+	// Free particles
+	for (int i = 0; i < particleCount; ++i) {
+		destructParticle(particleArray[i]);
+	}
+	particleCount = 0;
+}
+
+void freeBlackHoles() {
+	// Free blackholes
+	for (int i = 0; i < blackHoleCount; ++i) {
+		destructBlackHole(blackHoleArray[i]);
+	}
+	blackHoleCount = 0;
+}
+
+void freeAsteroid(int index) {
+	if (index > 0 && index < asteroidCount) {
+		Asteroid* asteroid = asteroidArray[index];
+
+		// Shuffle array
+		for (int i = index; i < asteroidCount - 1; ++i) {
+			asteroidArray[i] = asteroidArray[i + 1];
+		}
+		--asteroidCount;
+
+		// Free asteroid
+		destructAsteroid(asteroid);
+	}
+}
+
+void freeBullet(int index) {
+	if (index > 0 && index < bulletCount) {
+		Bullet* bullet = bulletArray[index];
+
+		// Shuffle array
+		for (int i = index; i < bulletCount - 1; ++i) {
+			bulletArray[i] = bulletArray[i + 1];
+		}
+		--bulletCount;
+
+		// Free bullet
+		destructBullet(bullet);
+	}
+}
+
+void freeParticle(int index) {
+	if (index > 0 && index < particleCount) {
+		Particle* particle = particleArray[index];
+
+		// Shuffle array
+		for (int i = index; i < particleCount - 1; ++i) {
+			particleArray[i] = particleArray[i + 1];
+		}
+		--particleCount;
+
+		// Free particle
+		destructParticle(particle);
+	}
+}
+
+void freeBlackHole(int index) {
+	if (index > 0 && index < blackHoleCount) {
+		BlackHole* bh = blackHoleArray[index];
+
+		// Shuffle array
+		for (int i = index; i < blackHoleCount - 1; ++i) {
+			blackHoleArray[i] = blackHoleArray[i + 1];
+		}
+		--blackHoleCount;
+
+		// Free particle
+		destructBlackHole(bh);
+	}
+}
+
 void destructAsteroid(Asteroid* asteroid) {
 	free(asteroid->vertices);
 	free(asteroid);
@@ -150,6 +338,87 @@ void destructParticle(Particle* particle) {
 
 void destructBlackHole(BlackHole* bh) {
 	free(bh);
+}
+
+// Object Rendering
+void renderAsteroids() {
+	// Create the asteroid in OpenGl
+	for (int i = 0; i < asteroidCount; ++i) {
+		float x = asteroidArray[i]->position.x;
+		float y = asteroidArray[i]->position.y;
+		glPushMatrix();
+		glTranslatef(x, y, 1.0);
+		glRotatef((asteroidArray[i]->angle * 180.0 / PI) - 90, 0.0, 0.0, 1.0);
+
+		glColor3f(highColour.r, highColour.g, highColour.b);
+
+		drawAsteroid(asteroidArray[i]->vertices, asteroidArray[i]->vertexCount, asteroidArray[i]->size);
+
+		glPopMatrix();
+	}
+}
+
+void renderPlayer() {
+	if (playerData != NULL) {
+		float x = playerData->position.x;
+		float y = playerData->position.y;
+
+		glPushMatrix();
+		glTranslatef(x, y, 1.0);
+		glRotatef((vectorAngle(playerData->direction) * 180.0 / PI) - 90, 0.0, 0.0, 1.0);
+
+		glColor3f(highColour.r, highColour.g, highColour.b);
+
+		drawPlayer();
+
+		glPopMatrix();
+	}
+}
+
+void renderBullets() {
+	for (int i = 0; i < bulletCount; ++i) {
+		float x = bulletArray[i]->position.x;
+		float y = bulletArray[i]->position.y;
+
+		glPushMatrix();
+		glTranslatef(x, y, 1.0);
+
+		glColor3f(highColour.r, highColour.g, highColour.b);
+
+		drawBullet();
+
+		glPopMatrix();
+	}
+}
+
+void renderEngineParticles() {
+	for (int i = 0; i < particleCount; ++i) {
+		float x = particleArray[i]->position.x;
+		float y = particleArray[i]->position.y;
+
+		glPushMatrix();
+		glTranslatef(x, y, 1.0);
+		glRotatef((particleArray[i]->angle * 180.0 / PI) - 90, 0, 0, 1.0);
+
+		glColor3f(highColour.r, highColour.g, highColour.b);
+
+		drawPentagon(particleArray[i]->size);
+
+		glPopMatrix();
+	}
+}
+
+void renderBlackHoles() {
+	for (int i = 0; i < blackHoleCount; ++i) {
+		glPushMatrix();
+		glTranslatef(blackHoleArray[i]->position.x, blackHoleArray[i]->position.y, 1.0);
+
+		glColor3f(highColour.r, highColour.g, highColour.b);
+
+		drawBlackHole(blackHoleArray[i]);
+
+		glPopMatrix();
+	}
 }
 
 // Object Rendering

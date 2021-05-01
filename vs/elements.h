@@ -7,6 +7,11 @@
 
 #include "util.h"
 
+#define MAX_ASTEROIDS 500
+#define MAX_BULLETS 100
+#define MAX_ENGINE_PARTICLES 1000
+#define MAX_BLACKHOLES 3
+
 #define BULLET_VECOLITY 1000.0
 
 #define ASTEROID_SPIN 6
@@ -27,7 +32,7 @@
 #define PARTICLE_DECAY_SPEED 30
 
 #define BLACKHOLE_RADIUS 20
-#define GRAVITY_MULTIPLIER 2000000;
+#define GRAVITY_MULTIPLIER 2000000
 
 typedef struct Asteroid {
 	PositionVector position;
@@ -57,7 +62,8 @@ typedef struct Player {
 
 typedef struct Bullet {
 	PositionVector position;
-	PositionVector moveVector;} Bullet;
+	PositionVector moveVector;
+} Bullet;
 
 typedef struct Particle {
 	PositionVector position;
@@ -77,6 +83,11 @@ typedef struct BlackHole {
 	int pulseDirection;
 } BlackHole;
 
+// Colours
+RGB highColour;
+RGB lowColour;
+RGB warnColour;
+
 // Object Initialisation
 Asteroid* initAsteroid(float x, float y);
 Player* initPlayer(float x, float y);
@@ -84,12 +95,45 @@ Bullet* initBullet(Player* player);
 Particle* initParticle(PositionVector position, PositionVector direction, int maxSize);
 BlackHole* initBlackHole(PositionVector position);
 
+// Object Creation
+void createAsteroid(float x, float y);
+void createPlayer(float x, float y);
+void createParticle(PositionVector position, PositionVector velocity, int maxSize);
+void createBlackHole(PositionVector position);
+
+// Object Access
+Player* getPlayer();
+Asteroid* getAsteroid(int index);
+int getAsteroidCount();
+Particle* getParticle(int index);
+int getParticleCount();
+Bullet* getBullet(int index);
+int getBulletCount();
+BlackHole* getBlackHole(int index);
+int getBlackHoleCount();
+
 // Object Destruction
+void freeAllObjects();
+void freeAsteroids();
+void freeBullets();
+void freeParticles();
+void freeBlackHoles();
+void freeAsteroid(int index);
+void freeBullet(int index);
+void freeParticle(int index);
+void freeBlackHole(int index);
 void destructAsteroid(Asteroid* asteroid);
 void destructPlayer(Player* player);
 void destructBullet(Bullet* bullet);
 void destructParticle(Particle* particle);
 void destructBlackHole(BlackHole* bh);
+
+// Object Rendering
+void renderAsteroids();
+void renderPlayer();
+void renderBullets();
+void renderEngineParticles();
+void renderBlackHoles();
 
 // Object Rendering
 void drawAsteroid(PositionVector* vertices, int vertexCount, int size);
