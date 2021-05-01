@@ -52,7 +52,7 @@ void asteroidCollisions() {
 
 		// Check for collision circle overlap for player
 		if (distance < getPlayer()->collisionRadius + getAsteroid(i)->collisionRadius) {
-			gameOver();
+			getPlayer()->hp = 0;
 		}
 
 		// Check for collisions with other asteroids
@@ -118,7 +118,7 @@ void asteroidCollisions() {
 void blackHoleCollision() {
 	// player collision
 	if (getPlayer() != NULL && collidingWithBlackHole(getPlayer()->position, getPlayer()->collisionRadius) > 0) {
-		gameOver(); // replace with player health and game over in update within game engine
+		getPlayer()->hp = 0;
 	}
 
 	// bullet collision
