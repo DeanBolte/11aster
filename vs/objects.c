@@ -4,7 +4,7 @@
 *	Main Author: Dean
 */
 
-#include "elements.h"
+#include "objects.h"
 
 // Object Data
 Asteroid* asteroidArray[MAX_ASTEROIDS];

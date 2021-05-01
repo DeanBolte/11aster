@@ -6,6 +6,7 @@
 #pragma once
 
 #include "physics.h"
+#include "rendering.h"
 
 // View walls
 #define LEFT_WALL 1

@@ -5,7 +5,7 @@
 */
 #pragma once
 
-#include "elements.h"
+#include "objects.h"
 
 #define DEGREE_OF_ROTATION 2 * PI
 #define PLAYER_PARTICLE_SIZE 5

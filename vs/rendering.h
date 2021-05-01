@@ -4,7 +4,7 @@
 *	Main Contributer: Dean
 */
 
-#include "elements.h"
+#include "objects.h"
 
 // Object Rendering
 void renderAsteroids();

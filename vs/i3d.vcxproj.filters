@@ -9,7 +9,7 @@
     <ClCompile Include="..\src\main.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="elements.c">
+    <ClCompile Include="objects.c">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="engine.c">
@@ -22,7 +22,7 @@
     <ClCompile Include="rendering.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="elements.h">
+    <ClInclude Include="objects.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="engine.h">
