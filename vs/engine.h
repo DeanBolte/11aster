@@ -7,16 +7,7 @@
 
 #include "physics.h"
 
-#define ASTEROID_SPAWN_ACCELERATION_MULTIPLIER 0.01
-#define ASTEROID_SPAWN_RADIUS_MULTIPLIER 1.1
-#define ASTEROID_SPLIT_RADIUS_MULTIPLIER 5
-#define ASTEROID_SPLIT_ANGLE PI / 6
-#define ASTEROID_PUFF_COUNT 50
-#define ASTEROID_PUFF_SIZE 20
-
-#define MIN_BH_DISTANCE_FROM_PLAYER 50
-
-// Arena walls
+// View walls
 #define LEFT_WALL 1
 #define RIGHT_WALL 2
 #define BOTTOM_WALL 3
@@ -66,7 +57,4 @@ void updateBlackHole(float delta, BlackHole* bh);
 // Screen Check
 int boolOutOfBounds(PositionVector position, float offset);
 
-// Object Removal
-void removeAsteroid(Asteroid* asteroid, int index);
-void removeBullet(Bullet* bullet, int index);
-void cullParticle(Particle* particle, int index);
+void cullBullet(Bullet* bullet, int index);

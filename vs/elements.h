@@ -91,7 +91,7 @@ RGB warnColour;
 // Object Initialisation
 Asteroid* initAsteroid(float x, float y);
 Player* initPlayer(float x, float y);
-Bullet* initBullet(Player* player);
+Bullet* initBullet();
 Particle* initParticle(PositionVector position, PositionVector direction, int maxSize);
 BlackHole* initBlackHole(PositionVector position);
 
@@ -100,10 +100,12 @@ void createAsteroid(float x, float y);
 void createPlayer(float x, float y);
 void createParticle(PositionVector position, PositionVector velocity, int maxSize);
 void createBlackHole(PositionVector position);
+void createBullet(PositionVector position, PositionVector direction);
 
 // Object Access
 Player* getPlayer();
 Asteroid* getAsteroid(int index);
+void pushAsteroid(Asteroid* asteroid);
 int getAsteroidCount();
 Particle* getParticle(int index);
 int getParticleCount();

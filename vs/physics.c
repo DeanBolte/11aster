@@ -10,11 +10,11 @@
 void physicsMovements(float delta) {
 	// Apply gravity from black holes
 	// Applies to Asteroids, Bullets, particles and the Player
-	applyGravity(delta);
+	//applyGravity(delta);
 
 	// Update asteroid positions
-	for (int i = 0; i < asteroidCount; ++i) {
-		moveAsteroid(delta, asteroidArray[i]);
+	for (int i = 0; i < getAsteroidCount(); ++i) {
+		moveAsteroid(delta, getAsteroid(i));
 	}
 
 	// Update player position
@@ -46,35 +46,35 @@ void physicsCollisions() {
 // This is the heaviest part of the code base, its essentially the entire game, it could be heavily modified to be made faster
 // however that is out of the scope of this project, i will however attempt to do as much optimisation in the time i have available
 void asteroidCollisions() {
-	for (int i = 0; i < asteroidCount; ++i) {
+	for (int i = 0; i < getAsteroidCount(); ++i) {
 		// Get distance between asteroid and player
-		float distance = vectorLength(subtractVectors(playerData->position, asteroidArray[i]->position));
+		float distance = vectorLength(subtractVectors(getPlayer()->position, getAsteroid(i)->position));
 
 		// Check for collision circle overlap for player
-		if (distance < playerData->collisionRadius + asteroidArray[i]->collisionRadius) {
+		if (distance < getPlayer()->collisionRadius + getAsteroid(i)->collisionRadius) {
 			gameOver();
 		}
 
 		// Check for collisions with other asteroids
-		for (int j = 0; j < asteroidCount; ++j) {
+		for (int j = 0; j < getAsteroidCount(); ++j) {
 			if (i != j) {
 				// Distance between asteroids
-				PositionVector distanceVector = subtractVectors(asteroidArray[i]->position, asteroidArray[j]->position);
+				PositionVector distanceVector = subtractVectors(getAsteroid(i)->position, getAsteroid(j)->position);
 				float distance = vectorLength(distanceVector);
-				if (distance < asteroidArray[i]->collisionRadius + asteroidArray[j]->collisionRadius) {
-					if (asteroidArray[i]->inside == 1 && asteroidArray[j]->inside == 1) {
+				if (distance < getAsteroid(i)->collisionRadius + getAsteroid(j)->collisionRadius) {
+					if (getAsteroid(i)->inside == 1 && getAsteroid(j)->inside == 1) {
 						PositionVector temp;
-						temp.x = asteroidArray[i]->moveVector.x;
-						temp.y = asteroidArray[i]->moveVector.y;
-						asteroidArray[i]->moveVector.x = asteroidArray[j]->moveVector.x;
-						asteroidArray[i]->moveVector.y = asteroidArray[j]->moveVector.y;
-						asteroidArray[j]->moveVector.x = temp.x;
-						asteroidArray[j]->moveVector.y = temp.y;
+						temp.x = getAsteroid(i)->moveVector.x;
+						temp.y = getAsteroid(i)->moveVector.y;
+						getAsteroid(i)->moveVector.x = getAsteroid(j)->moveVector.x;
+						getAsteroid(i)->moveVector.y = getAsteroid(j)->moveVector.y;
+						getAsteroid(j)->moveVector.x = temp.x;
+						getAsteroid(j)->moveVector.y = temp.y;
 					}
 					else {
 						// if an asteroid in the collision is outside then reflect each other based on collision vector
-						asteroidArray[i]->moveVector = addVectors(asteroidArray[i]->moveVector, distanceVector);
-						asteroidArray[j]->moveVector = subtractVectors(asteroidArray[j]->moveVector, distanceVector);
+						getAsteroid(i)->moveVector = addVectors(getAsteroid(i)->moveVector, distanceVector);
+						getAsteroid(j)->moveVector = subtractVectors(getAsteroid(j)->moveVector, distanceVector);
 					}
 
 					// Move the asteroids apart so they arent within each other
@@ -82,33 +82,33 @@ void asteroidCollisions() {
 					// here i calculate the vector of overlap and divide it in two to move the asteroids apart equally
 					// this is to prevent asteroid overlap
 					PositionVector distanceUnitVector = vectorToUnitVector(distanceVector);
-					PositionVector asteroid1OverlapVector = multiplyVector(distanceUnitVector, asteroidArray[i]->collisionRadius);
-					PositionVector asteroid2OverlapVector = multiplyVector(distanceUnitVector, asteroidArray[j]->collisionRadius);
+					PositionVector asteroid1OverlapVector = multiplyVector(distanceUnitVector, getAsteroid(i)->collisionRadius);
+					PositionVector asteroid2OverlapVector = multiplyVector(distanceUnitVector, getAsteroid(j)->collisionRadius);
 					PositionVector overlapVector = subtractVectors(subtractVectors(distanceVector, asteroid1OverlapVector), asteroid2OverlapVector);
 					PositionVector displacementVector = multiplyVector(overlapVector, 0.5);
-					asteroidArray[i]->position = subtractVectors(asteroidArray[i]->position, displacementVector);
-					asteroidArray[j]->position = addVectors(asteroidArray[j]->position, displacementVector);
+					getAsteroid(i)->position = subtractVectors(getAsteroid(i)->position, displacementVector);
+					getAsteroid(j)->position = addVectors(getAsteroid(j)->position, displacementVector);
 				}
 			}
 		}
 
 		// Check for collisions with black holes
-		if (collidingWithBlackHole(asteroidArray[i]->position, asteroidArray[i]->collisionRadius) > 0) {
-			explodeAsteroid(asteroidArray[i], i);
+		if (collidingWithBlackHole(getAsteroid(i)->position, getAsteroid(i)->collisionRadius) > 0) {
+			explodeAsteroid(getAsteroid(i), i);
 		}
 
 		// Check for collisions with bullets
-		for (int j = 0; j < bulletCount; ++j) {
-			float distance = vectorLength(subtractVectors(bulletArray[j]->position, asteroidArray[i]->position));
+		for (int j = 0; j < getBulletCount(); ++j) {
+			float distance = vectorLength(subtractVectors(getBullet(j)->position, getAsteroid(i)->position));
 
-			if (distance < asteroidArray[i]->collisionRadius) {
+			if (distance < getAsteroid(i)->collisionRadius) {
 				// despawn bullet
-				removeBullet(bulletArray[j], j);
+				freeBullet(j);
 
 				// remove health from asteroid
-				asteroidArray[i]->hp -= PLAYER_DAMAGE_DEALT;
-				if (asteroidArray[i]->hp <= 0) {
-					explodeAsteroid(asteroidArray[i], i);
+				getAsteroid(i)->hp -= PLAYER_DAMAGE_DEALT;
+				if (getAsteroid(i)->hp <= 0) {
+					explodeAsteroid(getAsteroid(i), i);
 				}
 			}
 		}
@@ -117,21 +117,21 @@ void asteroidCollisions() {
 
 void blackHoleCollision() {
 	// player collision
-	if (playerData != NULL && collidingWithBlackHole(playerData->position, playerData->collisionRadius) > 0) {
-		gameOver();
+	if (getPlayer() != NULL && collidingWithBlackHole(getPlayer()->position, getPlayer()->collisionRadius) > 0) {
+		gameOver(); // replace with player health and game over in update within game engine
 	}
 
 	// bullet collision
-	for (int i = 0; i < bulletCount; ++i) {
-		if (collidingWithBlackHole(bulletArray[i]->position, 0) > 0) {
-			removeBullet(bulletArray[i], i);
+	for (int i = 0; i < getBulletCount(); ++i) {
+		if (collidingWithBlackHole(getBullet(i)->position, 0) > 0) {
+			freeBullet(i);
 		}
 	}
 
 	// particle collision
-	for (int i = 0; i < particleCount; ++i) {
-		if (collidingWithBlackHole(particleArray[i]->position, 0) > 0) {
-			particleArray[i]->size = 0;
+	for (int i = 0; i < getParticleCount(); ++i) {
+		if (collidingWithBlackHole(getParticle(i)->position, 0) > 0) {
+			getParticle(i)->size = 0;
 		}
 	}
 }
@@ -139,10 +139,10 @@ void blackHoleCollision() {
 int collidingWithBlackHole(PositionVector position, float radius) {
 	// Check for collisions with black holes
 	int colliding = 0;
-	for (int j = 0; j < blackHoleCount; ++j) {
-		float distance = vectorLength(subtractVectors(blackHoleArray[j]->position, position));
+	for (int i = 0; i < getBlackHoleCount(); ++i) {
+		float distance = vectorLength(subtractVectors(getBlackHole(i)->position, position));
 
-		if (distance < radius + blackHoleArray[j]->radius) {
+		if (distance < radius + getBlackHole(i)->radius) {
 			colliding = 1;
 		}
 	}
@@ -150,15 +150,15 @@ int collidingWithBlackHole(PositionVector position, float radius) {
 }
 
 // Asteroid Physics
-void explodeAsteroid(Asteroid* asteroid, int index) {
+void explodeAsteroid(int index) {
 	// Spawn smaller asteroids if size > 1
-	if (asteroid->size > 1) {
-		splitAsteroid(asteroid);
+	if (getAsteroid(index)->size > 1) {
+		splitAsteroid(getAsteroid(index));
 	}
 
 	// Create asteroid puff effect
 	for (int i = 0; i < ASTEROID_PUFF_COUNT; ++i) {
-		createParticle(asteroid->position, multiplyVector(angleToUnitVector((rand() % 100 / 100) * 2 * PI), 0.1), ASTEROID_PUFF_SIZE);
+		createParticle(getAsteroid(index)->position, multiplyVector(angleToUnitVector((rand() % 100 / 100) * 2 * PI), 0.1), ASTEROID_PUFF_SIZE);
 	}
 
 	// Despawn Asteroid
@@ -167,12 +167,11 @@ void explodeAsteroid(Asteroid* asteroid, int index) {
 
 void splitAsteroid(Asteroid* asteroid) {
 	// If there is room for more asteroids then split new asteroids
-	for (int i = 0; asteroidCount < MAX_ASTEROIDS && i < 2; ++i) {
+	for (int i = 0; getAsteroidCount() < MAX_ASTEROIDS && i < 2; ++i) {
 		// Spawn new split asteroid
-		asteroidArray[asteroidCount] = initAsteroid(asteroid->position.x + (1 - i * 2) * ASTEROID_SPLIT_RADIUS_MULTIPLIER, asteroid->position.y);
-		asteroidArray[asteroidCount]->moveVector = rotateVector(asteroid->moveVector, ASTEROID_SPLIT_ANGLE, (-1 + i * 2));
-		asteroidArray[asteroidCount]->size = asteroid->size - 1;
-		++asteroidCount;
+		pushAsteroid(initAsteroid(asteroid->position.x + (1 - i * 2) * ASTEROID_SPLIT_RADIUS_MULTIPLIER, asteroid->position.y));
+		getAsteroid(getAsteroidCount() - 1)->moveVector = rotateVector(asteroid->moveVector, ASTEROID_SPLIT_ANGLE, (-1 + i * 2));
+		getAsteroid(getAsteroidCount() - 1)->size = asteroid->size - 1;
 	}
 }
 
@@ -193,39 +192,39 @@ void moveAsteroid(float delta, Asteroid* asteroid) {
 
 // Player Movement
 void movePlayer(float delta) {
-	playerData->position = movePosition(delta, playerData->position, playerData->moveVector);
+	getPlayer()->position = movePosition(delta, getPlayer()->position, getPlayer()->moveVector);
 }
 
 void rotatePlayer(float delta, int dir) {
-	playerData->direction = rotateVector(playerData->direction, DEGREE_OF_ROTATION * delta, dir);
+	getPlayer()->direction = rotateVector(getPlayer()->direction, DEGREE_OF_ROTATION * delta, dir);
 }
 
 void acceleratePlayer(float delta, int dir) {
 	// Accelerate player velocity towards player direction
 	// Only accelerate when below max velocity
-	if (dir > 0 && vectorLength(playerData->moveVector) <= playerData->maxVelocity) {
+	if (dir > 0 && vectorLength(getPlayer()->moveVector) <= getPlayer()->maxVelocity) {
 		PositionVector accelerate;
 
-		accelerate.x = playerData->direction.x * playerData->acceleration * dir * delta;
-		accelerate.y = playerData->direction.y * playerData->acceleration * dir * delta;
-		PositionVector newMoveVector = addVectors(playerData->moveVector, accelerate);
+		accelerate.x = getPlayer()->direction.x * getPlayer()->acceleration * dir * delta;
+		accelerate.y = getPlayer()->direction.y * getPlayer()->acceleration * dir * delta;
+		PositionVector newMoveVector = addVectors(getPlayer()->moveVector, accelerate);
 
 		// slow ship to max velocity
-		if (vectorLength(newMoveVector) < playerData->maxVelocity) {
-			playerData->moveVector = newMoveVector;
+		if (vectorLength(newMoveVector) < getPlayer()->maxVelocity) {
+			getPlayer()->moveVector = newMoveVector;
 		}
 
 		// Create engine particles
-		if (playerData->particleCoolDown <= 0) {
-			createParticle(playerData->position, playerData->direction, PLAYER_PARTICLE_SIZE);
+		if (getPlayer()->particleCoolDown <= 0) {
+			createParticle(getPlayer()->position, getPlayer()->direction, PLAYER_PARTICLE_SIZE);
 		}
 	}
 }
 
 // Bullet Movement
 void moveBullets(float delta) {
-	for (int i = 0; i < bulletCount; ++i) {
-		Bullet* bullet = bulletArray[i];
+	for (int i = 0; i < getBulletCount(); ++i) {
+		Bullet* bullet = getBullet(i);
 		bullet->position = movePosition(delta, bullet->position, bullet->moveVector);
 		// Theres an issue here, cullBullet removes the bullet struct before movebullets is complete, potentially skipping a bullet
 		// or worse, potentially causing undefined behaviour
@@ -235,9 +234,9 @@ void moveBullets(float delta) {
 
 // Engine Particle Movement
 void moveParticles(float delta) {
-	for (int i = 0; i < particleCount; ++i) {
+	for (int i = 0; i < getParticleCount(); ++i) {
 		// Move particle
-		Particle* particle = particleArray[i];
+		Particle* particle = getParticle(i);
 		particle->position = movePosition(delta, particle->position, particle->moveVector);
 
 		// Spin particle
@@ -254,34 +253,36 @@ void moveParticles(float delta) {
 		// Decrease size
 		particle->size -= particle->decaySpeed * delta;
 		if (particle->size <= 0) {
-			cullParticle(particle, i);
+			freeParticle(i);
 		}
 	}
 }
 
 void applyGravity(float delta) {
 	// Apply Gravity from black holes
-	for (int i = 0; i < blackHoleCount; ++i) {
+	for (int i = 0; i < getBlackHoleCount; ++i) {
+		BlackHole* bh = getBlackHole(i);
+
 		// Apply gravity to asteroids
-		for (int j = 0; j < asteroidCount; ++j) {
-			PositionVector acceleration = getAccelerationVector(delta, blackHoleArray[i], asteroidArray[j]->position);
-			asteroidArray[j]->moveVector = addVectors(asteroidArray[j]->moveVector, acceleration);
+		for (int j = 0; j < getAsteroidCount(); ++j) {
+			PositionVector acceleration = getAccelerationVector(delta, bh, getAsteroid(j)->position);
+			getAsteroid(j)->moveVector = addVectors(getAsteroid(j)->moveVector, acceleration);
 		}
 
 		// Apply gravity for player
-		PositionVector acceleration = getAccelerationVector(delta, blackHoleArray[i], playerData->position);
-		playerData->moveVector = addVectors(playerData->moveVector, acceleration);
+		PositionVector acceleration = getAccelerationVector(delta, bh, getPlayer()->position);
+		getPlayer()->moveVector = addVectors(getPlayer()->moveVector, acceleration);
 
 		// Apply gravity to bullets
-		for (int j = 0; j < bulletCount; ++j) {
-			PositionVector acceleration = getAccelerationVector(delta, blackHoleArray[i], bulletArray[j]->position);
-			bulletArray[j]->moveVector = addVectors(bulletArray[j]->moveVector, acceleration);
+		for (int j = 0; j < getBulletCount(); ++j) {
+			PositionVector acceleration = getAccelerationVector(delta, bh, getBullet(j)->position);
+			getBullet(j)->moveVector = addVectors(getBullet(j)->moveVector, acceleration);
 		}
 
 		// Apply gravity to particles
-		for (int j = 0; j < particleCount; ++j) {
-			PositionVector acceleration = getAccelerationVector(delta, blackHoleArray[i], particleArray[j]->position);
-			particleArray[j]->moveVector = addVectors(particleArray[j]->moveVector, acceleration);
+		for (int j = 0; j < getParticleCount(); ++j) {
+			PositionVector acceleration = getAccelerationVector(delta, bh, getParticle(j)->position);
+			getParticle(j)->moveVector = addVectors(getParticle(j)->moveVector, acceleration);
 		}
 	}
 }

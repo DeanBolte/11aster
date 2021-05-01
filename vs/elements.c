@@ -96,16 +96,11 @@ Player* initPlayer(float x, float y) {
 	return player;
 }
 
-Bullet* initBullet(Player* player) {
+Bullet* initBullet() {
 	Bullet* bullet = NULL;
 	while (bullet == NULL) {
 		bullet = malloc(sizeof(Bullet));
 	}
-	
-	bullet->position.x = player->position.x;
-	bullet->position.y = player->position.y;
-	bullet->moveVector.x = player->direction.x * BULLET_VECOLITY;
-	bullet->moveVector.y = player->direction.y * BULLET_VECOLITY;
 	return bullet;
 }
 
@@ -176,6 +171,18 @@ void createBlackHole(PositionVector position) {
 	}
 }
 
+void createBullet(PositionVector position, PositionVector direction) {
+	if (bulletCount < MAX_BULLETS) {
+		Bullet* bullet = initBullet();
+
+		// Initialise bullet variables
+		bullet->position.x = position.x;
+		bullet->position.y = position.y;
+		bullet->moveVector.x = direction.x * BULLET_VECOLITY;
+		bullet->moveVector.y = direction.y * BULLET_VECOLITY;
+	}
+}
+
 // Object Access
 Player* getPlayer() {
 	return playerData;
@@ -183,6 +190,13 @@ Player* getPlayer() {
 
 Asteroid* getAsteroid(int index) {
 	return asteroidArray[index];
+}
+
+void pushAsteroid(Asteroid* asteroid) {
+	if (asteroidCount < MAX_ASTEROIDS && asteroid != NULL) {
+		asteroidArray[asteroidCount] = asteroid;
+		++asteroidCount;
+	}
 }
 
 int getAsteroidCount() {

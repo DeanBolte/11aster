@@ -300,42 +300,23 @@ int boolOutOfBounds(PositionVector position, float offset) {
 // Player action
 void fireCannonPlayer(float delta) {
 	// Create bullet
-	if (playerData->cannonCoolDown <= 0 && bulletCount < MAX_BULLETS && playerData->firing == 1) {
-		playerData->cannonCoolDown = PLAYER_CANNON_COOLDOWN;
-		bulletArray[bulletCount] = initBullet(playerData);
-		++bulletCount;
+	Player* player = getPlayer();
+	if (player->cannonCoolDown <= 0 && getBulletCount() < MAX_BULLETS && player->firing == 1) {
+		// Reset cooldown
+		player->cannonCoolDown = PLAYER_CANNON_COOLDOWN;
+		
+		// Create bullet
+		createBullet(player->position, player->direction);
 	}
 
 	// reduce cooldown for players cannon
-	if (playerData->cannonCoolDown > 0) {
-		playerData->cannonCoolDown -= delta;
+	if (player->cannonCoolDown > 0) {
+		player->cannonCoolDown -= delta;
 	}
 }
 
 void cullBullet(Bullet* bullet, int index) {
 	if (boolOutOfBounds(bullet->position, 32) > 0) {
-		removeBullet(bullet, index);
+		freeBullet(index);
 	}
-}
-
-void removeBullet(Bullet* bullet, int index) {
-	// Remove bullet from array and shuffle down bullets
-	for (int i = index; i < bulletCount - 1; ++i) {
-		bulletArray[i] = bulletArray[i + 1];
-	}
-	bulletArray[bulletCount] = NULL;
-	--bulletCount;
-
-	// Destruct bullet
-	destructBullet(bullet);
-}
-
-void cullParticle(Particle* particle, int index) {
-	for (int i = index; i < particleCount - 1; ++i) {
-		particleArray[i] = particleArray[i + 1];
-	}
-	particleArray[particleCount] = NULL;
-	--particleCount;
-
-	destructParticle(particle);
 }

@@ -10,6 +10,11 @@
 #define DEGREE_OF_ROTATION 2 * PI
 #define PLAYER_PARTICLE_SIZE 5
 
+#define ASTEROID_PUFF_SIZE 20
+#define ASTEROID_SPLIT_RADIUS_MULTIPLIER 5
+#define ASTEROID_SPLIT_ANGLE PI / 6
+#define ASTEROID_PUFF_COUNT 50
+
 // Physics Engine Calls
 void physicsMovements(float delta);
 void physicsCollisions();
@@ -20,7 +25,7 @@ void blackHoleCollision();
 int collidingWithBlackHole(PositionVector position, float radius);
 
 // Asteroid Physics
-void explodeAsteroid(Asteroid* asteroid, int index);
+void explodeAsteroid(int index);
 void splitAsteroid(Asteroid* asteroid);
 
 // Movement
