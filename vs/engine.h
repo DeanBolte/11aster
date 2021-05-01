@@ -32,6 +32,7 @@ void initKeys();
 // Update Calls
 void update(float delta, float Width, float Height);
 void updateGame(float delta);
+void updatePlayer(float delta, Player* player);
 
 // Render Calls
 void render();

@@ -94,16 +94,10 @@ void updateGame(float delta) {
 	// Physics Call - Update Movement
 	physicsMovements(delta);
 
-	// Get playerdata
-	Player* player = getPlayer();
+	// Update player data
+	updatePlayer(delta, getPlayer());
 
-	// Update players particle cooldown
-	if (player->particleCoolDown <= 0) {
-		player->particleCoolDown = PLAYER_PARTICLE_INTERVAL;
-	}
-	else {
-		player->particleCoolDown -= delta;
-	}
+	
 
 	// Update BlackHoles
 	for(int i = 0; i < getBlackHoleCount(); ++i) {
@@ -118,6 +112,22 @@ void updateGame(float delta) {
 
 	// Check Collisions
 	physicsCollisions();
+}
+
+// Frame update for player data
+void updatePlayer(float delta, Player* player) {
+	// Update players particle cooldown
+	if (player->particleCoolDown <= 0) {
+		player->particleCoolDown = PLAYER_PARTICLE_INTERVAL;
+	}
+	else {
+		player->particleCoolDown -= delta;
+	}
+
+	// Check player status
+	if (player->hp <= 0) {
+		gameOver();
+	}
 }
 
 void render() {
