@@ -4,6 +4,7 @@
 *	Main Author: Dean
 */
 #include "engine.h"
+#include "rendering.h"
 
 // Game Data
 float screenWidth = 0.0;

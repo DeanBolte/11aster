@@ -158,12 +158,14 @@
     <ClCompile Include="elements.c" />
     <ClCompile Include="engine.c" />
     <ClCompile Include="physics.c" />
+    <ClCompile Include="rendering.c" />
     <ClCompile Include="util.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="elements.h" />
     <ClInclude Include="engine.h" />
     <ClInclude Include="physics.h" />
+    <ClInclude Include="rendering.h" />
     <ClInclude Include="util.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

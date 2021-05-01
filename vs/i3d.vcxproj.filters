@@ -19,6 +19,7 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="physics.c" />
+    <ClCompile Include="rendering.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="elements.h">
@@ -31,5 +32,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="physics.h" />
+    <ClInclude Include="rendering.h" />
   </ItemGroup>
 </Project>
