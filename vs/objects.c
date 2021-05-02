@@ -179,6 +179,10 @@ void createBullet(PositionVector position, PositionVector direction) {
 		bullet->position.y = position.y;
 		bullet->moveVector.x = direction.x * BULLET_VECOLITY;
 		bullet->moveVector.y = direction.y * BULLET_VECOLITY;
+
+		// Add bullet to array
+		bulletArray[bulletCount] = bullet;
+		++bulletCount;
 	}
 }
 
@@ -188,7 +192,11 @@ Player* getPlayer() {
 }
 
 Asteroid* getAsteroid(int index) {
-	return asteroidArray[index];
+	Asteroid* asteroid = NULL;
+	if (index >= 0 && index < asteroidCount) {
+		asteroid = asteroidArray[index];
+	}
+	return asteroid;
 }
 
 void pushAsteroid(Asteroid* asteroid) {

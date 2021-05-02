@@ -108,7 +108,7 @@ void asteroidCollisions() {
 				// remove health from asteroid
 				getAsteroid(i)->hp -= PLAYER_DAMAGE_DEALT;
 				if (getAsteroid(i)->hp <= 0) {
-					explodeAsteroid(getAsteroid(i), i);
+					explodeAsteroid(i);
 				}
 			}
 		}
@@ -152,17 +152,20 @@ int collidingWithBlackHole(PositionVector position, float radius) {
 // Asteroid Physics
 void explodeAsteroid(int index) {
 	// Spawn smaller asteroids if size > 1
-	if (getAsteroid(index)->size > 1) {
-		splitAsteroid(getAsteroid(index));
-	}
+	Asteroid* asteroid = getAsteroid(index);
+	if (asteroid) {
+		if (asteroid->size > 1) {
+			splitAsteroid(asteroid);
+		}
 
-	// Create asteroid puff effect
-	for (int i = 0; i < ASTEROID_PUFF_COUNT; ++i) {
-		createParticle(getAsteroid(index)->position, multiplyVector(angleToUnitVector((rand() % 100 / 100) * 2 * PI), 0.1), ASTEROID_PUFF_SIZE);
-	}
+		// Create asteroid puff effect
+		for (int i = 0; i < ASTEROID_PUFF_COUNT; ++i) {
+			createParticle(asteroid->position, multiplyVector(angleToUnitVector((rand() % 100 / 100) * 2 * PI), 0.1), ASTEROID_PUFF_SIZE);
+		}
 
-	// Despawn Asteroid
-	freeAsteroid(index);
+		// Despawn Asteroid
+		freeAsteroid(index);
+	}
 }
 
 void splitAsteroid(Asteroid* asteroid) {
