@@ -23,7 +23,7 @@
 #define GAME_OVER 5
 
 // Menu
-#define MENU_SELECT_COOLDOWN 0.1f
+#define MENU_SELECT_COOLDOWN 0.08f
 
 // Colours
 void initColours();

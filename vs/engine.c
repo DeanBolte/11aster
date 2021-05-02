@@ -116,7 +116,7 @@ void updateMenu(float delta) {
 		}
 		else {
 			menuSelect += dir;
-			if (menuSelect > 3) {
+			if (menuSelect > 2) {
 				menuSelect -= 3;
 			}
 			else if (menuSelect < 0) {
