@@ -19,7 +19,7 @@ Particle* particleArray[MAX_ENGINE_PARTICLES];
 int particleCount = 0;
 
 BlackHole* blackHoleArray[MAX_BLACKHOLES];
-int blackHoleCount;
+int blackHoleCount = 0;
 
 // Object Initialisation
 Asteroid* initAsteroid(float x, float y) {
@@ -275,7 +275,7 @@ void freeBlackHoles() {
 }
 
 void freeAsteroid(int index) {
-	if (index > 0 && index < asteroidCount) {
+	if (index >= 0 && index < asteroidCount) {
 		Asteroid* asteroid = asteroidArray[index];
 
 		// Shuffle array
@@ -290,7 +290,7 @@ void freeAsteroid(int index) {
 }
 
 void freeBullet(int index) {
-	if (index > 0 && index < bulletCount) {
+	if (index >= 0 && index < bulletCount) {
 		Bullet* bullet = bulletArray[index];
 
 		// Shuffle array
@@ -305,7 +305,7 @@ void freeBullet(int index) {
 }
 
 void freeParticle(int index) {
-	if (index > 0 && index < particleCount) {
+	if (index >= 0 && index < particleCount) {
 		Particle* particle = particleArray[index];
 
 		// Shuffle array
@@ -320,7 +320,7 @@ void freeParticle(int index) {
 }
 
 void freeBlackHole(int index) {
-	if (index > 0 && index < blackHoleCount) {
+	if (index >= 0 && index < blackHoleCount) {
 		BlackHole* bh = blackHoleArray[index];
 
 		// Shuffle array
