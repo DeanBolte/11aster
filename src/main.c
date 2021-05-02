@@ -115,6 +115,15 @@ void on_display()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
+	// Move camera
+	if (getPlayer()) {
+		float x = getPlayer()->position.x - port_width / 2;
+		float y = getPlayer()->position.y - port_height / 2;
+		gluLookAt(	x, y, 1.0f,
+					x, y, -1.0f,
+					0.0f, 1.0f, 0.0f);
+	}
+
 	// Highlight Colour
 	glColor3f(highColour.r, highColour.g, highColour.b);
 	// Background Colour
