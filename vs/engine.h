@@ -18,9 +18,10 @@
 #define SPLASH 0
 #define INITIALISING 1
 #define MENU 2
-#define IN_GAME 3
-#define PAUSED 4
-#define GAME_OVER 5
+#define OPTIONS 3
+#define IN_GAME 4
+#define PAUSED 5
+#define GAME_OVER 6
 
 // Menu
 #define MENU_SELECT_COOLDOWN 0.08f

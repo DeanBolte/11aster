@@ -213,7 +213,7 @@ void renderSplash() {
 	glPushMatrix();
 
 	drawText(screenWidth / 2 - 1.5 * glutStrokeWidth(GLUT_STROKE_ROMAN, 'A'), screenHeight / 1.4, "11Aster", 7, 0.5);
-	drawText(screenWidth / 2 - 14 / 5 * glutStrokeWidth(GLUT_STROKE_ROMAN, 'P'), screenHeight / 8, "Press any key to play!", 24, 0.2);
+	drawText(screenWidth / 2 - 7 / 5 * glutStrokeWidth(GLUT_STROKE_ROMAN, 'P'), screenHeight / 8, "by Dean Bolte", 13, 0.2);
 
 	glPopMatrix();
 }
@@ -236,7 +236,7 @@ void renderGameOver() {
 	glPushMatrix();
 
 	drawText(screenWidth / 2 - 4 / 2 * glutStrokeWidth(GLUT_STROKE_ROMAN, 'G'), screenHeight / 1.4, "Game Over.", 10, 0.5);
-	drawText(screenWidth / 2 - 14 / 5 * glutStrokeWidth(GLUT_STROKE_ROMAN, 'P'), screenHeight / 8, "Press any key to play again!", 28, 0.2);
+	drawText(screenWidth / 2 - 2.6 * glutStrokeWidth(GLUT_STROKE_ROMAN, 'P'), screenHeight / 8, "Press any key to play again!", 28, 0.2);
 	
 	glPopMatrix();
 }
