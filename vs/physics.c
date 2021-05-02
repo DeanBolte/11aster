@@ -202,14 +202,13 @@ void rotatePlayer(float delta, int dir) {
 	getPlayer()->direction = rotateVector(getPlayer()->direction, DEGREE_OF_ROTATION * delta, dir);
 }
 
-void acceleratePlayer(float delta, int dir) {
+void acceleratePlayer(float delta, int dir, int brake) {
 	// Accelerate player velocity towards player direction
 	// Only accelerate when below max velocity
 	if (dir > 0 && vectorLength(getPlayer()->moveVector) <= getPlayer()->maxVelocity) {
 		PositionVector accelerate;
 
-		accelerate.x = getPlayer()->direction.x * getPlayer()->acceleration * dir * delta;
-		accelerate.y = getPlayer()->direction.y * getPlayer()->acceleration * dir * delta;
+		accelerate = multiplyVector(getPlayer()->direction, getPlayer()->acceleration * dir * delta);
 		PositionVector newMoveVector = addVectors(getPlayer()->moveVector, accelerate);
 
 		// slow ship to max velocity
@@ -222,6 +221,17 @@ void acceleratePlayer(float delta, int dir) {
 			createParticle(getPlayer()->position, getPlayer()->direction, PLAYER_PARTICLE_SIZE);
 		}
 	}
+
+	// Space brakes
+	if (brake == 1) {
+		if (vectorLength(getPlayer()->moveVector) > PLAYER_MINIMUM_VELOCITY) {
+			PositionVector accelerate = multiplyVector(getPlayer()->moveVector, 2 * delta);
+			getPlayer()->moveVector = subtractVectors(getPlayer()->moveVector, accelerate);
+		}
+		else {
+			getPlayer()->moveVector = multiplyVector(getPlayer()->moveVector, 0);
+		}
+	}
 }
 
 // Bullet Movement
@@ -231,7 +241,6 @@ void moveBullets(float delta) {
 		bullet->position = movePosition(delta, bullet->position, bullet->moveVector);
 		// Theres an issue here, cullBullet removes the bullet struct before movebullets is complete, potentially skipping a bullet
 		// or worse, potentially causing undefined behaviour
-		cullBullet(bullet, i);
 	}
 }
 

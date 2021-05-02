@@ -38,11 +38,10 @@ void moveAsteroid(float delta, Asteroid* asteroid);
 // Player Movement
 void movePlayer(float delta);
 void rotatePlayer(float delta, int dir);
-void acceleratePlayer(float delta, int dir);
+void acceleratePlayer(float delta, int dir, int brake);
 
 // Bullet Movement
 void moveBullets(float delta);
-void cullBullet(Bullet* bullet, int index);
 
 // Particle Movement
 void moveParticles(float delta);

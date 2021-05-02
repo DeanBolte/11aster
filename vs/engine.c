@@ -122,7 +122,7 @@ void updatePlayer(float delta, Player* player) {
 	}
 	
 	// Player Actions
-	acceleratePlayer(delta, key_up);
+	acceleratePlayer(delta, key_up, key_space);
 	rotatePlayer(delta, key_left - key_right);
 
 	fireCannonPlayer(delta);
