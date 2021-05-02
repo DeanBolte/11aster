@@ -52,7 +52,6 @@ typedef struct Player {
 	PositionVector moveVector;
 	PositionVector direction;
 	int hp;
-	int firing;
 	float particleCoolDown;
 	float cannonCoolDown;
 	float collisionRadius;

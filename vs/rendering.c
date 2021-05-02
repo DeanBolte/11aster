@@ -23,7 +23,7 @@ void renderMenu(int select) {
 
 	// Draw selector
 	glPushMatrix();
-	glTranslatef(screenWidth / 8 - menuItemDistance / 2, screenHeight / 2 + (select + 0.2) * menuItemDistance, 0.0f);
+	glTranslatef(screenWidth / 8 - menuItemDistance / 2, screenHeight / 2 + (0.2 - select) * menuItemDistance, 0.0f);
 	glRotatef(menuSelectorAngle, 0.0f, 0.0f, 1.0f);
 	drawPentagon(15);
 	glPopMatrix();

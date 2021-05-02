@@ -86,7 +86,6 @@ Player* initPlayer(float x, float y) {
 	player->direction.x = 0.866;
 	player->direction.y = 0.5;
 	player->hp = 1;
-	player->firing = 0;
 	// Cooldowns in seconds
 	player->cannonCoolDown = 0;
 	player->particleCoolDown = 0;

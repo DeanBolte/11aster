@@ -17,9 +17,11 @@ int key_left = 0;
 int key_down = 0;
 int key_up = 0;
 int key_space = 0;
+int key_firing = 0;
 
 // Menu
 int menuSelect = 0;
+int menuPressed = 0;
 
 // Colours
 void initColours() {
@@ -70,6 +72,7 @@ void initKeys() {
 	key_down = 0;
 	key_up = 0;
 	key_space = 0;
+	key_firing = 0;
 }
 
 void update(float delta, float Width, float Height) {
@@ -83,7 +86,7 @@ void update(float delta, float Width, float Height) {
 		// could add some asteroids or a black hole here to make it seem cool, but that is out of scope
 		break;
 	case MENU:
-		
+		updateMenu(delta);
 		break;
 	case INITIALISING:
 		initRound();
@@ -99,6 +102,16 @@ void update(float delta, float Width, float Height) {
 		break;
 	default:
 		break;
+	}
+}
+
+void updateMenu(float delta) {
+	menuSelect += key_up - key_down;
+	if (menuSelect > 3) {
+		menuSelect -= 3;
+	}
+	else if (menuSelect < 0) {
+		menuSelect += 3;
 	}
 }
 
@@ -256,7 +269,7 @@ void inputControls(const char* input, int pressed) {
 		key_space = pressed;
 	}
 	if (input == "shoot") {
-		getPlayer()->firing = pressed;
+		key_firing = pressed;
 	}
 	if (input == "test") {
 		gameOver();
@@ -322,7 +335,7 @@ int boolOutOfBounds(PositionVector position, float offset) {
 void fireCannonPlayer(float delta) {
 	// Create bullet
 	Player* player = getPlayer();
-	if (player->cannonCoolDown <= 0 && getBulletCount() < MAX_BULLETS && player->firing == 1) {
+	if (player->cannonCoolDown <= 0 && getBulletCount() < MAX_BULLETS && key_firing == 1) {
 		// Reset cooldown
 		player->cannonCoolDown = PLAYER_CANNON_COOLDOWN;
 		
