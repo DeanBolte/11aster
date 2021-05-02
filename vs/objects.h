@@ -121,6 +121,7 @@ void freeAsteroids();
 void freeBullets();
 void freeParticles();
 void freeBlackHoles();
+void freePlayer();
 void freeAsteroid(int index);
 void freeBullet(int index);
 void freeParticle(int index);

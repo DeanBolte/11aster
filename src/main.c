@@ -39,6 +39,9 @@ void inputDown(unsigned char key, int x, int y)
 	case 32:
 		inputKeyboard("space", 1);
 		break;
+	case 'p':
+		inputKeyboard("test", 1);
+		break;
 	default:
 		break;
 	}
@@ -63,6 +66,9 @@ void inputUp(unsigned char key, int x, int y)
 		break;
 	case 32:
 		inputKeyboard("space", 0);
+		break;
+	case 'p':
+		inputKeyboard("test", 0);
 		break;
 	default:
 		break;

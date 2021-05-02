@@ -47,11 +47,16 @@ void init(int screen_width, int screen_height) {
 }
 
 void initRound() {
-	// Create Player at starting position
-	createPlayer(256, 256);
-
 	// Return input values to initial values
 	initKeys();
+	
+	// Create Player at starting position
+	createPlayer(screenWidth / 2, screenHeight / 2);
+
+	// Create some asteroids for perspective
+	for (int i = 0; i < 10; ++i) {
+		createAsteroid(rand() % (int)screenWidth, rand() % (int)screenHeight);
+	}
 
 	// Start Game
 	gameState = IN_GAME;
@@ -97,18 +102,10 @@ void updateGame(float delta) {
 	// Update player data
 	updatePlayer(delta, getPlayer());
 
-	
-
 	// Update BlackHoles
 	for(int i = 0; i < getBlackHoleCount(); ++i) {
 		updateBlackHole(delta, getBlackHole(i));
 	}
-
-	// Player Actions
-	acceleratePlayer(delta, key_up);
-	rotatePlayer(delta, key_left - key_right);
-
-	fireCannonPlayer(delta);
 
 	// Check Collisions
 	physicsCollisions();
@@ -123,6 +120,12 @@ void updatePlayer(float delta, Player* player) {
 	else {
 		player->particleCoolDown -= delta;
 	}
+	
+	// Player Actions
+	acceleratePlayer(delta, key_up);
+	rotatePlayer(delta, key_left - key_right);
+
+	fireCannonPlayer(delta);
 
 	// Check player status
 	if (player->hp <= 0) {
@@ -250,6 +253,10 @@ void inputInGame(const char* input, int pressed) {
 	}
 	if (input == "shoot") {
 		getPlayer()->firing = pressed;
+	}
+	if (input == "test") {
+		gameOver();
+		gameState = INITIALISING;
 	}
 }
 

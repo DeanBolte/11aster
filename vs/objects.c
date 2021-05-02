@@ -151,9 +151,7 @@ void createAsteroid(float x, float y) {
 }
 
 void createPlayer(float x, float y) {
-	if (playerData != NULL) {
-		destructPlayer(playerData);
-	}
+	freePlayer();
 	playerData = initPlayer(x, y);
 }
 
@@ -235,11 +233,7 @@ void freeAllObjects() {
 	freeBullets();
 	freeParticles();
 	freeBlackHoles();
-
-	// Free the player
-	if (playerData) {
-		destructPlayer(playerData);
-	}
+	freePlayer();
 }
 
 void freeAsteroids() {
@@ -272,6 +266,13 @@ void freeBlackHoles() {
 		destructBlackHole(blackHoleArray[i]);
 	}
 	blackHoleCount = 0;
+}
+
+void freePlayer() {
+	if (playerData) {
+		destructPlayer(playerData);
+		playerData = NULL;
+	}
 }
 
 void freeAsteroid(int index) {
