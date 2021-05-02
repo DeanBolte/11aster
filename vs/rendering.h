@@ -6,6 +6,17 @@
 
 #include "objects.h"
 
+// Menu
+#define PLAY 0
+#define OPTIONS 1
+#define EXIT 2
+
+float screenWidth;
+float screenHeight;
+
+// Menu Rendering
+void renderMenu(int select);
+
 // Object Rendering
 void renderAsteroids();
 void renderPlayer();

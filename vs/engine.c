@@ -6,8 +6,6 @@
 #include "engine.h"
 
 // Game Data
-float screenWidth = 0.0;
-float screenHeight = 0.0;
 int gameState = SPLASH;
 
 // This ensures that the game over screen only accepts an input after a new key is pressed during the game over screen
@@ -19,6 +17,9 @@ int key_left = 0;
 int key_down = 0;
 int key_up = 0;
 int key_space = 0;
+
+// Menu
+int menuSelect = 0;
 
 // Colours
 void initColours() {
@@ -81,11 +82,17 @@ void update(float delta, float Width, float Height) {
 	case SPLASH:
 		// could add some asteroids or a black hole here to make it seem cool, but that is out of scope
 		break;
+	case MENU:
+		
+		break;
 	case INITIALISING:
 		initRound();
 		break;
 	case IN_GAME:
 		updateGame(delta);
+		break;
+	case PAUSED:
+		
 		break;
 	case GAME_OVER:
 		// I had an idea here for making the game over text wobble, just a cool addition that i dont have the time to implement
@@ -139,13 +146,14 @@ void render() {
 	case SPLASH:
 		renderSplash();
 		break;
-	case INITIALISING:
-		// Nothing should ever really need to be rendered during intialisation
-		// However i felt the need to include it here in case its needed later
-		// perhaps a loading screen to ensure that users with low end pcs know something is happening
+	case MENU:
+		renderMenu(menuSelect);
 		break;
 	case IN_GAME:
 		renderInGame();
+		break;
+	case PAUSED:
+
 		break;
 	case GAME_OVER:
 		renderGameOver();
@@ -193,12 +201,10 @@ void inputKeyboard(const char* key, int pressed) {
 	case SPLASH:
 		inputGameStart(key, pressed);
 		break;
-	case INITIALISING:
-		// This case is not really needed
-		// could be used for an interactive load screen
-		break;
+	case MENU:
 	case IN_GAME:
-		inputInGame(key, pressed);
+	case PAUSED:
+		inputControls(key, pressed);
 		break;
 	case GAME_OVER:
 		inputGameOver(key, pressed);
@@ -214,12 +220,10 @@ void inputMouse(const char* input, int pressed) {
 	case SPLASH:
 		inputGameStart(input, pressed);
 		break;
-	case INITIALISING:
-		// This case is not really needed
-		// could be used for an interactive load screen
-		break;
+	case MENU:
 	case IN_GAME:
-		inputInGame(input, pressed);
+	case PAUSED:
+		inputControls(input, pressed);
 		break;
 	case GAME_OVER:
 		inputGameOver(input, pressed);
@@ -231,11 +235,11 @@ void inputMouse(const char* input, int pressed) {
 
 void inputGameStart(const char* input, int pressed) {
 	if (pressed == 0) {
-		gameState = INITIALISING;
+		gameState = MENU;
 	}
 }
 
-void inputInGame(const char* input, int pressed) {
+void inputControls(const char* input, int pressed) {
 	if (input == "left") {
 		key_left = pressed;
 	}

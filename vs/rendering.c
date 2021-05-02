@@ -6,6 +6,38 @@
 
 #include "rendering.h"
 
+// Menu
+int menuItemDistance = 80;
+int menuItemCount = 3;
+char* menuItems[3] = { "Play", "Options", "Exit" };
+float menuSelectorAngle = 0;
+
+// Menu Rendering
+void renderMenu(int select) {
+	glPushMatrix();
+
+	// Draw menu items
+	for (int i = 0; i < menuItemCount; ++i) {
+		drawText(screenWidth / 8, screenHeight / 2 - i * menuItemDistance, menuItems[i], 6, 0.3);
+	}
+
+	// Draw selector
+	glPushMatrix();
+	glTranslatef(screenWidth / 8 - menuItemDistance / 2, screenHeight / 2 + (select + 0.2) * menuItemDistance, 0.0f);
+	glRotatef(menuSelectorAngle, 0.0f, 0.0f, 1.0f);
+	drawPentagon(15);
+	glPopMatrix();
+
+	if (menuSelectorAngle < 360) {
+		menuSelectorAngle += 0.1;
+	}
+	else {
+		menuSelectorAngle = 0;
+	}
+
+	glPopMatrix();
+}
+
 // Object Rendering
 void renderAsteroids() {
 	// Create the asteroid in OpenGl

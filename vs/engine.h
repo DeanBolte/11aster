@@ -17,8 +17,13 @@
 // Game States
 #define SPLASH 0
 #define INITIALISING 1
-#define IN_GAME 2
-#define GAME_OVER 3
+#define MENU 2
+#define IN_GAME 3
+#define PAUSED 4
+#define GAME_OVER 5
+
+// Menu
+int menuSelect;
 
 // Colours
 void initColours();
@@ -44,7 +49,7 @@ void renderGameOver();
 void inputKeyboard(const char* key, int pressed);
 void inputMouse(const char* input, int pressed);
 void inputGameStart(const char* input, int pressed);
-void inputInGame(const char* input, int pressed);
+void inputControls(const char* input, int pressed);
 void inputGameOver(const char* input, int pressed);
 
 //		Gameplay
