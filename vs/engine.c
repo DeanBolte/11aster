@@ -141,6 +141,7 @@ void selectMenuItem(int select) {
 	case OPTIONS:
 		break;
 	case EXIT:
+		exit(EXIT_SUCCESS);
 		break;
 	default:
 		break;
