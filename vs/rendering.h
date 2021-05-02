@@ -16,6 +16,7 @@ float screenHeight;
 
 // Menu Rendering
 void renderMenu(int select);
+void renderPause(int select);
 
 // Object Rendering
 void renderAsteroids();

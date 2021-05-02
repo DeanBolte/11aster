@@ -97,7 +97,7 @@ void update(float delta, float Width, float Height) {
 		updateGame(delta);
 		break;
 	case PAUSED:
-		
+		updateMenu(delta);
 		break;
 	case GAME_OVER:
 		// I had an idea here for making the game over text wobble, just a cool addition that i dont have the time to implement
@@ -199,7 +199,7 @@ void render() {
 		renderInGame();
 		break;
 	case PAUSED:
-
+		renderPause(menuSelect);
 		break;
 	case GAME_OVER:
 		renderGameOver();
@@ -308,6 +308,10 @@ void inputControls(const char* input, int pressed) {
 	if (input == "test") {
 		gameOver();
 		gameState = INITIALISING;
+	}
+	if (input == "pause") {
+		menuSelect = 0;
+		gameState = PAUSED;
 	}
 }
 

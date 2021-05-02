@@ -46,6 +46,7 @@ void updatePlayer(float delta, Player* player);
 void render();
 void renderSplash();
 void renderInGame();
+
 void renderGameOver();
 
 // Input Calls
