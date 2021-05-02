@@ -22,6 +22,9 @@
 #define PAUSED 4
 #define GAME_OVER 5
 
+// Menu
+#define MENU_SELECT_COOLDOWN 0.1f
+
 // Colours
 void initColours();
 
@@ -34,6 +37,7 @@ void initKeys();
 // Update Calls
 void update(float delta, float Width, float Height);
 void updateMenu(float delta);
+void selectMenuItem(int select);
 void updateGame(float delta);
 void updatePlayer(float delta, Player* player);
 

@@ -18,10 +18,11 @@ int key_down = 0;
 int key_up = 0;
 int key_space = 0;
 int key_firing = 0;
+int key_select = 0;
 
 // Menu
 int menuSelect = 0;
-int menuPressed = 0;
+float menuSelectCoolDown = 0;
 
 // Colours
 void initColours() {
@@ -73,6 +74,7 @@ void initKeys() {
 	key_up = 0;
 	key_space = 0;
 	key_firing = 0;
+	key_select = 0;
 }
 
 void update(float delta, float Width, float Height) {
@@ -106,12 +108,42 @@ void update(float delta, float Width, float Height) {
 }
 
 void updateMenu(float delta) {
-	menuSelect += key_up - key_down;
-	if (menuSelect > 3) {
-		menuSelect -= 3;
+	// Menu movement
+	int dir = key_down - key_up;
+	if (dir != 0) {
+		if (menuSelectCoolDown > 0) {
+			menuSelectCoolDown -= delta;
+		}
+		else {
+			menuSelect += dir;
+			if (menuSelect > 3) {
+				menuSelect -= 3;
+			}
+			else if (menuSelect < 0) {
+				menuSelect += 3;
+			}
+
+			menuSelectCoolDown = MENU_SELECT_COOLDOWN;
+		}
 	}
-	else if (menuSelect < 0) {
-		menuSelect += 3;
+
+	// Menu select
+	if (key_select == 1) {
+		selectMenuItem(menuSelect);
+	}
+}
+
+void selectMenuItem(int select) {
+	switch (select) {
+	case PLAY:
+		gameState = INITIALISING;
+		break;
+	case OPTIONS:
+		break;
+	case EXIT:
+		break;
+	default:
+		break;
 	}
 }
 
@@ -270,6 +302,7 @@ void inputControls(const char* input, int pressed) {
 	}
 	if (input == "shoot") {
 		key_firing = pressed;
+		key_select = pressed;
 	}
 	if (input == "test") {
 		gameOver();
