@@ -129,10 +129,8 @@ void drawAsteroid(PositionVector* vertices, int vertexCount, int size) {
 }
 
 void drawPlayer() {
-	glBegin(GL_TRIANGLES);
+	glBegin(GL_LINE_LOOP);
 	glVertex2f(-20, -20);
-	glVertex2f(0, 20);
-	glVertex2f(0, -10);
 	glVertex2f(0, 20);
 	glVertex2f(20, -20);
 	glVertex2f(0, -10);
