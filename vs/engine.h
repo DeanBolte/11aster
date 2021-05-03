@@ -44,10 +44,6 @@ void updatePlayer(float delta, Player* player);
 
 // Render Calls
 void render();
-void renderSplash();
-void renderInGame();
-
-void renderGameOver();
 
 // Input Calls
 void inputKeyboard(const char* key, int pressed);

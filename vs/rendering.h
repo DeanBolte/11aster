@@ -14,7 +14,10 @@
 float screenWidth;
 float screenHeight;
 
-// Menu Rendering
+// Rendering Calls
+void renderSplash();
+void renderInGame();
+void renderGameOver();
 void renderMenu(int select);
 void renderPause(int select);
 
