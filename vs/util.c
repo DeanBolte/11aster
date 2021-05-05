@@ -60,9 +60,9 @@ PositionVector vectorToUnitVector(PositionVector vector) {
 
 // Other Math
 int intToCharacterCount(int number) {
-	int numOfDigits = 1;
+	int numOfDigits = 2;
 	if (number != 0) {
-		numOfDigits = log10(number) + 1;
+		numOfDigits = log10(number) + 2;
 	}
 	return numOfDigits;
 }

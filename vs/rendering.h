@@ -20,6 +20,7 @@ void renderInGame();
 void renderGameOver();
 void renderMenu(int select);
 void renderPause(int select);
+void renderUI();
 
 // Object Rendering
 void renderAsteroids();

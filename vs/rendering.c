@@ -33,6 +33,8 @@ void renderInGame() {
 	renderEngineParticles();
 	renderPlayer();
 
+	renderUI();
+
 	glPopMatrix();
 }
 
@@ -97,6 +99,27 @@ void renderPause(int select) {
 	else {
 		menuSelectorAngle = 0;
 	}
+
+	glPopMatrix();
+}
+
+void renderUI() {
+	glPushMatrix();
+
+	float x = 16 + (getPlayer()->position.x - screenWidth / 2);
+	float y = screenHeight - 24 + (getPlayer()->position.y - screenHeight / 2);
+
+	// Player health
+	int hpLength = intToCharacterCount(getPlayer()->hp);
+	char hp[3];
+	snprintf(hp, hpLength, "%d", getPlayer()->hp);
+	drawText(x, y, hp, hpLength, 0.1);
+
+	// Player speed
+	int speedLength = intToCharacterCount(vectorLength(getPlayer()->moveVector));
+	char speed[10];
+	snprintf(speed, speedLength, "%d", (int)vectorLength(getPlayer()->moveVector));
+	drawText(x, y - 24, speed, speedLength, 0.1);
 
 	glPopMatrix();
 }
