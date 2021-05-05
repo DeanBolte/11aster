@@ -33,7 +33,7 @@ void initColours();
 // Initialising Calls
 void init(int screen_width, int screen_height);
 void initRound();
-void initKeys();
+void resetKeys();
 
 // Update Calls
 void update(float delta, float Width, float Height);

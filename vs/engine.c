@@ -56,7 +56,7 @@ void init(int screen_width, int screen_height) {
 
 void initRound() {
 	// Return input values to initial values
-	initKeys();
+	resetKeys();
 	
 	// Create Player at starting position
 	createPlayer(screenWidth / 2, screenHeight / 2);
@@ -70,7 +70,7 @@ void initRound() {
 	gameState = IN_GAME;
 }
 
-void initKeys() {
+void resetKeys() {
 	// Keyboard Inputs
 	key_right = 0;
 	key_left = 0;
@@ -127,6 +127,7 @@ void updatePause(float delta) {
 	// Menu select
 	if (key_select == 1) {
 		selectPauseItem(menuSelect);
+		resetKeys();
 	}
 }
 
