@@ -48,14 +48,17 @@ void renderGameOver() {
 void renderMenu(int select) {
 	glPushMatrix();
 
+	float x = screenWidth / 8;
+	float y = screenHeight / 2;
+
 	// Draw menu items
 	for (int i = 0; i < menuItemCount; ++i) {
-		drawText(screenWidth / 8, screenHeight / 2 - i * menuItemDistance, menuItems[i], 6, 0.3);
+		drawText(x, y - i * menuItemDistance, menuItems[i], 6, 0.3);
 	}
 
 	// Draw selector
 	glPushMatrix();
-	glTranslatef(screenWidth / 8 - menuItemDistance / 2, screenHeight / 2 + (0.2 - select) * menuItemDistance, 0.0f);
+	glTranslatef(x - menuItemDistance / 2, y + (0.2 - select) * menuItemDistance, 0.0f);
 	glRotatef(menuSelectorAngle, 0.0f, 0.0f, 1.0f);
 	drawPentagon(15);
 	glPopMatrix();
@@ -73,14 +76,17 @@ void renderMenu(int select) {
 void renderPause(int select) {
 	glPushMatrix();
 
+	float x = screenWidth / 8 + (getPlayer()->position.x - screenWidth / 2);
+	float y = screenHeight / 2 + (getPlayer()->position.y - screenHeight / 2);
+
 	// Draw menu items
 	for (int i = 0; i < menuItemCount; ++i) {
-		drawText(screenWidth / 8, screenHeight / 2 - i * menuItemDistance, menuItems[i], 6, 0.3);
+		drawText(x, y - i * menuItemDistance, menuItems[i], 6, 0.3);
 	}
 
 	// Draw selector
 	glPushMatrix();
-	glTranslatef(screenWidth / 8 - menuItemDistance / 2, screenHeight / 2 + (0.2 - select) * menuItemDistance, 0.0f);
+	glTranslatef(x - menuItemDistance / 2, y + (0.2 - select) * menuItemDistance, 0.0f);
 	glRotatef(menuSelectorAngle, 0.0f, 0.0f, 1.0f);
 	drawPentagon(15);
 	glPopMatrix();
