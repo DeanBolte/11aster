@@ -11,6 +11,9 @@ int gameState = SPLASH;
 // This ensures that the game over screen only accepts an input after a new key is pressed during the game over screen
 int inputDuringGameOver = 0;
 
+// Pause menu variable
+int inputDuringPause = 0;
+
 // Keyboard Inputs
 int key_right = 0;
 int key_left = 0;
@@ -19,6 +22,7 @@ int key_up = 0;
 int key_space = 0;
 int key_firing = 0;
 int key_select = 0;
+int key_pause = 0;
 
 // Menu
 int menuSelect = 0;
@@ -75,6 +79,7 @@ void initKeys() {
 	key_space = 0;
 	key_firing = 0;
 	key_select = 0;
+	key_pause = 0;
 }
 
 void update(float delta, float Width, float Height) {
@@ -97,7 +102,7 @@ void update(float delta, float Width, float Height) {
 		updateGame(delta);
 		break;
 	case PAUSED:
-		updateMenu(delta);
+		updatePause(delta);
 		break;
 	case GAME_OVER:
 		// I had an idea here for making the game over text wobble, just a cool addition that i dont have the time to implement
@@ -108,6 +113,24 @@ void update(float delta, float Width, float Height) {
 }
 
 void updateMenu(float delta) {
+	updateSelect(delta);
+
+	// Menu select
+	if (key_select == 1) {
+		selectMenuItem(menuSelect);
+	}
+}
+
+void updatePause(float delta) {
+	updateSelect(delta);
+
+	// Menu select
+	if (key_select == 1) {
+		selectPauseItem(menuSelect);
+	}
+}
+
+void updateSelect(float delta) {
 	// Menu movement
 	int dir = key_down - key_up;
 	if (dir != 0) {
@@ -126,17 +149,27 @@ void updateMenu(float delta) {
 			menuSelectCoolDown = MENU_SELECT_COOLDOWN;
 		}
 	}
-
-	// Menu select
-	if (key_select == 1) {
-		selectMenuItem(menuSelect);
-	}
 }
 
 void selectMenuItem(int select) {
 	switch (select) {
 	case PLAY:
 		gameState = INITIALISING;
+		break;
+	case OPTIONS:
+		break;
+	case EXIT:
+		exit(EXIT_SUCCESS);
+		break;
+	default:
+		break;
+	}
+}
+
+void selectPauseItem(int select) {
+	switch (select) {
+	case PLAY:
+		gameState = IN_GAME;
 		break;
 	case OPTIONS:
 		break;
@@ -162,6 +195,12 @@ void updateGame(float delta) {
 
 	// Check Collisions
 	physicsCollisions();
+
+	// Reset select and enter pause
+	if (key_pause == 1) {
+		menuSelect = 0;
+		gameState = PAUSED;
+	}
 }
 
 // Frame update for player data
@@ -200,6 +239,7 @@ void render() {
 		renderInGame();
 		break;
 	case PAUSED:
+		renderInGame();
 		renderPause(menuSelect);
 		break;
 	case GAME_OVER:
@@ -279,8 +319,7 @@ void inputControls(const char* input, int pressed) {
 		gameState = INITIALISING;
 	}
 	if (input == "pause") {
-		menuSelect = 0;
-		gameState = PAUSED;
+		key_pause = pressed;
 	}
 }
 

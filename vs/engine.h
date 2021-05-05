@@ -38,9 +38,11 @@ void initKeys();
 // Update Calls
 void update(float delta, float Width, float Height);
 void updateMenu(float delta);
+void updatePause(float delta);
+void updateSelect(float delta);
 void selectMenuItem(int select);
+void selectPauseItem(int select);
 void updateGame(float delta);
-void updatePlayer(float delta, Player* player);
 
 // Render Calls
 void render();
@@ -52,16 +54,18 @@ void inputGameStart(const char* input, int pressed);
 void inputControls(const char* input, int pressed);
 void inputGameOver(const char* input, int pressed);
 
-//		Gameplay
+// Game updates
 void gameOver();
 
-//		Player Actions
+// Player updates
+void updatePlayer(float delta, Player* player);
 void fireCannonPlayer(float delta);
 
-//		BlackHole Actions
+// BlackHole updates
 void updateBlackHole(float delta, BlackHole* bh);
 
-// Screen Check
+// Screen functions
 int boolOutOfBounds(PositionVector position, float offset);
 
+// Misc
 void cullBullet(Bullet* bullet, int index);

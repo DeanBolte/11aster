@@ -22,7 +22,7 @@ void inputDown(unsigned char key, int x, int y)
 	switch (key)
 	{
 	case KEY_ESC:
-		exit(EXIT_SUCCESS);
+		inputKeyboard("pause", 1);
 		break;
 	case 'a':
 		inputKeyboard("left", 1);
@@ -42,10 +42,6 @@ void inputDown(unsigned char key, int x, int y)
 	case 'p':
 		inputKeyboard("test", 1);
 		break;
-	case 9:
-	case 'e':
-		inputKeyboard("pause", 1);
-		break;
 	default:
 		break;
 	}
@@ -56,6 +52,9 @@ void inputUp(unsigned char key, int x, int y)
 {
 	switch (key)
 	{
+	case KEY_ESC:
+		inputKeyboard("pause", 0);
+		break;
 	case 'a':
 		inputKeyboard("left", 0);
 		break;
@@ -73,10 +72,6 @@ void inputUp(unsigned char key, int x, int y)
 		break;
 	case 'p':
 		inputKeyboard("test", 0);
-		break;
-	case 9:
-	case 'e':
-		inputKeyboard("pause", 1);
 		break;
 	default:
 		break;
