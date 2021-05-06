@@ -118,19 +118,57 @@ void renderUI() {
 	float x = 24 + (player->position.x - screenWidth / 2);
 	float y = screenHeight - 24 + (player->position.y - screenHeight / 2);
 
-	// Player health
-	for (int i = 0; i < player->hp; ++i) {
-		glPushMatrix();
-		glTranslatef(x + 40 * i, y, 0.0f);
-		drawHeart(20);
-		glPopMatrix();
-	}
+	// Player health container
+	glPushMatrix();
+
+	glBegin(GL_LINE_LOOP);
+	glVertex2f(x, y - 18);
+	glVertex2f(x, y);
+	glVertex2f(x + player->maxHp * 24, y);
+	glVertex2f(x + player->maxHp * 24, y - 18);
+	glEnd();
+
+	glPopMatrix();
+
+	// Player healthometer
+	glPushMatrix();
+
+	glBegin(GL_POLYGON);
+	glVertex2f(x, y - 18);
+	glVertex2f(x, y);
+	glVertex2f(x + player->hp * 24, y);
+	glVertex2f(x + player->hp * 24, y - 18);
+	glEnd();
+
+	glPopMatrix();
 
 	// Player speed
-	int speedLength = intToCharacterCount(vectorLength(player->moveVector));
-	char speed[10];
-	snprintf(speed, speedLength, "%d", (int)vectorLength(player->moveVector));
-	drawText(x - 12, y - 32, speed, speedLength, 0.1);
+	float speed = vectorLength(player->moveVector) / 10;
+	float maxSpeed = player->maxVelocity / 10;
+
+	// Player speed container
+	glPushMatrix();
+
+	glBegin(GL_LINE_LOOP);
+	glVertex2f(x, y - 36);
+	glVertex2f(x, y - 24);
+	glVertex2f(x + maxSpeed, y - 24);
+	glVertex2f(x + maxSpeed, y - 36);
+	glEnd();
+
+	glPopMatrix();
+
+	// Player speedometer
+	glPushMatrix();
+
+	glBegin(GL_POLYGON);
+	glVertex2f(x, y - 36);
+	glVertex2f(x, y - 24);
+	glVertex2f(x + speed, y - 24);
+	glVertex2f(x + speed, y - 36);
+	glEnd();
+
+	glPopMatrix();
 
 	glPopMatrix();
 }

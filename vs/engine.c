@@ -310,8 +310,7 @@ void inputControls(const char* input, int pressed) {
 		key_select = pressed;
 	}
 	if (input == "test") {
-		gameOver();
-		gameState = INITIALISING;
+		getPlayer()->hp -= 1;
 	}
 	if (input == "pause") {
 		key_pause = pressed;
