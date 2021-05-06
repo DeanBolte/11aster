@@ -213,28 +213,6 @@ void updateGame(float delta) {
 	}
 }
 
-// Frame update for player data
-void updatePlayer(float delta, Player* player) {
-	// Update players particle cooldown
-	if (player->particleCoolDown <= 0) {
-		player->particleCoolDown = PLAYER_PARTICLE_INTERVAL;
-	}
-	else {
-		player->particleCoolDown -= delta;
-	}
-	
-	// Player Actions
-	acceleratePlayer(delta, key_up, key_space);
-	rotatePlayer(delta, key_left - key_right);
-
-	fireCannonPlayer(delta);
-
-	// Check player status
-	if (player->hp <= 0) {
-		gameOver();
-	}
-}
-
 // Render functions are called from rendering.c
 void render() {
 	// Render Switch
@@ -260,6 +238,7 @@ void render() {
 	}
 }
 
+// Input Calls
 void inputKeyboard(const char* key, int pressed) {
 	// Mouse Input Switch
 	switch (gameState) {
@@ -353,6 +332,46 @@ void gameOver() {
 	gameState = GAME_OVER;
 }
 
+// Player action
+// Frame update for player data
+void updatePlayer(float delta, Player* player) {
+	// Update players particle cooldown
+	if (player->particleCoolDown <= 0) {
+		player->particleCoolDown = PLAYER_PARTICLE_INTERVAL;
+	}
+	else {
+		player->particleCoolDown -= delta;
+	}
+
+	// Player Actions
+	acceleratePlayer(delta, key_up, key_space);
+	rotatePlayer(delta, key_left - key_right);
+
+	fireCannonPlayer(delta);
+
+	// Check player status
+	if (player->hp <= 0) {
+		gameOver();
+	}
+}
+
+void fireCannonPlayer(float delta) {
+	// Create bullet
+	Player* player = getPlayer();
+	if (player->cannonCoolDown <= 0 && getBulletCount() < MAX_BULLETS && key_firing == 1) {
+		// Reset cooldown
+		player->cannonCoolDown = PLAYER_CANNON_COOLDOWN;
+		
+		// Create bullet
+		createBullet(player->position, player->direction);
+	}
+
+	// reduce cooldown for players cannon
+	if (player->cannonCoolDown > 0) {
+		player->cannonCoolDown -= delta;
+	}
+}
+
 // BlackHole Actions
 void updateBlackHole(float delta, BlackHole* bh) {
 	// update radius
@@ -387,24 +406,7 @@ int boolOutOfBounds(PositionVector position, float offset) {
 	return outOfBounds;
 }
 
-// Player action
-void fireCannonPlayer(float delta) {
-	// Create bullet
-	Player* player = getPlayer();
-	if (player->cannonCoolDown <= 0 && getBulletCount() < MAX_BULLETS && key_firing == 1) {
-		// Reset cooldown
-		player->cannonCoolDown = PLAYER_CANNON_COOLDOWN;
-		
-		// Create bullet
-		createBullet(player->position, player->direction);
-	}
-
-	// reduce cooldown for players cannon
-	if (player->cannonCoolDown > 0) {
-		player->cannonCoolDown -= delta;
-	}
-}
-
+// misc
 void cullBullet(Bullet* bullet, int index) {
 	if (boolOutOfBounds(bullet->position, 32) > 0) {
 		freeBullet(index);
