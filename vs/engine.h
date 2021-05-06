@@ -35,6 +35,9 @@ void init(int screen_width, int screen_height);
 void initRound();
 void resetKeys();
 
+// World Creation
+void generateAsteroidBelt(float x, float y, int distance, int range, int amount);
+
 // Update Calls
 void update(float delta, float Width, float Height);
 void updateMenu(float delta);

@@ -61,10 +61,8 @@ void initRound() {
 	// Create Player at starting position
 	createPlayer(screenWidth / 2, screenHeight / 2);
 
-	// Create some asteroids for perspective
-	for (int i = 0; i < 10; ++i) {
-		createAsteroid(rand() % (int)screenWidth, rand() % (int)screenHeight);
-	}
+	// Create some asteroids in a ring around the player
+	generateAsteroidBelt(getPlayer()->position.x, getPlayer()->position.y, 1250, 1000, 100);
 
 	// Start Game
 	gameState = IN_GAME;
@@ -80,6 +78,17 @@ void resetKeys() {
 	key_firing = 0;
 	key_select = 0;
 	key_pause = 0;
+}
+
+// World Creation
+void generateAsteroidBelt(float x, float y, int distance, int range, int amount) {
+	for (int i = 0; i < amount; ++i) {
+		float ran = rand() % 100;
+		float angle = ran / 100 * (2 * PI);
+		float length = distance + rand() % range - range / 2;
+		PositionVector position = multiplyVector(angleToUnitVector(angle), length);
+		createAsteroid(position.x + x, position.y + y);
+	}
 }
 
 void update(float delta, float Width, float Height) {
