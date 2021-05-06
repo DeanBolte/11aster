@@ -337,6 +337,32 @@ void drawSemiCircle(float radius) {
 	glEnd();
 }
 
+void drawContainer(float x, float y, float height, float length, float fill) {
+	// Draw container
+	glPushMatrix();
+
+	glBegin(GL_LINE_LOOP);
+	glVertex2f(x, y);
+	glVertex2f(x, y + height);
+	glVertex2f(x + length, y + height);
+	glVertex2f(x + length, y);
+	glEnd();
+
+	glPopMatrix();
+
+	// Draw filling
+	glPushMatrix();
+
+	glBegin(GL_POLYGON);
+	glVertex2f(x, y);
+	glVertex2f(x, y + height);
+	glVertex2f(x + fill, y + height);
+	glVertex2f(x + fill, y);
+	glEnd();
+
+	glPopMatrix();
+}
+
 // Rendering Other
 void drawText(float x, float y, const char* text, int length, float size) {
 	glPushMatrix();
