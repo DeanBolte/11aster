@@ -115,13 +115,13 @@ void renderUI() {
 	// Player UI
 	Player* player = getPlayer();
 
-	float x = 16 + (player->position.x - screenWidth / 2);
-	float y = screenHeight - 24 + (player->position.y - screenHeight / 2);
+	float x = 32 + (player->position.x - screenWidth / 2);
+	float y = screenHeight - 32 + (player->position.y - screenHeight / 2);
 
 	// Player health
 	glPushMatrix();
 	for (int i = 0; i < player->hp; ++i) {
-		glTranslatef(x + 10 * i, y, 0.0f);
+		glTranslatef(x + 32 * i, y, 0.0f);
 		drawHeart(25);
 	}
 	glPopMatrix();
@@ -130,7 +130,7 @@ void renderUI() {
 	int speedLength = intToCharacterCount(vectorLength(player->moveVector));
 	char speed[10];
 	snprintf(speed, speedLength, "%d", (int)vectorLength(player->moveVector));
-	drawText(x, y - 24, speed, speedLength, 0.1);
+	drawText(x, y - 32, speed, speedLength, 0.1);
 
 	glPopMatrix();
 }
@@ -262,24 +262,37 @@ void drawCircle(float radius) {
 }
 
 void drawHeart(float size) {
+	// semicircle offset values
+	float xOffset = size * cos(PI / 4) / 2;
+	float yOffset = size * sin(PI / 4) / 2;
+	
 	// First semicircle
-	glTranslatef(-size / 2, size / 2, 0.0f);
+	glPushMatrix();
+	glTranslatef(-xOffset, yOffset, 0.0f);
 	glRotatef(45, 0.0f, 0.0f, 1.0f);
 	drawSemiCircle(size / 2);
+	glPopMatrix();
 
 	// Second semicircle
-	glTranslatef(size / 2, size / 2, 0.0f);
+	glPushMatrix();
+	glTranslatef(xOffset, yOffset, 0.0f);
 	glRotatef(-45, 0.0f, 0.0f, 1.0f);
 	drawSemiCircle(size / 2);
+	glPopMatrix();
 
 	// Bottom of heart
-	//glBegin(GL_LINE);
-
-	//glEnd();
+	glPushMatrix();
+	glBegin(GL_POLYGON);
+	glVertex2f(-2 * xOffset, 0);
+	glVertex2f(0, -2 * yOffset);
+	glVertex2f(2 * xOffset, 0);
+	glVertex2f(0, 2 * yOffset);
+	glEnd();
+	glPopMatrix();
 }
 
 void drawSemiCircle(float radius) {
-	glBegin(GL_LINE_LOOP);
+	glBegin(GL_POLYGON);
 	for (int i = 0; i < 180; ++i) {
 		glVertex2f(cos(i * PI / 180) * radius, sin(i * PI / 180) * radius);
 	}
