@@ -26,14 +26,20 @@ void renderInGame() {
 	// InGame Global Render
 	glPushMatrix();
 
+	// create offset for rendering the screen offset from the centre
+	PositionVector renderOffset;
+	renderOffset = multiplyVector(getPlayer()->moveVector, -0.1f);
+
+	renderUI();
+
+	glTranslatef(renderOffset.x, renderOffset.y, 0.0f);
+
 	// Render Order
 	renderAsteroids();
 	renderBlackHoles();
 	renderBullets();
 	renderEngineParticles();
 	renderPlayer();
-
-	renderUI();
 
 	glPopMatrix();
 }
@@ -106,19 +112,24 @@ void renderPause(int select) {
 void renderUI() {
 	glPushMatrix();
 
-	float x = 16 + (getPlayer()->position.x - screenWidth / 2);
-	float y = screenHeight - 24 + (getPlayer()->position.y - screenHeight / 2);
+	// Player UI
+	Player* player = getPlayer();
+
+	float x = 16 + (player->position.x - screenWidth / 2);
+	float y = screenHeight - 24 + (player->position.y - screenHeight / 2);
 
 	// Player health
-	int hpLength = intToCharacterCount(getPlayer()->hp);
-	char hp[3];
-	snprintf(hp, hpLength, "%d", getPlayer()->hp);
-	drawText(x, y, hp, hpLength, 0.1);
+	glPushMatrix();
+	for (int i = 0; i < player->hp; ++i) {
+		glTranslatef(x + 10 * i, y, 0.0f);
+		drawHeart(25);
+	}
+	glPopMatrix();
 
 	// Player speed
-	int speedLength = intToCharacterCount(vectorLength(getPlayer()->moveVector));
+	int speedLength = intToCharacterCount(vectorLength(player->moveVector));
 	char speed[10];
-	snprintf(speed, speedLength, "%d", (int)vectorLength(getPlayer()->moveVector));
+	snprintf(speed, speedLength, "%d", (int)vectorLength(player->moveVector));
 	drawText(x, y - 24, speed, speedLength, 0.1);
 
 	glPopMatrix();
@@ -245,6 +256,31 @@ void drawPentagon(float radius) {
 void drawCircle(float radius) {
 	glBegin(GL_LINE_LOOP);
 	for (int i = 0; i < 360; ++i) {
+		glVertex2f(cos(i * PI / 180) * radius, sin(i * PI / 180) * radius);
+	}
+	glEnd();
+}
+
+void drawHeart(float size) {
+	// First semicircle
+	glTranslatef(-size / 2, size / 2, 0.0f);
+	glRotatef(45, 0.0f, 0.0f, 1.0f);
+	drawSemiCircle(size / 2);
+
+	// Second semicircle
+	glTranslatef(size / 2, size / 2, 0.0f);
+	glRotatef(-45, 0.0f, 0.0f, 1.0f);
+	drawSemiCircle(size / 2);
+
+	// Bottom of heart
+	//glBegin(GL_LINE);
+
+	//glEnd();
+}
+
+void drawSemiCircle(float radius) {
+	glBegin(GL_LINE_LOOP);
+	for (int i = 0; i < 180; ++i) {
 		glVertex2f(cos(i * PI / 180) * radius, sin(i * PI / 180) * radius);
 	}
 	glEnd();

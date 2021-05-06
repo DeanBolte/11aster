@@ -38,6 +38,8 @@ void drawBlackHole(BlackHole* bh);
 // Rendering Shapes
 void drawPentagon(float radius);
 void drawCircle(float radius);
+void drawHeart(float size);
+void drawSemiCircle(float radius);
 
 // Rendering Other
 void drawText(float x, float y, const char* text, int length, float size);
