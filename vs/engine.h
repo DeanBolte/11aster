@@ -47,7 +47,7 @@ void selectMenuItem(int select);
 void selectPauseItem(int select);
 void updateGame(float delta);
 
-// Render Calls
+// Main Render Call
 void render();
 
 // Input Calls

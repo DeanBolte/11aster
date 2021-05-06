@@ -5,7 +5,7 @@
 * 
 *	Please read LICENSE.txt
 */
-
+#define GLEW_STATIC 1
 #include "../vs/engine.h"
 
 #define KEY_ESC 27

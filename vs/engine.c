@@ -213,8 +213,12 @@ void updateGame(float delta) {
 	}
 }
 
-// Render functions are called from rendering.c
+// Main Render Call
 void render() {
+	glPushMatrix();
+	// Screen effects
+	
+
 	// Render Switch
 	switch (gameState) {
 	case SPLASH:
@@ -236,6 +240,8 @@ void render() {
 	default:
 		break;
 	}
+
+	glPopMatrix();
 }
 
 // Input Calls
