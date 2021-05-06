@@ -40,7 +40,7 @@ void drawPentagon(float radius);
 void drawCircle(float radius);
 void drawHeart(float size);
 void drawSemiCircle(float radius);
-void drawContainer(float x, float y, float height, float length, float fill);
+void drawContainer(float height, float length, float fill);
 
 // Rendering Other
 void drawText(float x, float y, const char* text, int length, float size);

@@ -110,24 +110,48 @@ void renderPause(int select) {
 }
 
 void renderUI() {
-	glPushMatrix();
-
 	// Player UI
 	Player* player = getPlayer();
 
-	float x = 24 + (player->position.x - screenWidth / 2);
+	// UI position
+	float x = 36 + (player->position.x - screenWidth / 2);
 	float y = screenHeight - 36 + (player->position.y - screenHeight / 2);
 
+	// Player health icon
+	glPushMatrix();
+	glTranslatef(x - 20, y + 8, 0.0f);
+	drawHeart(10);
+	glPopMatrix();
+
 	// Player health container
-	drawContainer(x, y, 16, player->maxHp * 24, player->hp * 24);
+	glPushMatrix();
+	glTranslatef(x, y, 0.0f);
+	drawContainer(16, player->maxHp * 24, player->hp * 24);
+	glPopMatrix();
 
 	// Player speed
 	float speed = vectorLength(player->moveVector) / 10;
 	float maxSpeed = player->maxVelocity / 10;
 
-	// Player speed container
-	drawContainer(x, y - 24, 12, maxSpeed, speed);
+	// Player speed icon
+	glPushMatrix();
+	glTranslatef(x - 24, y - 26, 0.0f);
+	glBegin(GL_LINES);
+	glVertex2f(0, 0);
+	glVertex2f(8, 8);
+	glVertex2f(8, 8);
+	glVertex2f(0, 16);
+	glVertex2f(8, 0);
+	glVertex2f(16, 8);
+	glVertex2f(16, 8);
+	glVertex2f(8, 16);
+	glEnd();
+	glPopMatrix();
 
+	// Player speed container
+	glPushMatrix();
+	glTranslatef(x, y - 24, 0.0f);
+	drawContainer(12, maxSpeed, speed);
 	glPopMatrix();
 }
 
@@ -295,15 +319,15 @@ void drawSemiCircle(float radius) {
 	glEnd();
 }
 
-void drawContainer(float x, float y, float height, float length, float fill) {
+void drawContainer(float height, float length, float fill) {
 	// Draw container
 	glPushMatrix();
 
 	glBegin(GL_LINE_LOOP);
-	glVertex2f(x, y);
-	glVertex2f(x, y + height);
-	glVertex2f(x + length, y + height);
-	glVertex2f(x + length, y);
+	glVertex2f(0, 0);
+	glVertex2f(0, height);
+	glVertex2f(length, height);
+	glVertex2f(length, 0);
 	glEnd();
 
 	glPopMatrix();
@@ -312,10 +336,10 @@ void drawContainer(float x, float y, float height, float length, float fill) {
 	glPushMatrix();
 
 	glBegin(GL_POLYGON);
-	glVertex2f(x, y);
-	glVertex2f(x, y + height);
-	glVertex2f(x + fill, y + height);
-	glVertex2f(x + fill, y);
+	glVertex2f(0, 0);
+	glVertex2f(0, height);
+	glVertex2f(fill, height);
+	glVertex2f(fill, 0);
 	glEnd();
 
 	glPopMatrix();
