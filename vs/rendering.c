@@ -115,22 +115,22 @@ void renderUI() {
 	// Player UI
 	Player* player = getPlayer();
 
-	float x = 32 + (player->position.x - screenWidth / 2);
-	float y = screenHeight - 32 + (player->position.y - screenHeight / 2);
+	float x = 24 + (player->position.x - screenWidth / 2);
+	float y = screenHeight - 24 + (player->position.y - screenHeight / 2);
 
 	// Player health
-	glPushMatrix();
 	for (int i = 0; i < player->hp; ++i) {
-		glTranslatef(x + 32 * i, y, 0.0f);
-		drawHeart(25);
+		glPushMatrix();
+		glTranslatef(x + 40 * i, y, 0.0f);
+		drawHeart(20);
+		glPopMatrix();
 	}
-	glPopMatrix();
 
 	// Player speed
 	int speedLength = intToCharacterCount(vectorLength(player->moveVector));
 	char speed[10];
 	snprintf(speed, speedLength, "%d", (int)vectorLength(player->moveVector));
-	drawText(x, y - 32, speed, speedLength, 0.1);
+	drawText(x - 12, y - 32, speed, speedLength, 0.1);
 
 	glPopMatrix();
 }
