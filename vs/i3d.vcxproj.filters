@@ -20,6 +20,7 @@
     </ClCompile>
     <ClCompile Include="physics.cpp" />
     <ClCompile Include="rendering.cpp" />
+    <ClCompile Include="rgb.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="objects.h">
@@ -33,5 +34,6 @@
     </ClInclude>
     <ClInclude Include="physics.h" />
     <ClInclude Include="rendering.h" />
+    <ClInclude Include="rgb.h" />
   </ItemGroup>
 </Project>

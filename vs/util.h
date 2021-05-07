@@ -23,15 +23,13 @@
 #   include <GL/glut.h>
 #endif
 
+#include "rgb.h"
+
 #define PI 3.14159265
 
 typedef struct PositionVector {
 	float x, y;
 } PositionVector;
-
-typedef struct RGB {
-	float r, g, b;
-} RGB;
 
 // Vector math
 PositionVector addVectors(PositionVector vector1, PositionVector vector2);

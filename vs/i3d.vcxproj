@@ -159,6 +159,7 @@
     <ClCompile Include="engine.cpp" />
     <ClCompile Include="physics.cpp" />
     <ClCompile Include="rendering.cpp" />
+    <ClCompile Include="rgb.cpp" />
     <ClCompile Include="util.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +167,7 @@
     <ClInclude Include="engine.h" />
     <ClInclude Include="physics.h" />
     <ClInclude Include="rendering.h" />
+    <ClInclude Include="rgb.h" />
     <ClInclude Include="util.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
