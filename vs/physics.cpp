@@ -94,7 +94,7 @@ void asteroidCollisions() {
 
 		// Check for collisions with black holes
 		if (collidingWithBlackHole(getAsteroid(i)->position, getAsteroid(i)->collisionRadius) > 0) {
-			explodeAsteroid(getAsteroid(i), i);
+			explodeAsteroid(i);
 		}
 
 		// Check for collisions with bullets
@@ -272,7 +272,7 @@ void moveParticles(float delta) {
 
 void applyGravity(float delta) {
 	// Apply Gravity from black holes
-	for (int i = 0; i < getBlackHoleCount; ++i) {
+	for (int i = 0; i < getBlackHoleCount(); ++i) {
 		BlackHole* bh = getBlackHole(i);
 
 		// Apply gravity to asteroids

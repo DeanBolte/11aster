@@ -9,7 +9,7 @@
 // Menu
 int menuItemDistance = 80;
 int menuItemCount = 3;
-char* menuItems[3] = { "Play", "Options", "Exit" };
+const char* menuItems[3] = { "Play", "Options", "Exit" };
 float menuSelectorAngle = 0;
 
 // Rendering Calls

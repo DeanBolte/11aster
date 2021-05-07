@@ -24,10 +24,7 @@ int blackHoleCount = 0;
 // Object Initialisation
 Asteroid* initAsteroid(float x, float y) {
 	// Create and return the asteroid struct where requested
-	Asteroid* asteroid = NULL;
-	while (asteroid == NULL) {
-		asteroid = malloc(sizeof(Asteroid));
-	}
+	Asteroid* asteroid = new Asteroid;
 	
 	// initialise variables
 	asteroid->position.x = x;
@@ -45,10 +42,7 @@ Asteroid* initAsteroid(float x, float y) {
 	asteroid->collisionRadius = asteroid->size + ASTEROID_BASE_SIZE + ASTEROID_VARIANCE * asteroid->size / 2;
 
 	// Create vertices
-	asteroid->vertices = malloc(sizeof(PositionVector) * asteroid->vertexCount);
-	while (asteroid->vertices == NULL) {
-		asteroid->vertices = malloc(sizeof(PositionVector) * asteroid->vertexCount);
-	}
+	asteroid->vertices[asteroid->vertexCount];
 
 	PositionVector vertex;
 	vertex.x = rand() % ASTEROID_VARIANCE - ASTEROID_VARIANCE / 2;
@@ -74,10 +68,7 @@ Asteroid* initAsteroid(float x, float y) {
 }
 
 Player* initPlayer(float x, float y) {
-	Player* player = NULL;
-	while (player == NULL) {
-		player = malloc(sizeof(Player));
-	}
+	Player* player = new Player;
 
 	player->position.x = x;
 	player->position.y = y;
@@ -98,18 +89,12 @@ Player* initPlayer(float x, float y) {
 }
 
 Bullet* initBullet() {
-	Bullet* bullet = NULL;
-	while (bullet == NULL) {
-		bullet = malloc(sizeof(Bullet));
-	}
+	Bullet* bullet = new Bullet;
 	return bullet;
 }
 
 Particle* initParticle(PositionVector position, PositionVector direction, int maxSize) {
-	Particle* particle = NULL;
-	while (particle == NULL) {
-		particle = malloc(sizeof(Particle));
-	}
+	Particle* particle = new Particle;
 
 	// positon = player position + randomness - player direction
 	// player direction is subtracted to spawn particles at the back of the ship
@@ -127,10 +112,7 @@ Particle* initParticle(PositionVector position, PositionVector direction, int ma
 }
 
 BlackHole* initBlackHole(PositionVector position) {
-	BlackHole* bh = NULL;
-	while (bh == NULL) {
-		bh = malloc(sizeof(BlackHole));
-	}
+	BlackHole* bh = new BlackHole;
 
 	bh->position = position;
 	bh->radius = rand() % (int)(BLACKHOLE_RADIUS / 2) + BLACKHOLE_RADIUS;
