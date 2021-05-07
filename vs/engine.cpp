@@ -5,31 +5,8 @@
 */
 #include "engine.h"
 
-// Game Data
-int gameState = SPLASH;
-
-// This ensures that the game over screen only accepts an input after a new key is pressed during the game over screen
-int inputDuringGameOver = 0;
-
-// Pause menu variable
-int inputDuringPause = 0;
-
-// Keyboard Inputs
-int key_right = 0;
-int key_left = 0;
-int key_down = 0;
-int key_up = 0;
-int key_space = 0;
-int key_firing = 0;
-int key_select = 0;
-int key_pause = 0;
-
-// Menu
-int menuSelect = 0;
-float menuSelectCoolDown = 0;
-
 // Colours
-void initColours() {
+void Engine::initColours() {
 	// Init colour data
 	highColour.r = 0.004f;
 	highColour.g = 0.922f;
@@ -45,7 +22,7 @@ void initColours() {
 }
 
 // Game Engine Calls
-void init(int screen_width, int screen_height) {
+void Engine::init(int screen_width, int screen_height) {
 	// Initialise Colours
 	initColours();
 
@@ -54,7 +31,7 @@ void init(int screen_width, int screen_height) {
 	screenHeight = screen_height;
 }
 
-void initRound() {
+void Engine::initRound() {
 	// Return input values to initial values
 	resetKeys();
 	
@@ -68,7 +45,7 @@ void initRound() {
 	gameState = IN_GAME;
 }
 
-void resetKeys() {
+void Engine::resetKeys() {
 	// Keyboard Inputs
 	key_right = 0;
 	key_left = 0;
@@ -81,7 +58,7 @@ void resetKeys() {
 }
 
 // World Creation
-void generateAsteroidBelt(float x, float y, int distance, int range, int amount) {
+void Engine::generateAsteroidBelt(float x, float y, int distance, int range, int amount) {
 	for (int i = 0; i < amount; ++i) {
 		float ran = rand() % 100;
 		float angle = ran / 100 * (2 * PI);
@@ -91,7 +68,7 @@ void generateAsteroidBelt(float x, float y, int distance, int range, int amount)
 	}
 }
 
-void update(float delta, float Width, float Height) {
+void Engine::update(float delta, float Width, float Height) {
 	// Update screen size
 	screenWidth = Width;
 	screenHeight = Height;
@@ -121,7 +98,7 @@ void update(float delta, float Width, float Height) {
 	}
 }
 
-void updateMenu(float delta) {
+void Engine::updateMenu(float delta) {
 	updateSelect(delta);
 
 	// Menu select
@@ -130,7 +107,7 @@ void updateMenu(float delta) {
 	}
 }
 
-void updatePause(float delta) {
+void Engine::updatePause(float delta) {
 	updateSelect(delta);
 
 	// Menu select
@@ -140,7 +117,7 @@ void updatePause(float delta) {
 	}
 }
 
-void updateSelect(float delta) {
+void Engine::updateSelect(float delta) {
 	// Menu movement
 	int dir = key_down - key_up;
 	if (dir != 0) {
@@ -161,7 +138,7 @@ void updateSelect(float delta) {
 	}
 }
 
-void selectMenuItem(int select) {
+void Engine::selectMenuItem(int select) {
 	switch (select) {
 	case PLAY:
 		gameState = INITIALISING;
@@ -176,7 +153,7 @@ void selectMenuItem(int select) {
 	}
 }
 
-void selectPauseItem(int select) {
+void Engine::selectPauseItem(int select) {
 	switch (select) {
 	case PLAY:
 		gameState = IN_GAME;
@@ -191,7 +168,7 @@ void selectPauseItem(int select) {
 	}
 }
 
-void updateGame(float delta) {
+void Engine::updateGame(float delta) {
 	// Physics Call - Update Movement
 	physicsMovements(delta);
 
@@ -214,7 +191,7 @@ void updateGame(float delta) {
 }
 
 // Main Render Call
-void render() {
+void Engine::render() {
 	glPushMatrix();
 	// Screen effects
 	
@@ -245,7 +222,7 @@ void render() {
 }
 
 // Input Calls
-void inputKeyboard(const char* key, int pressed) {
+void Engine::inputKeyboard(const char* key, int pressed) {
 	// Mouse Input Switch
 	switch (gameState) {
 	case SPLASH:
@@ -264,7 +241,7 @@ void inputKeyboard(const char* key, int pressed) {
 	}
 }
 
-void inputMouse(const char* input, int pressed) {
+void Engine::inputMouse(const char* input, int pressed) {
 	// Mouse Input Switch
 	switch (gameState) {
 	case SPLASH:
@@ -283,13 +260,13 @@ void inputMouse(const char* input, int pressed) {
 	}
 }
 
-void inputGameStart(const char* input, int pressed) {
+void Engine::inputGameStart(const char* input, int pressed) {
 	if (pressed == 0) {
 		gameState = MENU;
 	}
 }
 
-void inputControls(const char* input, int pressed) {
+void Engine::inputControls(const char* input, int pressed) {
 	if (input == "left") {
 		key_left = pressed;
 	}
@@ -317,7 +294,7 @@ void inputControls(const char* input, int pressed) {
 	}
 }
 
-void inputGameOver(const char* input, int pressed) {
+void Engine::inputGameOver(const char* input, int pressed) {
 	if (pressed == 0 && inputDuringGameOver == 1) {
 		gameState = INITIALISING;
 	}
@@ -327,7 +304,7 @@ void inputGameOver(const char* input, int pressed) {
 }
 
 // Gameplay
-void gameOver() {
+void Engine::gameOver() {
 	// Free all game objects to reset the game
 	freeAllObjects();
 
@@ -339,7 +316,7 @@ void gameOver() {
 
 // Player action
 // Frame update for player data
-void updatePlayer(float delta, Player* player) {
+void Engine::updatePlayer(float delta, Player* player) {
 	// Update players particle cooldown
 	if (player->particleCoolDown <= 0) {
 		player->particleCoolDown = PLAYER_PARTICLE_INTERVAL;
@@ -360,7 +337,7 @@ void updatePlayer(float delta, Player* player) {
 	}
 }
 
-void fireCannonPlayer(float delta) {
+void Engine::fireCannonPlayer(float delta) {
 	// Create bullet
 	Player* player = getPlayer();
 	if (player->cannonCoolDown <= 0 && getBulletCount() < MAX_BULLETS && key_firing == 1) {
@@ -378,7 +355,7 @@ void fireCannonPlayer(float delta) {
 }
 
 // BlackHole Actions
-void updateBlackHole(float delta, BlackHole* bh) {
+void Engine::updateBlackHole(float delta, BlackHole* bh) {
 	// update radius
 	bh->radius += bh->pulseDirection * bh->radiusOutPulse * delta;
 	if (bh->radius > bh->radiusOutPulse) {
@@ -391,7 +368,7 @@ void updateBlackHole(float delta, BlackHole* bh) {
 
 // could extend this to provide an array of ints and then use that to represent more than one side
 // however i deem this out of scope
-int boolOutOfBounds(PositionVector position, float offset) {
+int Engine::boolOutOfBounds(PositionVector position, float offset) {
 	// Return > 0 if position is out of bounds
 	// value represents side
 	// 0 = left, 1 = right, 2 = bottom, 3 = top
@@ -412,7 +389,7 @@ int boolOutOfBounds(PositionVector position, float offset) {
 }
 
 // misc
-void cullBullet(Bullet* bullet, int index) {
+void Engine::cullBullet(Bullet* bullet, int index) {
 	if (boolOutOfBounds(bullet->position, 32) > 0) {
 		freeBullet(index);
 	}

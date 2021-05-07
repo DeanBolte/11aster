@@ -26,49 +26,78 @@
 // Menu
 #define MENU_SELECT_COOLDOWN 0.08f
 
-// Colours
-void initColours();
+class Engine {
+private:
+	// Game Data
+	int gameState = SPLASH;
 
-//		Game Engine Calls
-// Initialising Calls
-void init(int screen_width, int screen_height);
-void initRound();
-void resetKeys();
+	// This ensures that the game over screen only accepts an input after a new key is pressed during the game over screen
+	int inputDuringGameOver = 0;
 
-// World Creation
-void generateAsteroidBelt(float x, float y, int distance, int range, int amount);
+	// Pause menu variable
+	int inputDuringPause = 0;
 
-// Update Calls
-void update(float delta, float Width, float Height);
-void updateMenu(float delta);
-void updatePause(float delta);
-void updateSelect(float delta);
-void selectMenuItem(int select);
-void selectPauseItem(int select);
-void updateGame(float delta);
+	// Keyboard Inputs
+	int key_right = 0;
+	int key_left = 0;
+	int key_down = 0;
+	int key_up = 0;
+	int key_space = 0;
+	int key_firing = 0;
+	int key_select = 0;
+	int key_pause = 0;
 
-// Main Render Call
-void render();
+	// Menu
+	int menuSelect = 0;
+	float menuSelectCoolDown = 0;
 
-// Input Calls
-void inputKeyboard(const char* key, int pressed);
-void inputMouse(const char* input, int pressed);
-void inputGameStart(const char* input, int pressed);
-void inputControls(const char* input, int pressed);
-void inputGameOver(const char* input, int pressed);
+	// Colours
+	void initColours();
+	
+	// Initialising functions
+	void initRound();
+	void resetKeys();
 
-// Game updates
-void gameOver();
+	// World creation
+	void generateAsteroidBelt(float x, float y, int distance, int range, int amount);
 
-// Player updates
-void updatePlayer(float delta, Player* player);
-void fireCannonPlayer(float delta);
+	// Update functions
+	void updateMenu(float delta);
+	void updatePause(float delta);
+	void updateSelect(float delta);
+	void selectMenuItem(int select);
+	void selectPauseItem(int select);
+	void updateGame(float delta);
 
-// BlackHole updates
-void updateBlackHole(float delta, BlackHole* bh);
+	// Input functions
+	void inputGameStart(const char* input, int pressed);
+	void inputControls(const char* input, int pressed);
+	void inputGameOver(const char* input, int pressed);
 
-// Screen functions
-int boolOutOfBounds(PositionVector position, float offset);
+	// Game updates
+	void gameOver();
 
-// Misc
-void cullBullet(Bullet* bullet, int index);
+	// Player updates
+	void updatePlayer(float delta, Player* player);
+	void fireCannonPlayer(float delta);
+
+	// BlackHole updates
+	void updateBlackHole(float delta, BlackHole* bh);
+
+	// Screen functions
+	int boolOutOfBounds(PositionVector position, float offset);
+
+	// Misc
+	void cullBullet(Bullet* bullet, int index);
+
+public:
+	// Game Engine Calls
+	void init(int screen_width, int screen_height);
+	void update(float delta, float Width, float Height);
+	void render();
+
+	// Input Calls
+	void inputKeyboard(const char* key, int pressed);
+	void inputMouse(const char* input, int pressed);
+
+};
