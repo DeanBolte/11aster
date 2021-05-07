@@ -154,12 +154,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\main.c" />
-    <ClCompile Include="objects.c" />
-    <ClCompile Include="engine.c" />
-    <ClCompile Include="physics.c" />
-    <ClCompile Include="rendering.c" />
-    <ClCompile Include="util.c" />
+    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="objects.cpp" />
+    <ClCompile Include="engine.cpp" />
+    <ClCompile Include="physics.cpp" />
+    <ClCompile Include="rendering.cpp" />
+    <ClCompile Include="util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="objects.h" />

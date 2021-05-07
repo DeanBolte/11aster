@@ -6,20 +6,20 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\main.c">
+    <ClCompile Include="..\src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="objects.c">
+    <ClCompile Include="objects.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="engine.c">
+    <ClCompile Include="engine.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="util.c">
+    <ClCompile Include="util.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="physics.c" />
-    <ClCompile Include="rendering.c" />
+    <ClCompile Include="physics.cpp" />
+    <ClCompile Include="rendering.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="objects.h">
