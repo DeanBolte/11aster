@@ -23,6 +23,29 @@ Engine::Engine(int screen_width, int screen_height) {
 	// Set heights
 	screenWidth = screen_width;
 	screenHeight = screen_height;
+
+	// Game Data
+	gameState = SPLASH;
+
+	// This ensures that the game over screen only accepts an input after a new key is pressed during the game over screen
+	inputDuringGameOver = 0;
+
+	// Pause menu variable
+	inputDuringPause = 0;
+
+	// Keyboard Inputs
+	key_right = 0;
+	key_left = 0;
+	key_down = 0;
+	key_up = 0;
+	key_space = 0;
+	key_firing = 0;
+	key_select = 0;
+	key_pause = 0;
+
+	// Menu
+	menuSelect = 0;
+	menuSelectCoolDown = 0;
 }
 
 void Engine::initRound() {

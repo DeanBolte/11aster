@@ -29,27 +29,27 @@
 class Engine {
 private:
 	// Game Data
-	int gameState = SPLASH;
+	int gameState;
 
 	// This ensures that the game over screen only accepts an input after a new key is pressed during the game over screen
-	int inputDuringGameOver = 0;
+	int inputDuringGameOver;
 
 	// Pause menu variable
-	int inputDuringPause = 0;
+	int inputDuringPause;
 
 	// Keyboard Inputs
-	int key_right = 0;
-	int key_left = 0;
-	int key_down = 0;
-	int key_up = 0;
-	int key_space = 0;
-	int key_firing = 0;
-	int key_select = 0;
-	int key_pause = 0;
+	int key_right;
+	int key_left;
+	int key_down;
+	int key_up;
+	int key_space;
+	int key_firing;
+	int key_select;
+	int key_pause;
 
 	// Menu
-	int menuSelect = 0;
-	float menuSelectCoolDown = 0;
+	int menuSelect;
+	float menuSelectCoolDown;
 
 	float screenWidth;
 	float screenHeight;
