@@ -16,31 +16,33 @@ int port_height = 0;
 // Frametime data
 float previous_frametime;
 
+Engine* engine;
+
 // Keyboard input on press
 void inputDown(unsigned char key, int x, int y)
 {
 	switch (key)
 	{
 	case KEY_ESC:
-		inputKeyboard("pause", 1);
+		engine->inputKeyboard("pause", 1);
 		break;
 	case 'a':
-		inputKeyboard("left", 1);
+		engine->inputKeyboard("left", 1);
 		break;
 	case 'w':
-		inputKeyboard("up", 1);
+		engine->inputKeyboard("up", 1);
 		break;
 	case 'd':
-		inputKeyboard("right", 1);
+		engine->inputKeyboard("right", 1);
 		break;
 	case 's':
-		inputKeyboard("down", 1);
+		engine->inputKeyboard("down", 1);
 		break;
 	case 32:
-		inputKeyboard("space", 1);
+		engine->inputKeyboard("space", 1);
 		break;
 	case 'p':
-		inputKeyboard("test", 1);
+		engine->inputKeyboard("test", 1);
 		break;
 	default:
 		break;
@@ -53,25 +55,25 @@ void inputUp(unsigned char key, int x, int y)
 	switch (key)
 	{
 	case KEY_ESC:
-		inputKeyboard("pause", 0);
+		engine->inputKeyboard("pause", 0);
 		break;
 	case 'a':
-		inputKeyboard("left", 0);
+		engine->inputKeyboard("left", 0);
 		break;
 	case 'w':
-		inputKeyboard("up", 0);
+		engine->inputKeyboard("up", 0);
 		break;
 	case 'd':
-		inputKeyboard("right", 0);
+		engine->inputKeyboard("right", 0);
 		break;
 	case 's':
-		inputKeyboard("down", 0);
+		engine->inputKeyboard("down", 0);
 		break;
 	case 32:
-		inputKeyboard("space", 0);
+		engine->inputKeyboard("space", 0);
 		break;
 	case 'p':
-		inputKeyboard("test", 0);
+		engine->inputKeyboard("test", 0);
 		break;
 	default:
 		break;
@@ -92,7 +94,7 @@ void mouseInput(int button, int state, int x, int y) {
 	switch (button)
 	{
 	case GLUT_LEFT_BUTTON:
-		inputMouse("shoot", pressed);
+		engine->inputMouse("shoot", pressed);
 		break;
 	default:
 		break;
@@ -133,7 +135,7 @@ void on_display()
 	glClearColor(lowColour.r, lowColour.g, lowColour.b, 1.0);
 
 	// Call Game Engine to handle rendering
-	render();
+	engine->render();
 
 	// Error Checking
 	int err;
@@ -151,7 +153,7 @@ void on_idle() {
 	float delta = currentTime - previous_frametime;
 
 	// Call to Game Engine to update
-	update(delta, port_width, port_height);
+	engine->update(delta, port_width, port_height);
 	previous_frametime = currentTime;
 
 	glutPostRedisplay(); 
@@ -180,8 +182,8 @@ void init_app(int* argcp, char** argv) {
 	port_width = 1024;
 	port_height = 768;
 
-	// Initialise Game Engine
-	init(port_width, port_height);
+	// create game engine
+	engine = new Engine(port_width, port_height);
 
 	// Get time of init for calculating delta
 	previous_frametime = glutGet(GLUT_ELAPSED_TIME) / 1000.0;
