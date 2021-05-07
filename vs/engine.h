@@ -51,8 +51,8 @@ private:
 	int menuSelect = 0;
 	float menuSelectCoolDown = 0;
 
-	// Colours
-	void initColours();
+	float screenWidth;
+	float screenHeight;
 	
 	// Initialising functions
 	void initRound();
@@ -91,8 +91,10 @@ private:
 	void cullBullet(Bullet* bullet, int index);
 
 public:
+	// Constructors
+	Engine(int screen_width, int screen_height);
+	
 	// Game Engine Calls
-	void init(int screen_width, int screen_height);
 	void update(float delta, float Width, float Height);
 	void render();
 

@@ -5,8 +5,8 @@
 */
 #include "engine.h"
 
-// Colours
-void Engine::initColours() {
+// Constructors
+Engine::Engine(int screen_width, int screen_height) {
 	// Init colour data
 	highColour.r = 0.004f;
 	highColour.g = 0.922f;
@@ -19,14 +19,8 @@ void Engine::initColours() {
 	warnColour.r = 0.8f;
 	warnColour.g = 0.1f;
 	warnColour.b = 0.1f;
-}
 
-// Game Engine Calls
-void Engine::init(int screen_width, int screen_height) {
-	// Initialise Colours
-	initColours();
-
-	// Update screen size
+	// Set heights
 	screenWidth = screen_width;
 	screenHeight = screen_height;
 }
