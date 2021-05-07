@@ -33,6 +33,9 @@ Engine::Engine(int screen_width, int screen_height) {
 	// Menu
 	menuSelect = 0;
 	menuSelectCoolDown = 0;
+
+	// Rendering engine
+	renderer = new Renderer(screen_width, screen_height);
 }
 
 void Engine::initRound() {
@@ -43,7 +46,7 @@ void Engine::initRound() {
 	createPlayer(screenWidth / 2, screenHeight / 2);
 
 	// Create some asteroids in a ring around the player
-	generateAsteroidBelt(getPlayer()->position.x, getPlayer()->position.y, 1250, 1000, 100);
+	generateAsteroidBelt(getPlayer()->getPosition().x, getPlayer()->getPosition().y, 1250, 1000, 100);
 
 	// Start Game
 	gameState = IN_GAME;
@@ -203,20 +206,20 @@ void Engine::render() {
 	// Render Switch
 	switch (gameState) {
 	case SPLASH:
-		renderSplash();
+		renderer->renderSplash();
 		break;
 	case MENU:
-		renderMenu(menuSelect);
+		renderer->renderMenu(menuSelect);
 		break;
 	case IN_GAME:
-		renderInGame();
+		renderer->renderInGame();
 		break;
 	case PAUSED:
-		renderInGame();
-		renderPause(menuSelect);
+		renderer->renderInGame();
+		renderer->renderPause(menuSelect);
 		break;
 	case GAME_OVER:
-		renderGameOver();
+		renderer->renderGameOver();
 		break;
 	default:
 		break;
@@ -291,7 +294,7 @@ void Engine::inputControls(const char* input, int pressed) {
 		key_select = pressed;
 	}
 	if (input == "test") {
-		getPlayer()->hp -= 1;
+		//getPlayer()->getHp() -= 1;
 	}
 	if (input == "pause") {
 		key_pause = pressed;
@@ -322,7 +325,7 @@ void Engine::gameOver() {
 // Frame update for player data
 void Engine::updatePlayer(float delta, Player* player) {
 	// Update players particle cooldown
-	if (player->particleCoolDown <= 0) {
+	if (player->getParticleCoolDown() <= 0) {
 		player->particleCoolDown = PLAYER_PARTICLE_INTERVAL;
 	}
 	else {
@@ -336,7 +339,7 @@ void Engine::updatePlayer(float delta, Player* player) {
 	fireCannonPlayer(delta);
 
 	// Check player status
-	if (player->hp <= 0) {
+	if (player->getHp() <= 0) {
 		gameOver();
 	}
 }
@@ -349,7 +352,7 @@ void Engine::fireCannonPlayer(float delta) {
 		player->cannonCoolDown = PLAYER_CANNON_COOLDOWN;
 		
 		// Create bullet
-		createBullet(player->position, player->direction);
+		createBullet(player->getPosition(), player->getDirection());
 	}
 
 	// reduce cooldown for players cannon

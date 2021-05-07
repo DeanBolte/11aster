@@ -48,10 +48,10 @@ void physicsCollisions() {
 void asteroidCollisions() {
 	for (int i = 0; i < getAsteroidCount(); ++i) {
 		// Get distance between asteroid and player
-		float distance = vectorLength(subtractVectors(getPlayer()->position, getAsteroid(i)->position));
+		float distance = vectorLength(subtractVectors(getPlayer()->getPosition(), getAsteroid(i)->position));
 
 		// Check for collision circle overlap for player
-		if (distance < getPlayer()->collisionRadius + getAsteroid(i)->collisionRadius) {
+		if (distance < getPlayer()->getCollisionRadius() + getAsteroid(i)->collisionRadius) {
 			getPlayer()->hp = 0;
 		}
 
@@ -172,7 +172,7 @@ void splitAsteroid(Asteroid* asteroid) {
 	// If there is room for more asteroids then split new asteroids
 	for (int i = 0; getAsteroidCount() < MAX_ASTEROIDS && i < 2; ++i) {
 		// Spawn new split asteroid
-		pushAsteroid(initAsteroid(asteroid->position.x + (1 - i * 2) * ASTEROID_SPLIT_RADIUS_MULTIPLIER, asteroid->position.y));
+		pushAsteroid(new Asteroid(asteroid->position.x + (1 - i * 2) * ASTEROID_SPLIT_RADIUS_MULTIPLIER, asteroid->position.y));
 		getAsteroid(getAsteroidCount() - 1)->moveVector = rotateVector(asteroid->moveVector, ASTEROID_SPLIT_ANGLE, (-1 + i * 2));
 		getAsteroid(getAsteroidCount() - 1)->size = asteroid->size - 1;
 	}

@@ -16,6 +16,11 @@
 
 class Asteroid {
 private:
+	
+
+public:
+	Asteroid(float x, float y);
+	
 	PositionVector position;
 	PositionVector moveVector;
 	PositionVector* vertices;
@@ -26,8 +31,5 @@ private:
 	int hp;
 	float spin;
 	float angle;
-
-public:
-	Asteroid(float x, float y);
 
 };

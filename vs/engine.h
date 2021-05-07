@@ -53,6 +53,8 @@ private:
 
 	float screenWidth;
 	float screenHeight;
+
+	Renderer* renderer;
 	
 	// Initialising functions
 	void initRound();

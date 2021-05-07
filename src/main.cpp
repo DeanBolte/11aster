@@ -130,9 +130,9 @@ void on_display()
 	}
 
 	// Highlight Colour
-	glColor3f(highColour.r, highColour.g, highColour.b);
+	glColor3f(0.004f, 0.922f, 0.373f);
 	// Background Colour
-	glClearColor(lowColour.r, lowColour.g, lowColour.b, 1.0);
+	glClearColor(0.145f, 0.204f, 0.184f, 1.0);
 
 	// Call Game Engine to handle rendering
 	engine->render();

@@ -23,3 +23,48 @@ Player::Player(float x, float y) {
 	this->maxVelocity = PLAYER_MAXIMUM_VELOCITY;
 	this->minVelocity = PLAYER_MINIMUM_VELOCITY;
 }
+
+// Access
+PositionVector Player::getPosition() {
+	return position;
+}
+
+PositionVector Player::getMoveVector() {
+	return moveVector;
+}
+
+PositionVector Player::getDirection() {
+	return direction;
+}
+
+int Player::getHp() {
+	return hp;
+}
+
+int Player::getMaxHp() {
+	return maxHp;
+}
+
+float Player::getParticleCoolDown() {
+	return particleCoolDown;
+}
+
+float Player::getCannonCoolDown() {
+	return cannonCoolDown;
+}
+
+float Player::getCollisionRadius() {
+	return collisionRadius;
+}
+
+float Player::getAcceleration() {
+	return acceleration;
+}
+
+float Player::getMaxVelocity() {
+	return maxVelocity;
+}
+
+float Player::GetMinVelocity() {
+	return minVelocity;
+}

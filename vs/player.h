@@ -17,20 +17,37 @@
 
 class Player {
 private:
+	
+
+public:
+	// Constructors
+	Player(float x, float y);
+
+	// Access
+	PositionVector getPosition();
+	PositionVector getMoveVector();
+	PositionVector getDirection();
+	int getHp();
+	int getMaxHp();
+	float getParticleCoolDown();
+	float getCannonCoolDown();
+	float getCollisionRadius();
+	float getAcceleration();
+	float getMaxVelocity();
+	float GetMinVelocity();
+
+	float particleCoolDown;
+	float cannonCoolDown;
+
 	PositionVector position;
 	PositionVector moveVector;
 	PositionVector direction;
 	int hp;
 	int maxHp;
-	float particleCoolDown;
-	float cannonCoolDown;
+
 	float collisionRadius;
 	float acceleration;
 	float maxVelocity;
 	float minVelocity;
-
-public:
-	// Constructors
-	Player(float x, float y);
 	
 };

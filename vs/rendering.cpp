@@ -40,7 +40,7 @@ void Renderer::renderInGame() {
 
 	// create offset for rendering the screen offset from the centre
 	PositionVector renderOffset;
-	renderOffset = multiplyVector(getPlayer()->moveVector, -0.1f);
+	renderOffset = multiplyVector(getPlayer()->getMoveVector(), -0.1f);
 
 	renderUI();
 
@@ -96,8 +96,8 @@ void Renderer::renderMenu(int select) {
 void Renderer::renderPause(int select) {
 	glPushMatrix();
 
-	float x = screenWidth / 8 + (getPlayer()->position.x - screenWidth / 2);
-	float y = screenHeight / 2 + (getPlayer()->position.y - screenHeight / 2);
+	float x = screenWidth / 8 + (getPlayer()->getPosition().x - screenWidth / 2);
+	float y = screenHeight / 2 + (getPlayer()->getPosition().y - screenHeight / 2);
 
 	// Draw menu items
 	for (int i = 0; i < menuItemCount; ++i) {
@@ -126,8 +126,8 @@ void Renderer::renderUI() {
 	Player* player = getPlayer();
 
 	// UI position
-	float x = 36 + (player->position.x - screenWidth / 2);
-	float y = screenHeight - 36 + (player->position.y - screenHeight / 2);
+	float x = 36 + (player->getPosition().x - screenWidth / 2);
+	float y = screenHeight - 36 + (player->getPosition().y - screenHeight / 2);
 
 	// Player health icon
 	glPushMatrix();
@@ -138,12 +138,12 @@ void Renderer::renderUI() {
 	// Player health container
 	glPushMatrix();
 	glTranslatef(x, y, 0.0f);
-	drawContainer(16, player->maxHp * 24, player->hp * 24);
+	drawContainer(16, player->getMaxHp() * 24, player->getHp() * 24);
 	glPopMatrix();
 
 	// Player speed
-	float speed = vectorLength(player->moveVector) / 10;
-	float maxSpeed = player->maxVelocity / 10;
+	float speed = vectorLength(player->getMoveVector()) / 10;
+	float maxSpeed = player->getMaxVelocity() / 10;
 
 	// Player speed icon
 	glPushMatrix();
@@ -187,12 +187,12 @@ void Renderer::renderAsteroids() {
 
 void Renderer::renderPlayer() {
 	if (getPlayer() != NULL) {
-		float x = getPlayer()->position.x;
-		float y = getPlayer()->position.y;
+		float x = getPlayer()->getPosition().x;
+		float y = getPlayer()->getPosition().y;
 
 		glPushMatrix();
 		glTranslatef(x, y, 1.0);
-		glRotatef((vectorAngle(getPlayer()->direction) * 180.0 / PI) - 90, 0.0, 0.0, 1.0);
+		glRotatef((vectorAngle(getPlayer()->getDirection()) * 180.0 / PI) - 90, 0.0, 0.0, 1.0);
 
 		glColor3f(highColour->getRed(), highColour->getGreen(), highColour->getBlue());
 
