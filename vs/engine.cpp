@@ -324,19 +324,25 @@ void Engine::gameOver() {
 // Player action
 // Frame update for player data
 void Engine::updatePlayer(float delta, Player* player) {
-	// Update players particle cooldown
-	if (player->getParticleCoolDown() <= 0) {
-		player->particleCoolDown = PLAYER_PARTICLE_INTERVAL;
-	}
-	else {
-		player->particleCoolDown -= delta;
-	}
-
 	// Player Actions
-	acceleratePlayer(delta, key_up, key_space);
-	rotatePlayer(delta, key_left - key_right);
+	player->acceleratePlayer(delta, key_up);
+	int dir = key_left - key_right;
+	player->rotatePlayer(delta * dir * DEGREE_OF_ROTATION);
+
+	// Space brakes
+	if (key_space == 1) {
+		player->brakePlayer(delta);
+	}
 
 	fireCannonPlayer(delta);
+
+	// Update players particle cooldown
+	if (player->getParticleCoolDown() <= 0) {
+		player->incrementParticleCoolDown(PLAYER_PARTICLE_INTERVAL);
+
+		createParticle(player->getPosition(), player->getDirection(), PLAYER_PARTICLE_SIZE);
+	}
+	player->incrementParticleCoolDown(-delta);
 
 	// Check player status
 	if (player->getHp() <= 0) {
@@ -347,17 +353,17 @@ void Engine::updatePlayer(float delta, Player* player) {
 void Engine::fireCannonPlayer(float delta) {
 	// Create bullet
 	Player* player = getPlayer();
-	if (player->cannonCoolDown <= 0 && getBulletCount() < MAX_BULLETS && key_firing == 1) {
+	if (player->getCannonCoolDown() <= 0 && getBulletCount() < MAX_BULLETS && key_firing == 1) {
 		// Reset cooldown
-		player->cannonCoolDown = PLAYER_CANNON_COOLDOWN;
+		player->incrementCannonCoolDown(PLAYER_CANNON_COOLDOWN);
 		
 		// Create bullet
 		createBullet(player->getPosition(), player->getDirection());
 	}
 
 	// reduce cooldown for players cannon
-	if (player->cannonCoolDown > 0) {
-		player->cannonCoolDown -= delta;
+	if (player->getCannonCoolDown() > 0) {
+		player->incrementCannonCoolDown(-delta);
 	}
 }
 

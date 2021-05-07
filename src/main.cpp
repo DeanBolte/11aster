@@ -122,8 +122,8 @@ void on_display()
 
 	// Move camera
 	if (getPlayer()) {
-		float x = getPlayer()->position.x - port_width / 2;
-		float y = getPlayer()->position.y - port_height / 2;
+		float x = getPlayer()->getPosition().x - port_width / 2;
+		float y = getPlayer()->getPosition().y - port_height / 2;
 		gluLookAt(	x, y, 1.0f,
 					x, y, -1.0f,
 					0.0f, 1.0f, 0.0f);

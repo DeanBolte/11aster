@@ -24,7 +24,7 @@ Player::Player(float x, float y) {
 	this->minVelocity = PLAYER_MINIMUM_VELOCITY;
 }
 
-// Access
+// Movement
 PositionVector Player::getPosition() {
 	return position;
 }
@@ -35,6 +35,36 @@ PositionVector Player::getMoveVector() {
 
 PositionVector Player::getDirection() {
 	return direction;
+}
+
+void Player::rotatePlayer(float degree) {
+	direction = rotateVector(direction, degree, 1);
+}
+
+void Player::acceleratePlayer(float delta, int dir) {
+	// Accelerate player velocity towards player direction
+	// Only accelerate when below max velocity
+	if (dir > 0 && vectorLength(moveVector) <= maxVelocity) {
+		PositionVector accelerate;
+
+		accelerate = multiplyVector(direction, acceleration * dir * delta);
+		PositionVector newMoveVector = addVectors(moveVector, accelerate);
+
+		// slow ship to max velocity
+		if (vectorLength(newMoveVector) < maxVelocity) {
+			moveVector = newMoveVector;
+		}
+	}
+}
+
+void Player::brakePlayer(float delta) {
+	if (vectorLength(moveVector) > PLAYER_MINIMUM_VELOCITY) {
+		PositionVector accelerate = multiplyVector(moveVector, PLAYER_BRAKE_MULTIPLIER * delta);
+		moveVector = subtractVectors(moveVector, accelerate);
+	}
+	else {
+		moveVector = multiplyVector(moveVector, 0);
+	}
 }
 
 // Health

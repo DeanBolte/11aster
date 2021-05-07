@@ -20,8 +20,8 @@ Renderer::Renderer(float screen_width, float screen_height) {
 	warnColour = new Colour(0.8f, 0.1f, 0.1f);
 
 	// set screen dimensions
-	float screenWidth;
-	float screenHeight;
+	screenWidth = screen_width;
+	screenHeight = screen_height;
 }
 
 // Rendering Calls

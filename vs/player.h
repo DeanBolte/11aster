@@ -14,6 +14,10 @@
 #define PLAYER_ACCELERATION 1200.0f
 #define PLAYER_DAMAGE_DEALT 10
 #define PLAYER_PARTICLE_INTERVAL 0.001f
+#define PLAYER_PARTICLE_SIZE 5
+#define PLAYER_BRAKE_MULTIPLIER 2
+
+#define DEGREE_OF_ROTATION 2 * PI
 
 class Player {
 private:
@@ -42,10 +46,13 @@ public:
 	// Constructors
 	Player(float x, float y);
 
-	// Access
+	// Movement
 	PositionVector getPosition();
 	PositionVector getMoveVector();
 	PositionVector getDirection();
+	void rotatePlayer(float degree);
+	void acceleratePlayer(float delta, int dir);
+	void brakePlayer(float delta);
 	
 	// Health
 	int getHp();

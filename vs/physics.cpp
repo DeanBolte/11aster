@@ -52,7 +52,7 @@ void asteroidCollisions() {
 
 		// Check for collision circle overlap for player
 		if (distance < getPlayer()->getCollisionRadius() + getAsteroid(i)->collisionRadius) {
-			getPlayer()->hp = 0;
+			getPlayer()->getHp() = 0;
 		}
 
 		// Check for collisions with other asteroids
@@ -196,42 +196,6 @@ void moveAsteroid(float delta, Asteroid* asteroid) {
 // Player Movement
 void movePlayer(float delta) {
 	getPlayer()->position = movePosition(delta, getPlayer()->position, getPlayer()->moveVector);
-}
-
-void rotatePlayer(float delta, int dir) {
-	getPlayer()->direction = rotateVector(getPlayer()->direction, DEGREE_OF_ROTATION * delta, dir);
-}
-
-void acceleratePlayer(float delta, int dir, int brake) {
-	// Accelerate player velocity towards player direction
-	// Only accelerate when below max velocity
-	if (dir > 0 && vectorLength(getPlayer()->moveVector) <= getPlayer()->maxVelocity) {
-		PositionVector accelerate;
-
-		accelerate = multiplyVector(getPlayer()->direction, getPlayer()->acceleration * dir * delta);
-		PositionVector newMoveVector = addVectors(getPlayer()->moveVector, accelerate);
-
-		// slow ship to max velocity
-		if (vectorLength(newMoveVector) < getPlayer()->maxVelocity) {
-			getPlayer()->moveVector = newMoveVector;
-		}
-
-		// Create engine particles
-		if (getPlayer()->particleCoolDown <= 0) {
-			createParticle(getPlayer()->position, getPlayer()->direction, PLAYER_PARTICLE_SIZE);
-		}
-	}
-
-	// Space brakes
-	if (brake == 1) {
-		if (vectorLength(getPlayer()->moveVector) > PLAYER_MINIMUM_VELOCITY) {
-			PositionVector accelerate = multiplyVector(getPlayer()->moveVector, 2 * delta);
-			getPlayer()->moveVector = subtractVectors(getPlayer()->moveVector, accelerate);
-		}
-		else {
-			getPlayer()->moveVector = multiplyVector(getPlayer()->moveVector, 0);
-		}
-	}
 }
 
 // Bullet Movement

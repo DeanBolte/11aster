@@ -7,14 +7,6 @@
 
 #include "objects.h"
 
-#define DEGREE_OF_ROTATION 2 * PI
-#define PLAYER_PARTICLE_SIZE 5
-
-#define ASTEROID_PUFF_SIZE 20
-#define ASTEROID_SPLIT_RADIUS_MULTIPLIER 5
-#define ASTEROID_SPLIT_ANGLE PI / 6
-#define ASTEROID_PUFF_COUNT 50
-
 // Physics Engine Calls
 void physicsMovements(float delta);
 void physicsCollisions();
@@ -37,8 +29,6 @@ void moveAsteroid(float delta, Asteroid* asteroid);
 
 // Player Movement
 void movePlayer(float delta);
-void rotatePlayer(float delta, int dir);
-void acceleratePlayer(float delta, int dir, int brake);
 
 // Bullet Movement
 void moveBullets(float delta);
