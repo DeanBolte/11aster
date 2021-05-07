@@ -158,6 +158,7 @@
     <ClCompile Include="objects.cpp" />
     <ClCompile Include="engine.cpp" />
     <ClCompile Include="physics.cpp" />
+    <ClCompile Include="player.cpp" />
     <ClCompile Include="rendering.cpp" />
     <ClCompile Include="rgb.cpp" />
     <ClCompile Include="util.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="objects.h" />
     <ClInclude Include="engine.h" />
     <ClInclude Include="physics.h" />
+    <ClInclude Include="player.h" />
     <ClInclude Include="rendering.h" />
     <ClInclude Include="rgb.h" />
     <ClInclude Include="util.h" />

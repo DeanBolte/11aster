@@ -21,6 +21,7 @@
     <ClCompile Include="physics.cpp" />
     <ClCompile Include="rendering.cpp" />
     <ClCompile Include="rgb.cpp" />
+    <ClCompile Include="player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="objects.h">
@@ -35,5 +36,6 @@
     <ClInclude Include="physics.h" />
     <ClInclude Include="rendering.h" />
     <ClInclude Include="rgb.h" />
+    <ClInclude Include="player.h" />
   </ItemGroup>
 </Project>

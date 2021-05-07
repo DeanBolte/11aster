@@ -6,6 +6,7 @@
 #pragma once
 
 #include "util.h"
+#include "player.h"
 
 #define MAX_ASTEROIDS 500
 #define MAX_BULLETS 100
@@ -20,14 +21,6 @@
 #define ASTEROID_VARIANCE 4
 #define MAX_ASTEROID_VARIANCE 4
 #define ASTEROID_HP_MULTIPLIER 3;
-
-#define PLAYER_COLLISION_RADIUS 20.0
-#define PLAYER_CANNON_COOLDOWN 0.2
-#define PLAYER_MAXIMUM_VELOCITY 1000.0
-#define PLAYER_MINIMUM_VELOCITY 10
-#define PLAYER_ACCELERATION 1200.0
-#define PLAYER_DAMAGE_DEALT 10;
-#define PLAYER_PARTICLE_INTERVAL 0.001
 
 #define PARTICLE_DECAY_SPEED 30
 
@@ -46,20 +39,6 @@ typedef struct Asteroid {
 	float spin;
 	float angle;
 } Asteroid;
-
-typedef struct Player {
-	PositionVector position;
-	PositionVector moveVector;
-	PositionVector direction;
-	int hp;
-	int maxHp;
-	float particleCoolDown;
-	float cannonCoolDown;
-	float collisionRadius;
-	float acceleration;
-	float maxVelocity;
-	float minVelocity;
-} Player;
 
 typedef struct Bullet {
 	PositionVector position;
@@ -86,7 +65,6 @@ typedef struct BlackHole {
 
 // Object Initialisation
 Asteroid* initAsteroid(float x, float y);
-Player* initPlayer(float x, float y);
 Bullet* initBullet();
 Particle* initParticle(PositionVector position, PositionVector direction, int maxSize);
 BlackHole* initBlackHole(PositionVector position);

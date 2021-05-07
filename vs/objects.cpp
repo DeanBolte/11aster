@@ -67,27 +67,6 @@ Asteroid* initAsteroid(float x, float y) {
 	return asteroid;
 }
 
-Player* initPlayer(float x, float y) {
-	Player* player = new Player;
-
-	player->position.x = x;
-	player->position.y = y;
-	player->moveVector.x = 0;
-	player->moveVector.y = 0;
-	player->direction.x = 0.866;
-	player->direction.y = 0.5;
-	player->hp = 5;
-	player->maxHp = 5;
-	// Cooldowns in seconds
-	player->cannonCoolDown = 0;
-	player->particleCoolDown = 0;
-	player->collisionRadius = PLAYER_COLLISION_RADIUS;
-	player->acceleration = PLAYER_ACCELERATION;
-	player->maxVelocity = PLAYER_MAXIMUM_VELOCITY;
-	player->minVelocity = PLAYER_MINIMUM_VELOCITY;
-	return player;
-}
-
 Bullet* initBullet() {
 	Bullet* bullet = new Bullet;
 	return bullet;
@@ -134,7 +113,7 @@ void createAsteroid(float x, float y) {
 
 void createPlayer(float x, float y) {
 	freePlayer();
-	playerData = initPlayer(x, y);
+	playerData = new Player(x, y);
 }
 
 void createParticle(PositionVector position, PositionVector velocity, int maxSize) {
@@ -331,7 +310,7 @@ void destructAsteroid(Asteroid* asteroid) {
 }
 
 void destructPlayer(Player* player) {
-	free(player);
+	delete player;
 }
 
 void destructBullet(Bullet* bullet) {
