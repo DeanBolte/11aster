@@ -155,6 +155,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="asteroid.cpp" />
     <ClCompile Include="objects.cpp" />
     <ClCompile Include="engine.cpp" />
     <ClCompile Include="physics.cpp" />
@@ -164,6 +165,7 @@
     <ClCompile Include="util.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="asteroid.h" />
     <ClInclude Include="objects.h" />
     <ClInclude Include="engine.h" />
     <ClInclude Include="physics.h" />

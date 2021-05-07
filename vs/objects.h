@@ -7,6 +7,7 @@
 
 #include "util.h"
 #include "player.h"
+#include "asteroid.h"
 
 #define MAX_ASTEROIDS 500
 #define MAX_BULLETS 100
@@ -15,30 +16,10 @@
 
 #define BULLET_VECOLITY 1000.0
 
-#define ASTEROID_SPIN 6
-#define ASTEROID_VERTEX_COUNT 8
-#define ASTEROID_BASE_SIZE 16
-#define ASTEROID_VARIANCE 4
-#define MAX_ASTEROID_VARIANCE 4
-#define ASTEROID_HP_MULTIPLIER 3;
-
 #define PARTICLE_DECAY_SPEED 30
 
 #define BLACKHOLE_RADIUS 20
 #define GRAVITY_MULTIPLIER 2000000
-
-typedef struct Asteroid {
-	PositionVector position;
-	PositionVector moveVector;
-	PositionVector* vertices;
-	int inside;
-	float collisionRadius;
-	int vertexCount;
-	int size;
-	int hp;
-	float spin;
-	float angle;
-} Asteroid;
 
 typedef struct Bullet {
 	PositionVector position;
@@ -64,7 +45,6 @@ typedef struct BlackHole {
 } BlackHole;
 
 // Object Initialisation
-Asteroid* initAsteroid(float x, float y);
 Bullet* initBullet();
 Particle* initParticle(PositionVector position, PositionVector direction, int maxSize);
 BlackHole* initBlackHole(PositionVector position);

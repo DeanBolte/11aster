@@ -21,52 +21,6 @@ int particleCount = 0;
 BlackHole* blackHoleArray[MAX_BLACKHOLES];
 int blackHoleCount = 0;
 
-// Object Initialisation
-Asteroid* initAsteroid(float x, float y) {
-	// Create and return the asteroid struct where requested
-	Asteroid* asteroid = new Asteroid;
-	
-	// initialise variables
-	asteroid->position.x = x;
-	asteroid->position.y = y;
-	asteroid->moveVector.x = 0; 
-	asteroid->moveVector.y = 0;
-	asteroid->inside = 0;
-	asteroid->vertexCount = ASTEROID_VERTEX_COUNT;
-	asteroid->size = rand() % 2 + 1;
-	asteroid->hp = asteroid->size * ASTEROID_HP_MULTIPLIER;
-	asteroid->angle = PI/2;
-	asteroid->spin = rand() % ASTEROID_SPIN - ASTEROID_SPIN / 2;
-
-	// Collision
-	asteroid->collisionRadius = asteroid->size + ASTEROID_BASE_SIZE + ASTEROID_VARIANCE * asteroid->size / 2;
-
-	// Create vertices
-	asteroid->vertices[asteroid->vertexCount];
-
-	PositionVector vertex;
-	vertex.x = rand() % ASTEROID_VARIANCE - ASTEROID_VARIANCE / 2;
-	vertex.y = rand() % ASTEROID_VARIANCE + ASTEROID_BASE_SIZE;
-	for (int i = 0; i < asteroid->vertexCount; ++i) {
-		asteroid->vertices[i] = vertex;
-		vertex.x += rand() % ASTEROID_VARIANCE - ASTEROID_VARIANCE / 4;
-		vertex.y += rand() % ASTEROID_VARIANCE - ASTEROID_VARIANCE / 4;
-		// check for variance limit to prevent oversized or undersized asteroids
-		if (vectorLength(vertex) > ASTEROID_BASE_SIZE + MAX_ASTEROID_VARIANCE) {
-			float vectorScaler = (ASTEROID_BASE_SIZE + MAX_ASTEROID_VARIANCE) / vectorLength(vertex);
-			vertex = multiplyVector(vertex, vectorScaler);
-		} 
-		else if (vectorLength(vertex) < ASTEROID_BASE_SIZE - 1.5 * MAX_ASTEROID_VARIANCE) {
-			float vectorScaler = (ASTEROID_BASE_SIZE - MAX_ASTEROID_VARIANCE) / vectorLength(vertex);
-			vertex = multiplyVector(vertex, vectorScaler);
-		}
-
-		vertex = rotateVector(vertex, (2 * PI) / asteroid->vertexCount, 1);
-	}
-	
-	return asteroid;
-}
-
 Bullet* initBullet() {
 	Bullet* bullet = new Bullet;
 	return bullet;
@@ -105,7 +59,7 @@ BlackHole* initBlackHole(PositionVector position) {
 // Object Creation
 void createAsteroid(float x, float y) {
 	if (asteroidCount < MAX_ASTEROIDS) {
-		Asteroid* asteroid = initAsteroid(x, y);
+		Asteroid* asteroid = new Asteroid(x, y);
 		asteroidArray[asteroidCount] = asteroid;
 		++asteroidCount;
 	}

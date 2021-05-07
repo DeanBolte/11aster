@@ -22,6 +22,7 @@
     <ClCompile Include="rendering.cpp" />
     <ClCompile Include="rgb.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="asteroid.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="objects.h">
@@ -37,5 +38,6 @@
     <ClInclude Include="rendering.h" />
     <ClInclude Include="rgb.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="asteroid.h" />
   </ItemGroup>
 </Project>
