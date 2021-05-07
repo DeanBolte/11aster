@@ -37,20 +37,17 @@ PositionVector Player::getDirection() {
 	return direction;
 }
 
+// Health
 int Player::getHp() {
 	return hp;
 }
 
+void Player::incrementHp(int increment) {
+	hp += increment;
+}
+
 int Player::getMaxHp() {
 	return maxHp;
-}
-
-float Player::getParticleCoolDown() {
-	return particleCoolDown;
-}
-
-float Player::getCannonCoolDown() {
-	return cannonCoolDown;
 }
 
 float Player::getCollisionRadius() {
@@ -67,4 +64,21 @@ float Player::getMaxVelocity() {
 
 float Player::GetMinVelocity() {
 	return minVelocity;
+}
+
+// Cooldowns
+float Player::getParticleCoolDown() {
+	return particleCoolDown;
+}
+
+void Player::incrementParticleCoolDown(float increment) {
+	particleCoolDown += increment;
+}
+
+float Player::getCannonCoolDown() {
+	return cannonCoolDown;
+}
+
+void Player::incrementCannonCoolDown(float increment) {
+	cannonCoolDown += increment;
 }
