@@ -84,11 +84,6 @@ typedef struct BlackHole {
 	int pulseDirection;
 } BlackHole;
 
-// Colours
-RGB highColour;
-RGB lowColour;
-RGB warnColour;
-
 // Object Initialisation
 Asteroid* initAsteroid(float x, float y);
 Player* initPlayer(float x, float y);

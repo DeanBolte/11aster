@@ -6,21 +6,21 @@
 
 #include "rgb.h"
 
-RGB::RGB(float r, float g, float b) {
+Colour::Colour(float r, float g, float b) {
 	this->r = r;
 	this->g = g;
 	this->b = b;
 }
 
 // Access
-float RGB::getRed() {
+float Colour::getRed() {
 	return r;
 }
 
-float RGB::getGreen() {
+float Colour::getGreen() {
 	return g;
 }
 
-float RGB::getBlue() {
+float Colour::getBlue() {
 	return b;
 }

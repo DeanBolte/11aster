@@ -5,13 +5,13 @@
 */
 #pragma once
 
-class RGB {
+class Colour {
 private:
 	// Colour values
 	float r, g, b;
 public:
 	// Constructors
-	RGB(float r, float g, float b);
+	Colour(float r, float g, float b);
 
 	// Access
 	float getRed();

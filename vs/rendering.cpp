@@ -12,8 +12,20 @@ int menuItemCount = 3;
 const char* menuItems[3] = { "Play", "Options", "Exit" };
 float menuSelectorAngle = 0;
 
+// Constructors
+Renderer::Renderer(float screen_width, float screen_height) {
+	// Init colour data
+	highColour = new Colour(0.004f, 0.922f, 0.373f);
+	lowColour = new Colour(0.145f, 0.204f, 0.184f);
+	warnColour = new Colour(0.8f, 0.1f, 0.1f);
+
+	// set screen dimensions
+	float screenWidth;
+	float screenHeight;
+}
+
 // Rendering Calls
-void renderSplash() {
+void Renderer::renderSplash() {
 	glPushMatrix();
 
 	drawText(screenWidth / 2 - 1.5 * glutStrokeWidth(GLUT_STROKE_ROMAN, 'A'), screenHeight / 1.4, "11Aster", 7, 0.5);
@@ -22,7 +34,7 @@ void renderSplash() {
 	glPopMatrix();
 }
 
-void renderInGame() {
+void Renderer::renderInGame() {
 	// InGame Global Render
 	glPushMatrix();
 
@@ -44,7 +56,7 @@ void renderInGame() {
 	glPopMatrix();
 }
 
-void renderGameOver() {
+void Renderer::renderGameOver() {
 	glPushMatrix();
 
 	drawText(screenWidth / 2 - 4 / 2 * glutStrokeWidth(GLUT_STROKE_ROMAN, 'G'), screenHeight / 1.4, "Game Over.", 10, 0.5);
@@ -53,7 +65,7 @@ void renderGameOver() {
 	glPopMatrix();
 }
 
-void renderMenu(int select) {
+void Renderer::renderMenu(int select) {
 	glPushMatrix();
 
 	float x = screenWidth / 8;
@@ -81,7 +93,7 @@ void renderMenu(int select) {
 	glPopMatrix();
 }
 
-void renderPause(int select) {
+void Renderer::renderPause(int select) {
 	glPushMatrix();
 
 	float x = screenWidth / 8 + (getPlayer()->position.x - screenWidth / 2);
@@ -109,7 +121,7 @@ void renderPause(int select) {
 	glPopMatrix();
 }
 
-void renderUI() {
+void Renderer::renderUI() {
 	// Player UI
 	Player* player = getPlayer();
 
@@ -156,7 +168,7 @@ void renderUI() {
 }
 
 // Object Rendering
-void renderAsteroids() {
+void Renderer::renderAsteroids() {
 	// Create the asteroid in OpenGl
 	for (int i = 0; i < getAsteroidCount(); ++i) {
 		float x = getAsteroid(i)->position.x;
@@ -165,7 +177,7 @@ void renderAsteroids() {
 		glTranslatef(x, y, 1.0);
 		glRotatef((getAsteroid(i)->angle * 180.0 / PI) - 90, 0.0, 0.0, 1.0);
 
-		glColor3f(highColour.r, highColour.g, highColour.b);
+		glColor3f(highColour->getRed(), highColour->getGreen(), highColour->getBlue());
 
 		drawAsteroid(getAsteroid(i)->vertices, getAsteroid(i)->vertexCount, getAsteroid(i)->size);
 
@@ -173,7 +185,7 @@ void renderAsteroids() {
 	}
 }
 
-void renderPlayer() {
+void Renderer::renderPlayer() {
 	if (getPlayer() != NULL) {
 		float x = getPlayer()->position.x;
 		float y = getPlayer()->position.y;
@@ -182,7 +194,7 @@ void renderPlayer() {
 		glTranslatef(x, y, 1.0);
 		glRotatef((vectorAngle(getPlayer()->direction) * 180.0 / PI) - 90, 0.0, 0.0, 1.0);
 
-		glColor3f(highColour.r, highColour.g, highColour.b);
+		glColor3f(highColour->getRed(), highColour->getGreen(), highColour->getBlue());
 
 		drawPlayer();
 
@@ -190,7 +202,7 @@ void renderPlayer() {
 	}
 }
 
-void renderBullets() {
+void Renderer::renderBullets() {
 	for (int i = 0; i < getBulletCount(); ++i) {
 		float x = getBullet(i)->position.x;
 		float y = getBullet(i)->position.y;
@@ -198,7 +210,7 @@ void renderBullets() {
 		glPushMatrix();
 		glTranslatef(x, y, 1.0);
 
-		glColor3f(highColour.r, highColour.g, highColour.b);
+		glColor3f(highColour->getRed(), highColour->getGreen(), highColour->getBlue());
 
 		drawBullet();
 
@@ -206,7 +218,7 @@ void renderBullets() {
 	}
 }
 
-void renderEngineParticles() {
+void Renderer::renderEngineParticles() {
 	for (int i = 0; i < getParticleCount(); ++i) {
 		float x = getParticle(i)->position.x;
 		float y = getParticle(i)->position.y;
@@ -215,7 +227,7 @@ void renderEngineParticles() {
 		glTranslatef(x, y, 1.0);
 		glRotatef((getParticle(i)->angle * 180.0 / PI) - 90, 0, 0, 1.0);
 
-		glColor3f(highColour.r, highColour.g, highColour.b);
+		glColor3f(highColour->getRed(), highColour->getGreen(), highColour->getBlue());
 
 		drawPentagon(getParticle(i)->size);
 
@@ -223,12 +235,12 @@ void renderEngineParticles() {
 	}
 }
 
-void renderBlackHoles() {
+void Renderer::renderBlackHoles() {
 	for (int i = 0; i < getBlackHoleCount(); ++i) {
 		glPushMatrix();
 		glTranslatef(getBlackHole(i)->position.x, getBlackHole(i)->position.y, 1.0);
 
-		glColor3f(highColour.r, highColour.g, highColour.b);
+		glColor3f(highColour->getRed(), highColour->getGreen(), highColour->getBlue());
 
 		drawBlackHole(getBlackHole(i));
 
@@ -237,7 +249,7 @@ void renderBlackHoles() {
 }
 
 // Object Rendering
-void drawAsteroid(PositionVector* vertices, int vertexCount, int size) {
+void Renderer::drawAsteroid(PositionVector* vertices, int vertexCount, int size) {
 	glBegin(GL_LINE_LOOP);
 	for (int i = 0; i < vertexCount; ++i) {
 		glVertex2f(vertices[i].x * size, vertices[i].y * size);
@@ -245,7 +257,7 @@ void drawAsteroid(PositionVector* vertices, int vertexCount, int size) {
 	glEnd();
 }
 
-void drawPlayer() {
+void Renderer::drawPlayer() {
 	glBegin(GL_LINE_LOOP);
 	glVertex2f(-20, -20);
 	glVertex2f(0, 20);
@@ -254,16 +266,16 @@ void drawPlayer() {
 	glEnd();
 }
 
-void drawBullet() {
+void Renderer::drawBullet() {
 	drawPentagon(3);
 }
 
-void drawBlackHole(BlackHole* bh) {
+void Renderer::drawBlackHole(BlackHole* bh) {
 	drawCircle(bh->radius);
 }
 
 // Rendering Shapes
-void drawPentagon(float radius) {
+void Renderer::drawPentagon(float radius) {
 	glBegin(GL_LINE_LOOP);
 	glVertex2f(0, 1 * radius);
 	glVertex2f(0.9511 * radius, 0.309 * radius);
@@ -273,7 +285,7 @@ void drawPentagon(float radius) {
 	glEnd();
 }
 
-void drawCircle(float radius) {
+void Renderer::drawCircle(float radius) {
 	glBegin(GL_LINE_LOOP);
 	for (int i = 0; i < 360; ++i) {
 		glVertex2f(cos(i * PI / 180) * radius, sin(i * PI / 180) * radius);
@@ -281,7 +293,7 @@ void drawCircle(float radius) {
 	glEnd();
 }
 
-void drawHeart(float size) {
+void Renderer::drawHeart(float size) {
 	// semicircle offset values
 	float xOffset = size * cos(PI / 4) / 2;
 	float yOffset = size * sin(PI / 4) / 2;
@@ -311,7 +323,7 @@ void drawHeart(float size) {
 	glPopMatrix();
 }
 
-void drawSemiCircle(float radius) {
+void Renderer::drawSemiCircle(float radius) {
 	glBegin(GL_POLYGON);
 	for (int i = 0; i < 180; ++i) {
 		glVertex2f(cos(i * PI / 180) * radius, sin(i * PI / 180) * radius);
@@ -319,7 +331,7 @@ void drawSemiCircle(float radius) {
 	glEnd();
 }
 
-void drawContainer(float height, float length, float fill) {
+void Renderer::drawContainer(float height, float length, float fill) {
 	// Draw container
 	glPushMatrix();
 
@@ -346,7 +358,7 @@ void drawContainer(float height, float length, float fill) {
 }
 
 // Rendering Other
-void drawText(float x, float y, const char* text, int length, float size) {
+void Renderer::drawText(float x, float y, const char* text, int length, float size) {
 	glPushMatrix();
 	glTranslatef(x, y, 0.0);
 	glScalef(size, size, 1.0);

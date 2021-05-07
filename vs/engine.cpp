@@ -7,19 +7,6 @@
 
 // Constructors
 Engine::Engine(int screen_width, int screen_height) {
-	// Init colour data
-	highColour.r = 0.004f;
-	highColour.g = 0.922f;
-	highColour.b = 0.373f;
-
-	lowColour.r = 0.145f;
-	lowColour.g = 0.204f;
-	lowColour.b = 0.184f;
-
-	warnColour.r = 0.8f;
-	warnColour.g = 0.1f;
-	warnColour.b = 0.1f;
-
 	// Set heights
 	screenWidth = screen_width;
 	screenHeight = screen_height;
