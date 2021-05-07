@@ -13,7 +13,7 @@ public:
 	// Constructors
 	Colour(float r, float g, float b);
 
-	// Access
+	// Access colours
 	float getRed();
 	float getGreen();
 	float getBlue();

@@ -12,7 +12,7 @@ Colour::Colour(float r, float g, float b) {
 	this->b = b;
 }
 
-// Access
+// Access colours
 float Colour::getRed() {
 	return r;
 }
