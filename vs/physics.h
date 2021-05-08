@@ -18,10 +18,3 @@ void asteroidCollisions();
 // Asteroid Physics
 void explodeAsteroid(int index);
 void splitAsteroid(Asteroid* asteroid);
-
-// Movement
-// Movement calls
-PositionVector movePosition(float delta, PositionVector position, PositionVector movement);
-
-// Particle Movement
-void moveParticles(float delta);

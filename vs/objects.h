@@ -9,35 +9,22 @@
 #include "player.h"
 #include "asteroid.h"
 #include "bullet.h"
+#include "particle.h"
 
 #define MAX_ASTEROIDS 500
 #define MAX_BULLETS 100
 #define MAX_ENGINE_PARTICLES 1000
-#define MAX_BLACKHOLES 3
+#define MAX_BLACKHOLES 
 
 #define BULLET_VECOLITY 1000.0
-
-#define PARTICLE_DECAY_SPEED 30
 
 #define BLACKHOLE_RADIUS 20
 #define GRAVITY_MULTIPLIER 2000000
 
-typedef struct Particle {
-	PositionVector position;
-	PositionVector moveVector;
-	float decaySpeed;
-	float spin;
-	float angle;
-	float size;
-} Particle;
-
-// Object Initialisation
-Particle* initParticle(PositionVector position, PositionVector direction, int maxSize);
-
 // Object Creation
 void createAsteroid(float x, float y);
 void createPlayer(float x, float y);
-void createParticle(PositionVector position, PositionVector velocity, int maxSize);
+void createParticle(PositionVector position, PositionVector moveVector);
 void createBullet(PositionVector position, PositionVector direction);
 
 // Object Access

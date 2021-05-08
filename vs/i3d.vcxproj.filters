@@ -24,6 +24,7 @@
     <ClCompile Include="player.cpp" />
     <ClCompile Include="asteroid.cpp" />
     <ClCompile Include="bullet.cpp" />
+    <ClCompile Include="particle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="objects.h">
@@ -41,5 +42,6 @@
     <ClInclude Include="player.h" />
     <ClInclude Include="asteroid.h" />
     <ClInclude Include="bullet.h" />
+    <ClInclude Include="particle.h" />
   </ItemGroup>
 </Project>

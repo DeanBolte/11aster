@@ -18,24 +18,6 @@ Player* playerData = NULL;
 Particle* particleArray[MAX_ENGINE_PARTICLES];
 int particleCount = 0;
 
-Particle* initParticle(PositionVector position, PositionVector direction, int maxSize) {
-	Particle* particle = new Particle;
-
-	// positon = player position + randomness - player direction
-	// player direction is subtracted to spawn particles at the back of the ship
-	particle->position.x = position.x + (rand() % 10 - 5) - direction.x * 10;
-	particle->position.y = position.y + (rand() % 10 - 5) - direction.y * 10;
-
-	// velocity is based on the inverse direction of acceleration of the player + some randomness
-	particle->moveVector.x = -direction.x * 1000 + rand() % 200;
-	particle->moveVector.y = -direction.y * 1000 + rand() % 200;
-	particle->decaySpeed = rand() % (PARTICLE_DECAY_SPEED / 2) + PARTICLE_DECAY_SPEED;
-	particle->size = rand() % maxSize;
-	particle->spin = rand() % 5 - 2.5;
-	particle->angle = PI / 2;
-	return particle;
-}
-
 // Object Creation
 void createAsteroid(float x, float y) {
 	if (asteroidCount < MAX_ASTEROIDS) {
@@ -50,9 +32,9 @@ void createPlayer(float x, float y) {
 	playerData = new Player(x, y);
 }
 
-void createParticle(PositionVector position, PositionVector velocity, int maxSize) {
+void createParticle(PositionVector position, PositionVector moveVector) {
 	if (particleCount < MAX_ENGINE_PARTICLES) {
-		Particle* particle = initParticle(position, velocity, maxSize);
+		Particle* particle = new Particle(position, moveVector);
 		particleArray[particleCount] = particle;
 		++particleCount;
 	}

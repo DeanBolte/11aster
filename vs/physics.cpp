@@ -22,7 +22,20 @@ void physicsMovements(float delta) {
 	}
 
 	// Update particle positions
-	moveParticles(delta);
+	for (int i = 0; i < getParticleCount(); ++i) {
+		// Move particle
+		Particle* particle = getParticle(i);
+		particle->update(delta);
+
+		// Theres an issue here, cullEngineParticle removes the engine particle struct before movebullets is complete, potentially skipping a bullet
+		// or worse, potentially causing undefined behaviour
+		// Decrease size
+		particle->decay(delta);
+		if (particle->getSize() <= 0) {
+			freeParticle(i);
+			--i;
+		}
+	}
 }
 
 void physicsCollisions() {
@@ -136,38 +149,5 @@ void splitAsteroid(Asteroid* asteroid) {
 		pushAsteroid(new Asteroid(asteroid->position.x + (1 - i * 2) * ASTEROID_SPLIT_RADIUS_MULTIPLIER, asteroid->position.y));
 		getAsteroid(getAsteroidCount() - 1)->moveVector = rotateVector(asteroid->moveVector, ASTEROID_SPLIT_ANGLE, (-1 + i * 2));
 		getAsteroid(getAsteroidCount() - 1)->size = asteroid->size - 1;
-	}
-}
-
-// Movement
-PositionVector movePosition(float delta, PositionVector position, PositionVector movement) {
-	movement.x *= delta;
-	movement.y *= delta;
-	return addVectors(position, movement);
-}
-
-// Engine Particle Movement
-void moveParticles(float delta) {
-	for (int i = 0; i < getParticleCount(); ++i) {
-		// Move particle
-		Particle* particle = getParticle(i);
-		particle->position = movePosition(delta, particle->position, particle->moveVector);
-
-		// Spin particle
-		particle->angle += particle->spin * delta;
-		if (particle->angle >= 2 * PI) {
-			particle->angle -= 2 * PI;
-		}
-		else if (particle->angle <= 0) {
-			particle->angle += 2 * PI;
-		}
-
-		// Theres an issue here, cullEngineParticle removes the engine particle struct before movebullets is complete, potentially skipping a bullet
-		// or worse, potentially causing undefined behaviour
-		// Decrease size
-		particle->size -= particle->decaySpeed * delta;
-		if (particle->size <= 0) {
-			freeParticle(i);
-		}
 	}
 }
