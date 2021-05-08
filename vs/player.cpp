@@ -6,6 +6,7 @@
 
 #include "player.h"
 
+// Constructors
 Player::Player(float x, float y) {
 	this->position.x = x;
 	this->position.y = y;
@@ -22,6 +23,19 @@ Player::Player(float x, float y) {
 	this->acceleration = PLAYER_ACCELERATION;
 	this->maxVelocity = PLAYER_MAXIMUM_VELOCITY;
 	this->minVelocity = PLAYER_MINIMUM_VELOCITY;
+}
+
+// Update calls
+void Player::update(float delta) {
+	// Update position
+	move(delta);
+
+	// Update
+}
+
+// Player Movement
+void Player::move(float delta) {
+	position = addVectors(position, multiplyVector(moveVector, delta));
 }
 
 // Movement

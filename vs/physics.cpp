@@ -14,11 +14,11 @@ void physicsMovements(float delta) {
 
 	// Update asteroid positions
 	for (int i = 0; i < getAsteroidCount(); ++i) {
-		moveAsteroid(delta, getAsteroid(i));
+		getAsteroid(i)->update(delta);
 	}
 
-	// Update player position
-	movePlayer(delta);
+	// Update player
+	getPlayer()->update(delta);
 
 	// Update bullet positions
 	moveBullets(delta);
@@ -191,19 +191,6 @@ PositionVector movePosition(float delta, PositionVector position, PositionVector
 	movement.x *= delta;
 	movement.y *= delta;
 	return addVectors(position, movement);
-}
-
-// Asteroid movement
-void moveAsteroid(float delta, Asteroid* asteroid) {
-	asteroid->position = movePosition(delta, asteroid->position, asteroid->moveVector);
-
-	// Spin
-	asteroid->angle += asteroid->spin * delta;
-}
-
-// Player Movement
-void movePlayer(float delta) {
-	getPlayer()->position = movePosition(delta, getPlayer()->position, getPlayer()->moveVector);
 }
 
 // Bullet Movement

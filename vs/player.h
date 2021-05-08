@@ -43,9 +43,15 @@ private:
 	float particleCoolDown;
 	float cannonCoolDown;
 
+	// Update functions
+	void move(float delta);
+
 public:
 	// Constructors
 	Player(float x, float y);
+
+	// Update calls
+	void update(float delta);
 
 	// Movement
 	PositionVector getPosition();

@@ -31,8 +31,15 @@ private:
 	float spin;
 	float angle;
 
+	// Update functions
+	void move(float delta);
+
 public:
+	// Constructors
 	Asteroid(float x, float y);
+
+	// Update calls
+	void update(float delta);
 	
 	// Movement
 	PositionVector getPosition();

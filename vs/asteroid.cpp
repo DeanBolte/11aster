@@ -49,6 +49,19 @@ Asteroid::Asteroid(float x, float y) {
 	}
 }
 
+// Update calls
+void Asteroid::update(float delta) {
+	// Update position
+	move(delta);
+
+	// Spin
+	angle += spin * delta;
+}
+
+void Asteroid::move(float delta) {
+	position = addVectors(position, multiplyVector(moveVector, delta));
+}
+
 // Movement
 PositionVector Asteroid::getPosition() {
 	return position;
