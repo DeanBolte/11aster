@@ -170,15 +170,15 @@ void Renderer::renderUI() {
 void Renderer::renderAsteroids() {
 	// Create the asteroid in OpenGl
 	for (int i = 0; i < getAsteroidCount(); ++i) {
-		float x = getAsteroid(i)->position.x;
-		float y = getAsteroid(i)->position.y;
+		float x = getAsteroid(i)->getPosition().x;
+		float y = getAsteroid(i)->getPosition().y;
 		glPushMatrix();
 		glTranslatef(x, y, 1.0);
-		glRotatef((getAsteroid(i)->angle * 180.0 / PI) - 90, 0.0, 0.0, 1.0);
+		glRotatef((getAsteroid(i)->getAngle() * 180.0 / PI) - 90, 0.0, 0.0, 1.0);
 
 		glColor3f(highColour->getRed(), highColour->getGreen(), highColour->getBlue());
 
-		drawAsteroid(getAsteroid(i)->vertices, getAsteroid(i)->vertexCount, getAsteroid(i)->size);
+		drawAsteroid(getAsteroid(i));
 
 		glPopMatrix();
 	}
@@ -203,8 +203,8 @@ void Renderer::renderPlayer() {
 
 void Renderer::renderBullets() {
 	for (int i = 0; i < getBulletCount(); ++i) {
-		float x = getBullet(i)->position.x;
-		float y = getBullet(i)->position.y;
+		float x = getBullet(i)->getPosition().x;
+		float y = getBullet(i)->getPosition().y;
 
 		glPushMatrix();
 		glTranslatef(x, y, 1.0);
@@ -219,26 +219,26 @@ void Renderer::renderBullets() {
 
 void Renderer::renderEngineParticles() {
 	for (int i = 0; i < getParticleCount(); ++i) {
-		float x = getParticle(i)->position.x;
-		float y = getParticle(i)->position.y;
+		float x = getParticle(i)->getPosition().x;
+		float y = getParticle(i)->getPosition().y;
 
 		glPushMatrix();
 		glTranslatef(x, y, 1.0);
-		glRotatef((getParticle(i)->angle * 180.0 / PI) - 90, 0, 0, 1.0);
+		glRotatef((getParticle(i)->getAngle() * 180.0 / PI) - 90, 0, 0, 1.0);
 
 		glColor3f(highColour->getRed(), highColour->getGreen(), highColour->getBlue());
 
-		drawPentagon(getParticle(i)->size);
+		drawPentagon(getParticle(i)->getSize());
 
 		glPopMatrix();
 	}
 }
 
 // Object Rendering
-void Renderer::drawAsteroid(PositionVector* vertices, int vertexCount, int size) {
+void Renderer::drawAsteroid(Asteroid* asteroid) {
 	glBegin(GL_LINE_LOOP);
-	for (int i = 0; i < vertexCount; ++i) {
-		glVertex2f(vertices[i].x * size, vertices[i].y * size);
+	for (int i = 0; i < asteroid->getVertexCount(); ++i) {
+		glVertex2f(asteroid->getVertex(i)->x * asteroid->getSize(), asteroid->getVertex(i)->y * asteroid->getSize());
 	}
 	glEnd();
 }

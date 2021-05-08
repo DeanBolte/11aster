@@ -86,9 +86,6 @@ private:
 	// Screen functions
 	int boolOutOfBounds(PositionVector position, float offset);
 
-	// Misc
-	void cullBullet(Bullet* bullet, int index);
-
 public:
 	// Constructors
 	Engine(int screen_width, int screen_height);

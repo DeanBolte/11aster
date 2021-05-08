@@ -335,7 +335,7 @@ void Engine::updatePlayer(float delta, Player* player) {
 	if (player->getParticleCoolDown() <= 0) {
 		player->incrementParticleCoolDown(PLAYER_PARTICLE_INTERVAL);
 
-		createParticle(player->getPosition(), player->getDirection(), PLAYER_PARTICLE_SIZE);
+		createParticle(player->getPosition(), player->getDirection());
 	}
 	player->incrementParticleCoolDown(-delta);
 
@@ -382,11 +382,4 @@ int Engine::boolOutOfBounds(PositionVector position, float offset) {
 		outOfBounds = TOP_WALL;
 	}
 	return outOfBounds;
-}
-
-// misc
-void Engine::cullBullet(Bullet* bullet, int index) {
-	if (boolOutOfBounds(bullet->position, 32) > 0) {
-		freeBullet(index);
-	}
 }

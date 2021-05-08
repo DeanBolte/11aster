@@ -28,7 +28,7 @@ private:
 	void renderEngineParticles();
 
 	// Object Rendering
-	void drawAsteroid(PositionVector* vertices, int vertexCount, int size);
+	void drawAsteroid(Asteroid* asteroid);
 	void drawPlayer();
 	void drawBullet();
 
