@@ -8,10 +8,6 @@
 
 //		Physics Engine Calls
 void physicsMovements(float delta) {
-	// Apply gravity from black holes
-	// Applies to Asteroids, Bullets, particles and the Player
-	//applyGravity(delta);
-	
 	// Update player
 	getPlayer()->update(delta);
 	
