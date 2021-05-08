@@ -7,13 +7,16 @@
 #include "asteroid.h"
 
 Asteroid::Asteroid(float x, float y) {
-	// initialise variables
+	// Body
 	this->position.x = x;
 	this->position.y = y;
 	this->moveVector.x = 0;
 	this->moveVector.y = 0;
-	this->inside = 0;
+	
+	// Vertices to draw
 	this->vertexCount = ASTEROID_VERTEX_COUNT;
+	
+	// Stats
 	this->size = rand() % 2 + 1;
 	this->hp = this->size * ASTEROID_HP_MULTIPLIER;
 	this->angle = PI / 2;
@@ -44,4 +47,51 @@ Asteroid::Asteroid(float x, float y) {
 
 		vertex = rotateVector(vertex, (2 * PI) / this->vertexCount, 1);
 	}
+}
+
+// Movement
+PositionVector Asteroid::getPosition() {
+	return position;
+}
+
+PositionVector Asteroid::getMoveVector() {
+	return moveVector;
+}
+
+float Asteroid::getCollisionRadius() {
+	return collisionRadius;
+}
+
+float Asteroid::getSpin() {
+	return spin;
+}
+
+// Rendering
+PositionVector Asteroid::getVertex(int vertex) {
+	PositionVector v;
+	if (vertex < vertexCount && vertex >= 0) {
+		v = vertices[vertex];
+	}
+	return v;
+}
+
+int Asteroid::getVertexCount() {
+	return vertexCount;
+}
+
+int Asteroid::getSize() {
+	return size;
+}
+
+float Asteroid::getAngle() {
+	return angle;
+}
+
+// Health
+int Asteroid::getHp() {
+	return hp;
+}
+
+void Asteroid::incrementHp(int increment) {
+	hp += increment;
 }

@@ -21,20 +21,33 @@
 
 class Asteroid {
 private:
-	
-
-public:
-	Asteroid(float x, float y);
-	
 	PositionVector position;
 	PositionVector moveVector;
 	PositionVector* vertices;
-	int inside;
 	float collisionRadius;
 	int vertexCount;
 	int size;
 	int hp;
 	float spin;
 	float angle;
+
+public:
+	Asteroid(float x, float y);
+	
+	// Movement
+	PositionVector getPosition();
+	PositionVector getMoveVector();
+	float getCollisionRadius();
+	float getSpin();
+
+	// Rendering
+	PositionVector getVertex(int vertex);
+	int getVertexCount();
+	int getSize();
+	float getAngle();
+
+	// Health
+	int getHp();
+	void incrementHp(int increment);
 
 };
