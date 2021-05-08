@@ -9,7 +9,15 @@
 
 class Bullet {
 private:
+	// Body
+	PositionVector position;
+	PositionVector moveVector;
 
 public:
+	// Constructors
+	Bullet(PositionVector position, PositionVector moveVector);
 
+	// Access
+	PositionVector getPosition();
+	PositionVector getMoveVector();
 };

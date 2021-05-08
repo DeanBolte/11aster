@@ -8,6 +8,7 @@
 #include "util.h"
 #include "player.h"
 #include "asteroid.h"
+#include "bullet.h"
 
 #define MAX_ASTEROIDS 500
 #define MAX_BULLETS 100
@@ -21,11 +22,6 @@
 #define BLACKHOLE_RADIUS 20
 #define GRAVITY_MULTIPLIER 2000000
 
-typedef struct Bullet {
-	PositionVector position;
-	PositionVector moveVector;
-} Bullet;
-
 typedef struct Particle {
 	PositionVector position;
 	PositionVector moveVector;
@@ -36,7 +32,6 @@ typedef struct Particle {
 } Particle;
 
 // Object Initialisation
-Bullet* initBullet();
 Particle* initParticle(PositionVector position, PositionVector direction, int maxSize);
 
 // Object Creation

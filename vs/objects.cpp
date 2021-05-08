@@ -18,11 +18,6 @@ Player* playerData = NULL;
 Particle* particleArray[MAX_ENGINE_PARTICLES];
 int particleCount = 0;
 
-Bullet* initBullet() {
-	Bullet* bullet = new Bullet;
-	return bullet;
-}
-
 Particle* initParticle(PositionVector position, PositionVector direction, int maxSize) {
 	Particle* particle = new Particle;
 
@@ -65,13 +60,7 @@ void createParticle(PositionVector position, PositionVector velocity, int maxSiz
 
 void createBullet(PositionVector position, PositionVector direction) {
 	if (bulletCount < MAX_BULLETS) {
-		Bullet* bullet = initBullet();
-
-		// Initialise bullet variables
-		bullet->position.x = position.x;
-		bullet->position.y = position.y;
-		bullet->moveVector.x = direction.x * BULLET_VECOLITY;
-		bullet->moveVector.y = direction.y * BULLET_VECOLITY;
+		Bullet* bullet = new Bullet(position, multiplyVector(direction, BULLET_VECOLITY));
 
 		// Add bullet to array
 		bulletArray[bulletCount] = bullet;
