@@ -12,6 +12,7 @@ void physicsMovements(float delta);
 void physicsCollisions();
 
 // Collision Detection
+bool isColliding(PositionVector position1, PositionVector position2, float collisionDistance);
 void asteroidCollisions();
 void blackHoleCollision();
 int collidingWithBlackHole(PositionVector position, float radius);

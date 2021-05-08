@@ -43,16 +43,31 @@ void physicsCollisions() {
 }
 
 //		Collision Detection
+bool isColliding(PositionVector position1, PositionVector position2, float collisionDistance) {
+	// return bool
+	bool colliding = false;
+
+	// Get distance between the two objects
+	float distance = vectorLength(subtractVectors(position1, position2));
+
+	// check if the two objects are within distance to collide
+	if (distance <= collisionDistance) {
+		colliding = true;
+	}
+
+	return colliding;
+}
+
 // This is the heaviest part of the code base, its essentially the entire game, it could be heavily modified to be made faster
 // however that is out of the scope of this project, i will however attempt to do as much optimisation in the time i have available
 void asteroidCollisions() {
 	for (int i = 0; i < getAsteroidCount(); ++i) {
-		// Get distance between asteroid and player
-		float distance = vectorLength(subtractVectors(getPlayer()->getPosition(), getAsteroid(i)->getPosition()));
+		Asteroid* asteroid = getAsteroid(i);
 
 		// Check for collision circle overlap for player
-		if (distance < getPlayer()->getCollisionRadius() + getAsteroid(i)->collisionRadius) {
-			getPlayer()->getHp() = 0;
+		Player* player = getPlayer();
+		if (isColliding(player->getPosition(), asteroid->getPosition(), player->getCollisionRadius() + asteroid->getCollisionRadius())) {
+			player->incrementHp(PLAYER_DAMAGE_TAKEN);
 		}
 
 		// Check for collisions with other asteroids
@@ -86,21 +101,21 @@ void asteroidCollisions() {
 		}
 
 		// Check for collisions with black holes
-		if (collidingWithBlackHole(getAsteroid(i)->position, getAsteroid(i)->collisionRadius) > 0) {
+		if (collidingWithBlackHole(asteroid->position, asteroid->collisionRadius) > 0) {
 			explodeAsteroid(i);
 		}
 
 		// Check for collisions with bullets
 		for (int j = 0; j < getBulletCount(); ++j) {
-			float distance = vectorLength(subtractVectors(getBullet(j)->position, getAsteroid(i)->position));
+			float distance = vectorLength(subtractVectors(getBullet(j)->position, asteroid->position));
 
-			if (distance < getAsteroid(i)->collisionRadius) {
+			if (distance < asteroid->collisionRadius) {
 				// despawn bullet
 				freeBullet(j);
 
 				// remove health from asteroid
-				getAsteroid(i)->hp -= PLAYER_DAMAGE_DEALT;
-				if (getAsteroid(i)->hp <= 0) {
+				asteroid->hp -= PLAYER_DAMAGE_DEALT;
+				if (asteroid->hp <= 0) {
 					explodeAsteroid(i);
 				}
 			}
