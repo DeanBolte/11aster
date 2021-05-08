@@ -80,41 +80,36 @@ void asteroidCollisions() {
 				// Distance between asteroids
 				PositionVector distanceVector = subtractVectors(getAsteroid(i)->getPosition(), getAsteroid(j)->getPosition());
 				float distance = vectorLength(distanceVector);
-				if (distance < getAsteroid(i)->collisionRadius + getAsteroid(j)->collisionRadius) {
+				if (distance < getAsteroid(i)->getCollisionRadius() + getAsteroid(j)->getCollisionRadius()) {
 					PositionVector temp;
-					temp.x = getAsteroid(i)->moveVector.x;
-					temp.y = getAsteroid(i)->moveVector.y;
-					getAsteroid(i)->moveVector.x = getAsteroid(j)->moveVector.x;
-					getAsteroid(i)->moveVector.y = getAsteroid(j)->moveVector.y;
-					getAsteroid(j)->moveVector.x = temp.x;
-					getAsteroid(j)->moveVector.y = temp.y;
+					temp = asteroid->getMoveVector();
+					asteroid->setMoveVector(getAsteroid(j)->getMoveVector());
+					getAsteroid(j)->setMoveVector(temp);
 
 					// Move the asteroids apart so they arent within each other
 					// the distance of overlap between the two asteroids is equal to the distance between there centres minus the non overlapping distance
 					// here i calculate the vector of overlap and divide it in two to move the asteroids apart equally
 					// this is to prevent asteroid overlap
 					PositionVector distanceUnitVector = vectorToUnitVector(distanceVector);
-					PositionVector asteroid1OverlapVector = multiplyVector(distanceUnitVector, getAsteroid(i)->collisionRadius);
-					PositionVector asteroid2OverlapVector = multiplyVector(distanceUnitVector, getAsteroid(j)->collisionRadius);
+					PositionVector asteroid1OverlapVector = multiplyVector(distanceUnitVector, asteroid->getCollisionRadius());
+					PositionVector asteroid2OverlapVector = multiplyVector(distanceUnitVector, getAsteroid(j)->getCollisionRadius());
 					PositionVector overlapVector = subtractVectors(subtractVectors(distanceVector, asteroid1OverlapVector), asteroid2OverlapVector);
 					PositionVector displacementVector = multiplyVector(overlapVector, 0.5);
-					getAsteroid(i)->position = subtractVectors(getAsteroid(i)->position, displacementVector);
-					getAsteroid(j)->position = addVectors(getAsteroid(j)->position, displacementVector);
+					asteroid->setPosition(subtractVectors(asteroid->getPosition(), displacementVector));
+					getAsteroid(j)->setPosition(addVectors(getAsteroid(j)->getPosition(), displacementVector));
 				}
 			}
 		}
 
 		// Check for collisions with bullets
 		for (int j = 0; j < getBulletCount(); ++j) {
-			float distance = vectorLength(subtractVectors(getBullet(j)->position, asteroid->position));
-
-			if (distance < asteroid->collisionRadius) {
+			if (isColliding(getBullet(j)->getPosition(), asteroid->getPosition(), asteroid->getCollisionRadius())) {
 				// despawn bullet
 				freeBullet(j);
 
 				// remove health from asteroid
-				asteroid->hp -= PLAYER_DAMAGE_DEALT;
-				if (asteroid->hp <= 0) {
+				asteroid->incrementHp(-PLAYER_DAMAGE_DEALT);
+				if (asteroid->getHp() <= 0) {
 					explodeAsteroid(i);
 				}
 			}
@@ -127,13 +122,13 @@ void explodeAsteroid(int index) {
 	// Spawn smaller asteroids if size > 1
 	Asteroid* asteroid = getAsteroid(index);
 	if (asteroid) {
-		if (asteroid->size > 1) {
+		if (asteroid->getSize() > 1) {
 			splitAsteroid(asteroid);
 		}
 
 		// Create asteroid puff effect
 		for (int i = 0; i < ASTEROID_PUFF_COUNT; ++i) {
-			createParticle(asteroid->position, multiplyVector(angleToUnitVector((rand() % 100 / 100) * 2 * PI), 0.1), ASTEROID_PUFF_SIZE);
+			createParticle(asteroid->getPosition(), multiplyVector(angleToUnitVector((rand() % 100 / 100) * 2 * PI), 0.1f));
 		}
 
 		// Despawn Asteroid
@@ -145,8 +140,8 @@ void splitAsteroid(Asteroid* asteroid) {
 	// If there is room for more asteroids then split new asteroids
 	for (int i = 0; getAsteroidCount() < MAX_ASTEROIDS && i < 2; ++i) {
 		// Spawn new split asteroid
-		pushAsteroid(new Asteroid(asteroid->position.x + (1 - i * 2) * ASTEROID_SPLIT_RADIUS_MULTIPLIER, asteroid->position.y));
-		getAsteroid(getAsteroidCount() - 1)->moveVector = rotateVector(asteroid->moveVector, ASTEROID_SPLIT_ANGLE, (-1 + i * 2));
-		getAsteroid(getAsteroidCount() - 1)->size = asteroid->size - 1;
+		pushAsteroid(new Asteroid(asteroid->getPosition().x + (1 - i * 2) * ASTEROID_SPLIT_RADIUS_MULTIPLIER, asteroid->getPosition().y));
+		getAsteroid(getAsteroidCount() - 1)->setMoveVector(rotateVector(asteroid->getMoveVector(), ASTEROID_SPLIT_ANGLE, (-1 + i * 2)));
+		getAsteroid(getAsteroidCount() - 1)->setSize(asteroid->getSize() - 1);
 	}
 }

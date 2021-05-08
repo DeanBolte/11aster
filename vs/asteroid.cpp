@@ -67,8 +67,16 @@ PositionVector Asteroid::getPosition() {
 	return position;
 }
 
+void Asteroid::setPosition(PositionVector position) {
+	this->position = position;
+}
+
 PositionVector Asteroid::getMoveVector() {
 	return moveVector;
+}
+
+void Asteroid::setMoveVector(PositionVector moveVector) {
+	this->moveVector = moveVector;
 }
 
 float Asteroid::getCollisionRadius() {
@@ -95,6 +103,10 @@ int Asteroid::getVertexCount() {
 
 int Asteroid::getSize() {
 	return size;
+}
+
+void Asteroid::setSize(int size) {
+	this->size = size;
 }
 
 float Asteroid::getAngle() {

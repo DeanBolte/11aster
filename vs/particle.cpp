@@ -10,8 +10,8 @@
 Particle::Particle(PositionVector position, PositionVector direction) {
 	// positon = player position + randomness - player direction
 	// player direction is subtracted to spawn particles at the back of the ship
-	position.x = position.x + (rand() % 10 - 5) - direction.x * 10;
-	position.y = position.y + (rand() % 10 - 5) - direction.y * 10;
+	this->position.x = position.x + (rand() % 10 - 5) - direction.x * 10;
+	this->position.y = position.y + (rand() % 10 - 5) - direction.y * 10;
 
 	// velocity is based on the inverse direction of acceleration of the player + some randomness
 	moveVector.x = -direction.x * 1000 + rand() % 200;

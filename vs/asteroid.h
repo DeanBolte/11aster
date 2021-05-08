@@ -43,7 +43,9 @@ public:
 	
 	// Movement
 	PositionVector getPosition();
+	void setPosition(PositionVector position);
 	PositionVector getMoveVector();
+	void setMoveVector(PositionVector moveVector);
 	float getCollisionRadius();
 	float getSpin();
 
@@ -51,6 +53,7 @@ public:
 	PositionVector* getVertex(int vertex);
 	int getVertexCount();
 	int getSize();
+	void setSize(int size);
 	float getAngle();
 
 	// Health
