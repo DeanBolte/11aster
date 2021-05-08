@@ -125,7 +125,6 @@ void freeAllObjects() {
 	freeAsteroids();
 	freeBullets();
 	freeParticles();
-	freeBlackHoles();
 	freePlayer();
 }
 
