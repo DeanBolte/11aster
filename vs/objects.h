@@ -35,25 +35,14 @@ typedef struct Particle {
 	float size;
 } Particle;
 
-typedef struct BlackHole {
-	PositionVector position;
-	float radius;
-	float radiusOutPulse;
-	float radiusInPulse;
-	float gravity;
-	int pulseDirection;
-} BlackHole;
-
 // Object Initialisation
 Bullet* initBullet();
 Particle* initParticle(PositionVector position, PositionVector direction, int maxSize);
-BlackHole* initBlackHole(PositionVector position);
 
 // Object Creation
 void createAsteroid(float x, float y);
 void createPlayer(float x, float y);
 void createParticle(PositionVector position, PositionVector velocity, int maxSize);
-void createBlackHole(PositionVector position);
 void createBullet(PositionVector position, PositionVector direction);
 
 // Object Access
@@ -65,22 +54,17 @@ Particle* getParticle(int index);
 int getParticleCount();
 Bullet* getBullet(int index);
 int getBulletCount();
-BlackHole* getBlackHole(int index);
-int getBlackHoleCount();
 
 // Object Destruction
 void freeAllObjects();
 void freeAsteroids();
 void freeBullets();
 void freeParticles();
-void freeBlackHoles();
 void freePlayer();
 void freeAsteroid(int index);
 void freeBullet(int index);
 void freeParticle(int index);
-void freeBlackHole(int index);
 void destructAsteroid(Asteroid* asteroid);
 void destructPlayer(Player* player);
 void destructBullet(Bullet* bullet);
 void destructParticle(Particle* particle);
-void destructBlackHole(BlackHole* bh);

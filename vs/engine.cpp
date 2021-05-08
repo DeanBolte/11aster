@@ -182,11 +182,6 @@ void Engine::updateGame(float delta) {
 	// Update player data
 	updatePlayer(delta, getPlayer());
 
-	// Update BlackHoles
-	for(int i = 0; i < getBlackHoleCount(); ++i) {
-		updateBlackHole(delta, getBlackHole(i));
-	}
-
 	// Check Collisions
 	physicsCollisions();
 
@@ -364,18 +359,6 @@ void Engine::fireCannonPlayer(float delta) {
 	// reduce cooldown for players cannon
 	if (player->getCannonCoolDown() > 0) {
 		player->incrementCannonCoolDown(-delta);
-	}
-}
-
-// BlackHole Actions
-void Engine::updateBlackHole(float delta, BlackHole* bh) {
-	// update radius
-	bh->radius += bh->pulseDirection * bh->radiusOutPulse * delta;
-	if (bh->radius > bh->radiusOutPulse) {
-		bh->pulseDirection = -1;
-	}
-	else if (bh->radius < bh->radiusInPulse) {
-		bh->pulseDirection = 1;
 	}
 }
 

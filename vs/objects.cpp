@@ -18,9 +18,6 @@ Player* playerData = NULL;
 Particle* particleArray[MAX_ENGINE_PARTICLES];
 int particleCount = 0;
 
-BlackHole* blackHoleArray[MAX_BLACKHOLES];
-int blackHoleCount = 0;
-
 Bullet* initBullet() {
 	Bullet* bullet = new Bullet;
 	return bullet;
@@ -44,18 +41,6 @@ Particle* initParticle(PositionVector position, PositionVector direction, int ma
 	return particle;
 }
 
-BlackHole* initBlackHole(PositionVector position) {
-	BlackHole* bh = new BlackHole;
-
-	bh->position = position;
-	bh->radius = rand() % (int)(BLACKHOLE_RADIUS / 2) + BLACKHOLE_RADIUS;
-	bh->radiusOutPulse = bh->radius + rand() % (int)(BLACKHOLE_RADIUS / 2);
-	bh->radiusInPulse = bh->radius - rand() % (int)(BLACKHOLE_RADIUS / 2);
-	bh->gravity = bh->radius * GRAVITY_MULTIPLIER;
-	bh->pulseDirection = 1;
-	return bh;
-}
-
 // Object Creation
 void createAsteroid(float x, float y) {
 	if (asteroidCount < MAX_ASTEROIDS) {
@@ -75,13 +60,6 @@ void createParticle(PositionVector position, PositionVector velocity, int maxSiz
 		Particle* particle = initParticle(position, velocity, maxSize);
 		particleArray[particleCount] = particle;
 		++particleCount;
-	}
-}
-
-void createBlackHole(PositionVector position) {
-	if (blackHoleCount < MAX_BLACKHOLES) {
-		blackHoleArray[blackHoleCount] = initBlackHole(position);
-		++blackHoleCount;
 	}
 }
 
@@ -141,14 +119,6 @@ int getBulletCount() {
 	return bulletCount;
 }
 
-BlackHole* getBlackHole(int index) {
-	return blackHoleArray[index];
-}
-
-int getBlackHoleCount() {
-	return blackHoleCount;
-}
-
 // Object Destruction
 void freeAllObjects() {
 	// Free all game objects
@@ -181,14 +151,6 @@ void freeParticles() {
 		destructParticle(particleArray[i]);
 	}
 	particleCount = 0;
-}
-
-void freeBlackHoles() {
-	// Free blackholes
-	for (int i = 0; i < blackHoleCount; ++i) {
-		destructBlackHole(blackHoleArray[i]);
-	}
-	blackHoleCount = 0;
 }
 
 void freePlayer() {
@@ -243,21 +205,6 @@ void freeParticle(int index) {
 	}
 }
 
-void freeBlackHole(int index) {
-	if (index >= 0 && index < blackHoleCount) {
-		BlackHole* bh = blackHoleArray[index];
-
-		// Shuffle array
-		for (int i = index; i < blackHoleCount - 1; ++i) {
-			blackHoleArray[i] = blackHoleArray[i + 1];
-		}
-		--blackHoleCount;
-
-		// Free particle
-		destructBlackHole(bh);
-	}
-}
-
 void destructAsteroid(Asteroid* asteroid) {
 	delete asteroid;
 }
@@ -272,8 +219,4 @@ void destructBullet(Bullet* bullet) {
 
 void destructParticle(Particle* particle) {
 	free(particle);
-}
-
-void destructBlackHole(BlackHole* bh) {
-	free(bh);
 }

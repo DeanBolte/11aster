@@ -83,9 +83,6 @@ private:
 	void updatePlayer(float delta, Player* player);
 	void fireCannonPlayer(float delta);
 
-	// BlackHole updates
-	void updateBlackHole(float delta, BlackHole* bh);
-
 	// Screen functions
 	int boolOutOfBounds(PositionVector position, float offset);
 

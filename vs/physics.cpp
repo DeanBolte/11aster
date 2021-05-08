@@ -34,12 +34,6 @@ void physicsCollisions() {
 	// Asteroid / Wall collisions
 	// BlackHole / Asteroid collisions
 	asteroidCollisions();
-
-	// check collisions with blackholes
-	// Player / BlackHole
-	// Bullets / BlackHole
-	// Particles / BackHole
-	blackHoleCollision();
 }
 
 //		Collision Detection
@@ -100,11 +94,6 @@ void asteroidCollisions() {
 			}
 		}
 
-		// Check for collisions with black holes
-		if (collidingWithBlackHole(asteroid->position, asteroid->collisionRadius) > 0) {
-			explodeAsteroid(i);
-		}
-
 		// Check for collisions with bullets
 		for (int j = 0; j < getBulletCount(); ++j) {
 			float distance = vectorLength(subtractVectors(getBullet(j)->position, asteroid->position));
@@ -121,40 +110,6 @@ void asteroidCollisions() {
 			}
 		}
 	}
-}
-
-void blackHoleCollision() {
-	// player collision
-	if (getPlayer() != NULL && collidingWithBlackHole(getPlayer()->position, getPlayer()->collisionRadius) > 0) {
-		getPlayer()->hp = 0;
-	}
-
-	// bullet collision
-	for (int i = 0; i < getBulletCount(); ++i) {
-		if (collidingWithBlackHole(getBullet(i)->position, 0) > 0) {
-			freeBullet(i);
-		}
-	}
-
-	// particle collision
-	for (int i = 0; i < getParticleCount(); ++i) {
-		if (collidingWithBlackHole(getParticle(i)->position, 0) > 0) {
-			getParticle(i)->size = 0;
-		}
-	}
-}
-
-int collidingWithBlackHole(PositionVector position, float radius) {
-	// Check for collisions with black holes
-	int colliding = 0;
-	for (int i = 0; i < getBlackHoleCount(); ++i) {
-		float distance = vectorLength(subtractVectors(getBlackHole(i)->position, position));
-
-		if (distance < radius + getBlackHole(i)->radius) {
-			colliding = 1;
-		}
-	}
-	return colliding;
 }
 
 // Asteroid Physics
@@ -227,40 +182,4 @@ void moveParticles(float delta) {
 			freeParticle(i);
 		}
 	}
-}
-
-void applyGravity(float delta) {
-	// Apply Gravity from black holes
-	for (int i = 0; i < getBlackHoleCount(); ++i) {
-		BlackHole* bh = getBlackHole(i);
-
-		// Apply gravity to asteroids
-		for (int j = 0; j < getAsteroidCount(); ++j) {
-			PositionVector acceleration = getAccelerationVector(delta, bh, getAsteroid(j)->position);
-			getAsteroid(j)->moveVector = addVectors(getAsteroid(j)->moveVector, acceleration);
-		}
-
-		// Apply gravity for player
-		PositionVector acceleration = getAccelerationVector(delta, bh, getPlayer()->position);
-		getPlayer()->moveVector = addVectors(getPlayer()->moveVector, acceleration);
-
-		// Apply gravity to bullets
-		for (int j = 0; j < getBulletCount(); ++j) {
-			PositionVector acceleration = getAccelerationVector(delta, bh, getBullet(j)->position);
-			getBullet(j)->moveVector = addVectors(getBullet(j)->moveVector, acceleration);
-		}
-
-		// Apply gravity to particles
-		for (int j = 0; j < getParticleCount(); ++j) {
-			PositionVector acceleration = getAccelerationVector(delta, bh, getParticle(j)->position);
-			getParticle(j)->moveVector = addVectors(getParticle(j)->moveVector, acceleration);
-		}
-	}
-}
-
-PositionVector getAccelerationVector(float delta, BlackHole* bh, PositionVector objectPosition) {
-	PositionVector distanceVector = subtractVectors(bh->position, objectPosition);
-	// apply inverse square law to gravity acceleration
-	float pull = (bh->gravity / pow(vectorLength(distanceVector), 2)) * delta;
-	return multiplyVector(vectorToUnitVector(distanceVector), pull);
 }

@@ -48,7 +48,6 @@ void Renderer::renderInGame() {
 
 	// Render Order
 	renderAsteroids();
-	renderBlackHoles();
 	renderBullets();
 	renderEngineParticles();
 	renderPlayer();
@@ -235,19 +234,6 @@ void Renderer::renderEngineParticles() {
 	}
 }
 
-void Renderer::renderBlackHoles() {
-	for (int i = 0; i < getBlackHoleCount(); ++i) {
-		glPushMatrix();
-		glTranslatef(getBlackHole(i)->position.x, getBlackHole(i)->position.y, 1.0);
-
-		glColor3f(highColour->getRed(), highColour->getGreen(), highColour->getBlue());
-
-		drawBlackHole(getBlackHole(i));
-
-		glPopMatrix();
-	}
-}
-
 // Object Rendering
 void Renderer::drawAsteroid(PositionVector* vertices, int vertexCount, int size) {
 	glBegin(GL_LINE_LOOP);
@@ -268,10 +254,6 @@ void Renderer::drawPlayer() {
 
 void Renderer::drawBullet() {
 	drawPentagon(3);
-}
-
-void Renderer::drawBlackHole(BlackHole* bh) {
-	drawCircle(bh->radius);
 }
 
 // Rendering Shapes

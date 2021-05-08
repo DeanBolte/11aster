@@ -26,13 +26,11 @@ private:
 	void renderPlayer();
 	void renderBullets();
 	void renderEngineParticles();
-	void renderBlackHoles();
 
 	// Object Rendering
 	void drawAsteroid(PositionVector* vertices, int vertexCount, int size);
 	void drawPlayer();
 	void drawBullet();
-	void drawBlackHole(BlackHole* bh);
 
 	// Rendering Shapes
 	void drawPentagon(float radius);
