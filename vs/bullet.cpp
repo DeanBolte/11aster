@@ -12,6 +12,16 @@ Bullet::Bullet(PositionVector position, PositionVector moveVector) {
 	this->moveVector = moveVector;
 }
 
+// Update calls
+void Bullet::update(float delta) {
+	// Update position
+	move(delta);
+}
+
+void Bullet::move(float delta) {
+	position = addVectors(position, multiplyVector(moveVector, delta));
+}
+
 // Access
 PositionVector Bullet::getPosition() {
 	return position;

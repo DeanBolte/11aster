@@ -23,8 +23,5 @@ void splitAsteroid(Asteroid* asteroid);
 // Movement calls
 PositionVector movePosition(float delta, PositionVector position, PositionVector movement);
 
-// Bullet Movement
-void moveBullets(float delta);
-
 // Particle Movement
 void moveParticles(float delta);

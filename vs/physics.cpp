@@ -11,17 +11,19 @@ void physicsMovements(float delta) {
 	// Apply gravity from black holes
 	// Applies to Asteroids, Bullets, particles and the Player
 	//applyGravity(delta);
-
+	
+	// Update player
+	getPlayer()->update(delta);
+	
 	// Update asteroid positions
 	for (int i = 0; i < getAsteroidCount(); ++i) {
 		getAsteroid(i)->update(delta);
 	}
 
-	// Update player
-	getPlayer()->update(delta);
-
 	// Update bullet positions
-	moveBullets(delta);
+	for (int i = 0; i < getBulletCount(); ++i) {
+		getBullet(i)->update(delta);
+	}
 
 	// Update particle positions
 	moveParticles(delta);
@@ -146,16 +148,6 @@ PositionVector movePosition(float delta, PositionVector position, PositionVector
 	movement.x *= delta;
 	movement.y *= delta;
 	return addVectors(position, movement);
-}
-
-// Bullet Movement
-void moveBullets(float delta) {
-	for (int i = 0; i < getBulletCount(); ++i) {
-		Bullet* bullet = getBullet(i);
-		bullet->position = movePosition(delta, bullet->position, bullet->moveVector);
-		// Theres an issue here, cullBullet removes the bullet struct before movebullets is complete, potentially skipping a bullet
-		// or worse, potentially causing undefined behaviour
-	}
 }
 
 // Engine Particle Movement
