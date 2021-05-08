@@ -18,9 +18,6 @@
 
 #define BULLET_VECOLITY 1000.0
 
-#define BLACKHOLE_RADIUS 20
-#define GRAVITY_MULTIPLIER 2000000
-
 // Object Creation
 void createAsteroid(float x, float y);
 void createPlayer(float x, float y);

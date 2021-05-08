@@ -27,12 +27,11 @@ void physicsMovements(float delta) {
 		Particle* particle = getParticle(i);
 		particle->update(delta);
 
-		// Theres an issue here, cullEngineParticle removes the engine particle struct before movebullets is complete, potentially skipping a bullet
-		// or worse, potentially causing undefined behaviour
-		// Decrease size
+		// Decay and until no size then destroy
 		particle->decay(delta);
 		if (particle->getSize() <= 0) {
 			freeParticle(i);
+			// decrement i as the next particle will fill this element of the array
 			--i;
 		}
 	}
