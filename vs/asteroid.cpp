@@ -67,10 +67,11 @@ float Asteroid::getSpin() {
 }
 
 // Rendering
-PositionVector Asteroid::getVertex(int vertex) {
-	PositionVector v;
+// This functions returns an editable vertex
+PositionVector* Asteroid::getVertex(int vertex) {
+	PositionVector* v = NULL;
 	if (vertex < vertexCount && vertex >= 0) {
-		v = vertices[vertex];
+		v = &vertices[vertex];
 	}
 	return v;
 }

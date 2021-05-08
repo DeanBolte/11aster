@@ -259,8 +259,7 @@ void freeBlackHole(int index) {
 }
 
 void destructAsteroid(Asteroid* asteroid) {
-	free(asteroid->vertices);
-	free(asteroid);
+	delete asteroid;
 }
 
 void destructPlayer(Player* player) {

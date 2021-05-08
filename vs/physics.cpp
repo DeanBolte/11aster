@@ -48,7 +48,7 @@ void physicsCollisions() {
 void asteroidCollisions() {
 	for (int i = 0; i < getAsteroidCount(); ++i) {
 		// Get distance between asteroid and player
-		float distance = vectorLength(subtractVectors(getPlayer()->getPosition(), getAsteroid(i)->position));
+		float distance = vectorLength(subtractVectors(getPlayer()->getPosition(), getAsteroid(i)->getPosition()));
 
 		// Check for collision circle overlap for player
 		if (distance < getPlayer()->getCollisionRadius() + getAsteroid(i)->collisionRadius) {
@@ -59,23 +59,16 @@ void asteroidCollisions() {
 		for (int j = 0; j < getAsteroidCount(); ++j) {
 			if (i != j) {
 				// Distance between asteroids
-				PositionVector distanceVector = subtractVectors(getAsteroid(i)->position, getAsteroid(j)->position);
+				PositionVector distanceVector = subtractVectors(getAsteroid(i)->getPosition(), getAsteroid(j)->getPosition());
 				float distance = vectorLength(distanceVector);
 				if (distance < getAsteroid(i)->collisionRadius + getAsteroid(j)->collisionRadius) {
-					if (getAsteroid(i)->inside == 1 && getAsteroid(j)->inside == 1) {
-						PositionVector temp;
-						temp.x = getAsteroid(i)->moveVector.x;
-						temp.y = getAsteroid(i)->moveVector.y;
-						getAsteroid(i)->moveVector.x = getAsteroid(j)->moveVector.x;
-						getAsteroid(i)->moveVector.y = getAsteroid(j)->moveVector.y;
-						getAsteroid(j)->moveVector.x = temp.x;
-						getAsteroid(j)->moveVector.y = temp.y;
-					}
-					else {
-						// if an asteroid in the collision is outside then reflect each other based on collision vector
-						getAsteroid(i)->moveVector = addVectors(getAsteroid(i)->moveVector, distanceVector);
-						getAsteroid(j)->moveVector = subtractVectors(getAsteroid(j)->moveVector, distanceVector);
-					}
+					PositionVector temp;
+					temp.x = getAsteroid(i)->moveVector.x;
+					temp.y = getAsteroid(i)->moveVector.y;
+					getAsteroid(i)->moveVector.x = getAsteroid(j)->moveVector.x;
+					getAsteroid(i)->moveVector.y = getAsteroid(j)->moveVector.y;
+					getAsteroid(j)->moveVector.x = temp.x;
+					getAsteroid(j)->moveVector.y = temp.y;
 
 					// Move the asteroids apart so they arent within each other
 					// the distance of overlap between the two asteroids is equal to the distance between there centres minus the non overlapping distance

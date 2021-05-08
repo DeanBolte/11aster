@@ -41,7 +41,7 @@ public:
 	float getSpin();
 
 	// Rendering
-	PositionVector getVertex(int vertex);
+	PositionVector* getVertex(int vertex);
 	int getVertexCount();
 	int getSize();
 	float getAngle();
