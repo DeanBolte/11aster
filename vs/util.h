@@ -23,8 +23,6 @@
 #   include <GL/glut.h>
 #endif
 
-#include "rgb.h"
-
 #define PI 3.14159265
 
 typedef struct PositionVector {

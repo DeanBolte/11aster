@@ -5,6 +5,7 @@
 */
 
 #include "factory.h"
+#include "rgb.h"
 
 // Menu
 #define PLAY 0
