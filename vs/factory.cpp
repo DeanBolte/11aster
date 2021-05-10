@@ -11,7 +11,7 @@ std::vector<Asteroid*> asteroidArray;
 
 std::vector<Bullet*> bulletArray;
 
-Player* playerData = NULL;
+Player* player = NULL;
 
 std::vector<Particle*> particleArray;
 
@@ -22,7 +22,7 @@ void createAsteroid(float x, float y) {
 
 void createPlayer(float x, float y) {
 	freePlayer();
-	playerData = new Player(x, y);
+	player = new Player(x, y);
 }
 
 void createParticle(PositionVector position, PositionVector moveVector) {
@@ -35,7 +35,7 @@ void createBullet(PositionVector position, PositionVector direction) {
 
 // Object Access
 Player* getPlayer() {
-	return playerData;
+	return player;
 }
 
 Asteroid* getAsteroid(int index) {
@@ -101,9 +101,9 @@ void freeParticles() {
 }
 
 void freePlayer() {
-	if (playerData) {
-		delete playerData;
-		playerData = NULL;
+	if (player) {
+		delete player;
+		player = NULL;
 	}
 }
 
