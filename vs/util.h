@@ -29,6 +29,16 @@
 
 typedef struct PositionVector {
 	float x, y;
+
+	PositionVector(float x, float y) {
+		this->x = x;
+		this->y = y;
+	}
+
+	PositionVector() {
+		x = 0;
+		y = 0;
+	}
 } PositionVector;
 
 // Vector math

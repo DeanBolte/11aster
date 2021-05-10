@@ -48,9 +48,7 @@ float vectorAngle(PositionVector vector) {
 }
 
 PositionVector angleToUnitVector(float radians) {
-	PositionVector vector;
-	vector.x = cos(radians);
-	vector.y = sin(radians);
+	PositionVector vector = PositionVector(cos(radians), sin(radians));
 	return vector;
 }
 

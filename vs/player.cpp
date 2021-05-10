@@ -9,12 +9,9 @@
 // Constructors
 Player::Player(float x, float y) {
 	// Body
-	position.x = x;
-	position.y = y;
-	moveVector.x = 0;
-	moveVector.y = 0;
-	direction.x = 0.866;
-	direction.y = 0.5;
+	position = PositionVector(x, y);
+	moveVector = PositionVector();
+	direction = PositionVector(0.866, 0.5);
 
 	// Collision
 	collisionRadius = PLAYER_COLLISION_RADIUS;
@@ -66,9 +63,7 @@ void Player::acceleratePlayer(float delta, int dir) {
 	// Accelerate player velocity towards player direction
 	// Only accelerate when below max velocity
 	if (dir > 0 && vectorLength(moveVector) <= maxVelocity) {
-		PositionVector accelerate;
-
-		accelerate = multiplyVector(direction, acceleration * dir * delta);
+		PositionVector accelerate = multiplyVector(direction, acceleration * dir * delta);
 		PositionVector newMoveVector = addVectors(moveVector, accelerate);
 
 		// slow ship to max velocity

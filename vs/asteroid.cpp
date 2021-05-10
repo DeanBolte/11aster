@@ -25,9 +25,9 @@ Asteroid::Asteroid(float x, float y) {
 	// Collision
 	collisionRadius = size + ASTEROID_BASE_SIZE + ASTEROID_VARIANCE * size / 2;
 
-	PositionVector vertex;
-	vertex.x = rand() % ASTEROID_VARIANCE - ASTEROID_VARIANCE / 2;
-	vertex.y = rand() % ASTEROID_VARIANCE + ASTEROID_BASE_SIZE;
+	PositionVector vertex = PositionVector(
+		rand() % ASTEROID_VARIANCE - ASTEROID_VARIANCE / 2, 
+		rand() % ASTEROID_VARIANCE + ASTEROID_BASE_SIZE);
 	for (int i = 0; i < vertexCount; ++i) {
 		vertices.push_back(vertex);
 		vertex.x += rand() % ASTEROID_VARIANCE - ASTEROID_VARIANCE / 4;

@@ -39,8 +39,7 @@ void Renderer::renderInGame() {
 	glPushMatrix();
 
 	// create offset for rendering the screen offset from the centre
-	PositionVector renderOffset;
-	renderOffset = multiplyVector(getPlayer()->getMoveVector(), -0.1f);
+	PositionVector renderOffset = multiplyVector(getPlayer()->getMoveVector(), -0.1f);
 
 	renderUI();
 
