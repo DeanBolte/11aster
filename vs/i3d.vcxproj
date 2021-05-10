@@ -157,7 +157,7 @@
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="asteroid.cpp" />
     <ClCompile Include="bullet.cpp" />
-    <ClCompile Include="objects.cpp" />
+    <ClCompile Include="factory.cpp" />
     <ClCompile Include="engine.cpp" />
     <ClCompile Include="particle.cpp" />
     <ClCompile Include="physics.cpp" />
@@ -169,7 +169,7 @@
   <ItemGroup>
     <ClInclude Include="asteroid.h" />
     <ClInclude Include="bullet.h" />
-    <ClInclude Include="objects.h" />
+    <ClInclude Include="factory.h" />
     <ClInclude Include="engine.h" />
     <ClInclude Include="particle.h" />
     <ClInclude Include="physics.h" />

@@ -4,7 +4,7 @@
 *	Main Contributer: Dean
 */
 
-#include "objects.h"
+#include "factory.h"
 
 // Menu
 #define PLAY 0

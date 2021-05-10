@@ -9,7 +9,7 @@
     <ClCompile Include="..\src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="objects.cpp">
+    <ClCompile Include="factory.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="engine.cpp">
@@ -27,7 +27,7 @@
     <ClCompile Include="particle.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="objects.h">
+    <ClInclude Include="factory.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="engine.h">

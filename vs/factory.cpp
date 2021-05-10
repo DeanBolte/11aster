@@ -4,7 +4,7 @@
 *	Main Author: Dean
 */
 
-#include "objects.h"
+#include "factory.h"
 
 // Object Data
 std::vector<Asteroid*> asteroidArray;
