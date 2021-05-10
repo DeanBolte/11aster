@@ -73,7 +73,7 @@ void asteroidCollisions() {
 		// Check for collision circle overlap for player
 		Player* player = getPlayer();
 		if (isColliding(player->getPosition(), asteroid->getPosition(), player->getCollisionRadius() + asteroid->getCollisionRadius())) {
-			player->incrementHp(PLAYER_DAMAGE_TAKEN);
+			player->incrementHp(-PLAYER_DAMAGE_TAKEN);
 		}
 
 		// Check for collisions with other asteroids
