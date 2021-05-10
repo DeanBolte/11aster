@@ -5,16 +5,12 @@
 */
 #pragma once
 
+#include <vector>
 #include "util.h"
 #include "player.h"
 #include "asteroid.h"
 #include "bullet.h"
 #include "particle.h"
-
-#define MAX_ASTEROIDS 500
-#define MAX_BULLETS 100
-#define MAX_ENGINE_PARTICLES 1000
-#define MAX_BLACKHOLES 
 
 #define BULLET_VECOLITY 1000.0
 
@@ -43,7 +39,3 @@ void freePlayer();
 void freeAsteroid(int index);
 void freeBullet(int index);
 void freeParticle(int index);
-void destructAsteroid(Asteroid* asteroid);
-void destructPlayer(Player* player);
-void destructBullet(Bullet* bullet);
-void destructParticle(Particle* particle);

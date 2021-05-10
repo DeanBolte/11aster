@@ -140,7 +140,7 @@ void explodeAsteroid(int index) {
 
 void splitAsteroid(Asteroid* asteroid) {
 	// If there is room for more asteroids then split new asteroids
-	for (int i = 0; getAsteroidCount() < MAX_ASTEROIDS && i < 2; ++i) {
+	for (int i = 0; i < 2; ++i) {
 		// Spawn new split asteroid
 		pushAsteroid(new Asteroid(asteroid->getPosition().x + (1 - i * 2) * ASTEROID_SPLIT_RADIUS_MULTIPLIER, asteroid->getPosition().y));
 		getAsteroid(getAsteroidCount() - 1)->setMoveVector(rotateVector(asteroid->getMoveVector(), ASTEROID_SPLIT_ANGLE, (-1 + i * 2)));

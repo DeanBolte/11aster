@@ -289,7 +289,7 @@ void Engine::inputControls(const char* input, int pressed) {
 		key_select = pressed;
 	}
 	if (input == "test") {
-		//getPlayer()->getHp() -= 1;
+		getPlayer()->incrementHp(-1);
 	}
 	if (input == "pause") {
 		key_pause = pressed;
@@ -348,7 +348,7 @@ void Engine::updatePlayer(float delta, Player* player) {
 void Engine::fireCannonPlayer(float delta) {
 	// Create bullet
 	Player* player = getPlayer();
-	if (player->getCannonCoolDown() <= 0 && getBulletCount() < MAX_BULLETS && key_firing == 1) {
+	if (player->getCannonCoolDown() <= 0 && key_firing == 1) {
 		// Reset cooldown
 		player->incrementCannonCoolDown(PLAYER_CANNON_COOLDOWN);
 		
