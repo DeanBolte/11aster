@@ -46,6 +46,8 @@ Asteroid::Asteroid(float x, float y) {
 	}
 }
 
+Asteroid::Asteroid(PositionVector position) : Asteroid(position.x, position.y) {}
+
 // Update calls
 void Asteroid::update(float delta) {
 	// Update position

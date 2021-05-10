@@ -29,6 +29,8 @@ Player::Player(float x, float y) {
 	minVelocity = PLAYER_MINIMUM_VELOCITY;
 }
 
+Player::Player(PositionVector position) : Player(position.x, position.y) {}
+
 // Update calls
 void Player::update(float delta) {
 	// Update position

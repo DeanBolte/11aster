@@ -38,6 +38,7 @@ private:
 public:
 	// Constructors
 	Asteroid(float x, float y);
+	Asteroid(PositionVector position);
 
 	// Update calls
 	void update(float delta);

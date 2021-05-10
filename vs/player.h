@@ -49,6 +49,7 @@ private:
 public:
 	// Constructors
 	Player(float x, float y);
+	Player(PositionVector position);
 
 	// Update calls
 	void update(float delta);
