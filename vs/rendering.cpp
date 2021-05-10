@@ -238,7 +238,7 @@ void Renderer::renderEngineParticles() {
 void Renderer::drawAsteroid(Asteroid* asteroid) {
 	glBegin(GL_LINE_LOOP);
 	for (int i = 0; i < asteroid->getVertexCount(); ++i) {
-		glVertex2f(asteroid->getVertex(i)->x * asteroid->getSize(), asteroid->getVertex(i)->y * asteroid->getSize());
+		glVertex2f(asteroid->getVertex(i).x * asteroid->getSize(), asteroid->getVertex(i).y * asteroid->getSize());
 	}
 	glEnd();
 }

@@ -8,31 +8,28 @@
 
 Asteroid::Asteroid(float x, float y) {
 	// Body
-	this->position.x = x;
-	this->position.y = y;
-	this->moveVector.x = 0;
-	this->moveVector.y = 0;
+	position.x = x;
+	position.y = y;
+	moveVector.x = 0;
+	moveVector.y = 0;
 	
 	// Vertices to draw
-	this->vertexCount = ASTEROID_VERTEX_COUNT;
+	vertexCount = ASTEROID_VERTEX_COUNT;
 	
 	// Stats
-	this->size = rand() % 2 + 1;
-	this->hp = this->size * ASTEROID_HP_MULTIPLIER;
-	this->angle = PI / 2;
-	this->spin = rand() % ASTEROID_SPIN - ASTEROID_SPIN / 2;
+	size = rand() % 2 + 1;
+	hp = size * ASTEROID_HP_MULTIPLIER;
+	angle = PI / 2;
+	spin = rand() % ASTEROID_SPIN - ASTEROID_SPIN / 2;
 
 	// Collision
-	this->collisionRadius = this->size + ASTEROID_BASE_SIZE + ASTEROID_VARIANCE * this->size / 2;
-
-	// Create vertices
-	this->vertices[this->vertexCount];
+	collisionRadius = size + ASTEROID_BASE_SIZE + ASTEROID_VARIANCE * size / 2;
 
 	PositionVector vertex;
 	vertex.x = rand() % ASTEROID_VARIANCE - ASTEROID_VARIANCE / 2;
 	vertex.y = rand() % ASTEROID_VARIANCE + ASTEROID_BASE_SIZE;
-	for (int i = 0; i < this->vertexCount; ++i) {
-		this->vertices[i] = vertex;
+	for (int i = 0; i < vertexCount; ++i) {
+		vertices.push_back(vertex);
 		vertex.x += rand() % ASTEROID_VARIANCE - ASTEROID_VARIANCE / 4;
 		vertex.y += rand() % ASTEROID_VARIANCE - ASTEROID_VARIANCE / 4;
 		// check for variance limit to prevent oversized or undersized asteroids
@@ -45,7 +42,7 @@ Asteroid::Asteroid(float x, float y) {
 			vertex = multiplyVector(vertex, vectorScaler);
 		}
 
-		vertex = rotateVector(vertex, (2 * PI) / this->vertexCount, 1);
+		vertex = rotateVector(vertex, (2 * PI) / vertexCount, 1);
 	}
 }
 
@@ -89,12 +86,8 @@ float Asteroid::getSpin() {
 
 // Rendering
 // This functions returns an editable vertex
-PositionVector* Asteroid::getVertex(int vertex) {
-	PositionVector* v = NULL;
-	if (vertex < vertexCount && vertex >= 0) {
-		v = &vertices[vertex];
-	}
-	return v;
+PositionVector Asteroid::getVertex(int index) {
+	return vertices.at(index);
 }
 
 int Asteroid::getVertexCount() {

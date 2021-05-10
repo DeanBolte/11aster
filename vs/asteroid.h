@@ -5,6 +5,7 @@
 */
 #pragma once
 
+#include <vector>
 #include "util.h"
 
 #define ASTEROID_SPIN 6
@@ -23,7 +24,7 @@ class Asteroid {
 private:
 	PositionVector position;
 	PositionVector moveVector;
-	PositionVector* vertices;
+	std::vector<PositionVector> vertices;
 	float collisionRadius;
 	int vertexCount;
 	int size;
@@ -50,7 +51,7 @@ public:
 	float getSpin();
 
 	// Rendering
-	PositionVector* getVertex(int vertex);
+	PositionVector getVertex(int index);
 	int getVertexCount();
 	int getSize();
 	void setSize(int size);
