@@ -361,25 +361,3 @@ void Engine::fireCannonPlayer(float delta) {
 		player->incrementCannonCoolDown(-delta);
 	}
 }
-
-// could extend this to provide an array of ints and then use that to represent more than one side
-// however i deem this out of scope
-int Engine::boolOutOfBounds(PositionVector position, float offset) {
-	// Return > 0 if position is out of bounds
-	// value represents side
-	// 0 = left, 1 = right, 2 = bottom, 3 = top
-	int outOfBounds = 0;
-	if (position.x < 0 - offset) {
-		outOfBounds = LEFT_WALL;
-	}
-	else if (position.x > screenWidth + offset) {
-		outOfBounds = RIGHT_WALL;
-	}
-	else if (position.y < 0 - offset) {
-		outOfBounds = BOTTOM_WALL;
-	}
-	else if (position.y > screenHeight + offset) {
-		outOfBounds = TOP_WALL;
-	}
-	return outOfBounds;
-}

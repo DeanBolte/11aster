@@ -12,6 +12,28 @@ int menuItemCount = 3;
 const char* menuItems[3] = { "Play", "Options", "Exit" };
 float menuSelectorAngle = 0;
 
+// Return > 0 if position is out of bounds
+// value represents side
+// 0 = left, 1 = right, 2 = bottom, 3 = top
+int Renderer::boolOutOfBounds(PositionVector position, float offset) {
+	int outOfBounds = 0;
+	float x = getPlayer()->getPosition().x - screenWidth / 2;
+	float y = getPlayer()->getPosition().y - screenHeight / 2;
+	if (position.x < x - offset) {
+		outOfBounds = LEFT_WALL;
+	}
+	else if (position.x > x + screenWidth + offset) {
+		outOfBounds = RIGHT_WALL;
+	}
+	else if (position.y < y - offset) {
+		outOfBounds = BOTTOM_WALL;
+	}
+	else if (position.y > y + screenHeight + offset) {
+		outOfBounds = TOP_WALL;
+	}
+	return outOfBounds;
+}
+
 // Constructors
 Renderer::Renderer(float screen_width, float screen_height) {
 	// Init colour data
@@ -169,17 +191,21 @@ void Renderer::renderUI() {
 void Renderer::renderAsteroids() {
 	// Create the asteroid in OpenGl
 	for (int i = 0; i < getAsteroidCount(); ++i) {
-		float x = getAsteroid(i)->getPosition().x;
-		float y = getAsteroid(i)->getPosition().y;
-		glPushMatrix();
-		glTranslatef(x, y, 1.0);
-		glRotatef((getAsteroid(i)->getAngle() * 180.0 / PI) - 90, 0.0, 0.0, 1.0);
+		Asteroid* asteroid = getAsteroid(i);
+		if (boolOutOfBounds(asteroid->getPosition(), asteroid->getCollisionRadius() * vectorLength(getPlayer()->getMoveVector()) / 100) == 0) {
+			float x = asteroid->getPosition().x;
+			float y = asteroid->getPosition().y;
 
-		glColor3f(highColour->getRed(), highColour->getGreen(), highColour->getBlue());
+			glPushMatrix();
+			glTranslatef(x, y, 1.0);
+			glRotatef((asteroid->getAngle() * 180.0 / PI) - 90, 0.0, 0.0, 1.0);
 
-		drawAsteroid(getAsteroid(i));
+			glColor3f(highColour->getRed(), highColour->getGreen(), highColour->getBlue());
 
-		glPopMatrix();
+			drawAsteroid(asteroid);
+
+			glPopMatrix();
+		}
 	}
 }
 

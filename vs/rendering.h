@@ -11,6 +11,12 @@
 #define OPTIONS 1
 #define EXIT 2
 
+// View walls
+#define LEFT_WALL 1
+#define RIGHT_WALL 2
+#define BOTTOM_WALL 3
+#define TOP_WALL 4
+
 class Renderer {
 private:
 	float screenWidth;
@@ -20,6 +26,9 @@ private:
 	Colour* highColour;
 	Colour* lowColour;
 	Colour* warnColour;
+
+	// Screen functions
+	int boolOutOfBounds(PositionVector position, float offset);
 
 	// Object Rendering
 	void renderAsteroids();

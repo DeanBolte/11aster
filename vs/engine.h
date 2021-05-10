@@ -8,12 +8,6 @@
 #include "physics.h"
 #include "rendering.h"
 
-// View walls
-#define LEFT_WALL 1
-#define RIGHT_WALL 2
-#define BOTTOM_WALL 3
-#define TOP_WALL 4
-
 // Game States
 #define SPLASH 0
 #define INITIALISING 1
@@ -82,9 +76,6 @@ private:
 	// Player updates
 	void updatePlayer(float delta, Player* player);
 	void fireCannonPlayer(float delta);
-
-	// Screen functions
-	int boolOutOfBounds(PositionVector position, float offset);
 
 public:
 	// Constructors
