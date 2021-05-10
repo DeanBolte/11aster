@@ -19,6 +19,7 @@ Player::Player(float x, float y) {
 	// Health
 	hp = 5;
 	maxHp = 5;
+
 	// Cooldowns in seconds
 	cannonCoolDown = 0;
 	particleCoolDown = 0;
