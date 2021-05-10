@@ -332,7 +332,7 @@ void Engine::updatePlayer(float delta, Player* player) {
 	fireCannonPlayer(delta);
 
 	// Update players particle cooldown
-	if (player->getParticleCoolDown() <= 0) {
+	if (player->getParticleCoolDown() <= 0 && key_up == 1) {
 		player->incrementParticleCoolDown(PLAYER_PARTICLE_INTERVAL);
 
 		createParticle(player->getPosition(), player->getDirection());

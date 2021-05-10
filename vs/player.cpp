@@ -33,8 +33,6 @@ Player::Player(float x, float y) {
 void Player::update(float delta) {
 	// Update position
 	move(delta);
-
-	// Update
 }
 
 // Player Movement
