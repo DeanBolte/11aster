@@ -62,6 +62,8 @@ bool isColliding(PositionVector position1, PositionVector position2, float colli
 	return colliding;
 }
 
+//		Asteroid stuff
+
 // This is the heaviest part of the code base, its essentially the entire game, it could be heavily modified to be made faster
 // however that is out of the scope of this project, i will however attempt to do as much optimisation in the time i have available
 void asteroidCollisions() {
